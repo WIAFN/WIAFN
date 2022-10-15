@@ -15,10 +15,15 @@ public class Character : MonoBehaviour
     [HideInInspector]
     public float stamina;
 
-    public void Start()
+
+    private void Awake()
     {
         _characterMove = GetComponent<CharacterMove>();
         _baseStats = GetComponent<CharacterBaseStats>();
+    }
+
+    public void Start()
+    {
 
         health = _baseStats.maxHealth;
         stamina = _baseStats.maxStamina;
