@@ -5,11 +5,13 @@ using UnityEngine;
 
 public class CharacterMove : MonoBehaviour
 {
+    private CharacterController _controller;
+    private Character _character;
+    private CharacterBaseStats _baseStats;
+
     //Relations
     [Header("Relations")]
     public Camera fpsCam;
-    public CharacterController controller;
-    public PlayerAttributes attributes;
     public Transform feet;
     public LayerMask groundMask;
     public float groundDistance = 0.4f;
@@ -37,18 +39,21 @@ public class CharacterMove : MonoBehaviour
     public float dashSpeed;
     public AnimationCurve dashCurve;
 
-    [Header("Movement Checks")]
     //Movement Checks
-    public bool isMoving;
-    public bool isGrounded;
-    public bool isDashing;
-    public bool isSprinting;
+    public bool IsMoving { get; private set; }
+    public bool IsGrounded { get; private set; }
+    public bool IsDashing { get; private set; }
+    public bool IsSprinting { get; private set; }
 
     void Start()
     {
-        remainingJump = attributes.multiJumps;
-        remainingDashes = attributes.multiDashes;
-        dashDuration = attributes.dashDuration;
+        _controller = GetComponent<CharacterController>();
+        _character = GetComponent<Character>();
+        _baseStats = _character.BaseStats;
+
+        remainingJump = _baseStats.multiJumps;
+        remainingDashes = _baseStats.multiDashes;
+        dashDuration = _baseStats.dashDuration;
     }
 
     // Update is called once per frame
@@ -62,40 +67,32 @@ public class CharacterMove : MonoBehaviour
 
         PlayerActions();
 
-        if (isDashing)
+        if (IsDashing)
         {
             Dashing();
         }
 
-        if (isSprinting)
+        if (IsSprinting)
         {
             Sprinting();
         }
-        if (speed != attributes.speed && !isDashing && !isSprinting)
+        if (speed != _baseStats.Speed && !IsDashing && !IsSprinting)
         {
             SlowDown();
-        }
-
-        if (!isSprinting && !isDashing)
-        {
-            if(attributes.stamina < attributes.maxStamina)
-            {
-                attributes.RegenStamina();
-            }         
         }
         ApplyGravity();
     }
 
     private void PlayerCooldowns()
     {
-        if(remainingDashes < attributes.multiDashes)
+        if(remainingDashes < _baseStats.multiDashes)
         {
             dashCooldown -= Time.deltaTime;
         }
 
         if(dashCooldown <= 0)
         {
-            dashCooldown = attributes.dashCooldown;
+            dashCooldown = _baseStats.dashCooldown;
             remainingDashes++;
         }
     }
@@ -103,30 +100,30 @@ public class CharacterMove : MonoBehaviour
     {
         velocity.y += gravity * Time.deltaTime;
 
-        controller.Move(velocity * Time.deltaTime);
+        _controller.Move(velocity * Time.deltaTime);
     }
 
     private void PlayerActions()
     {
-        if (Input.GetButtonDown("Jump") && (isGrounded || remainingJump > 0))
+        if (Input.GetButtonDown("Jump") && (IsGrounded || remainingJump > 0))
         {
-            velocity.y = Mathf.Sqrt(attributes.jumpHeight * -2f * gravity);
+            velocity.y = Mathf.Sqrt(_baseStats.jumpHeight * -2f * gravity);
             remainingJump--;
         }
-        if (Input.GetKeyDown(KeyCode.LeftShift) && remainingDashes > 0 && attributes.stamina > attributes.dashCost && isMoving)
+        if (Input.GetKeyDown(KeyCode.LeftShift) && remainingDashes > 0 && _character.stamina > _baseStats.dashCost && IsMoving)
         {
-            isDashing = true;
+            IsDashing = true;
             remainingDashes--;
-            attributes.stamina -= attributes.dashCost;
+            _character.stamina -= _baseStats.dashCost;
         }
-        if(Input.GetKey(KeyCode.LeftControl) && isMoving)
+        if(Input.GetKey(KeyCode.LeftControl) && IsMoving)
         {
-            isSprinting = true;
+            IsSprinting = true;
         }
 
-        if (Input.GetKeyUp(KeyCode.LeftControl) || !isMoving)
+        if (Input.GetKeyUp(KeyCode.LeftControl) || !IsMoving)
         {
-            isSprinting = false;
+            IsSprinting = false;
             sprintDuration = 0;
             slowDownDuration = 0;
         }
@@ -136,21 +133,21 @@ public class CharacterMove : MonoBehaviour
     {
         float x = Input.GetAxis("Horizontal");
         float z = Input.GetAxis("Vertical");
-        isMoving = x != 0 || z != 0;
+        IsMoving = x != 0 || z != 0;
 
         Vector3 move = transform.right * x + transform.forward * z;
 
-        controller.Move(speed * Time.deltaTime * move);
+        _controller.Move(speed * Time.deltaTime * move);
     }
 
     private void GravityCheck()
     {
-        isGrounded = Physics.CheckSphere(feet.position, groundDistance, groundMask);
+        IsGrounded = Physics.CheckSphere(feet.position, groundDistance, groundMask);
 
-        if (isGrounded && velocity.y < 0)
+        if (IsGrounded && velocity.y < 0)
         {
             velocity.y = -10f;
-            remainingJump = attributes.multiJumps;
+            remainingJump = _baseStats.multiJumps;
         }
     }
 
@@ -158,39 +155,39 @@ public class CharacterMove : MonoBehaviour
     {
         if (dashDuration < 0)
         {
-            isDashing = false;
-            dashDuration = attributes.dashDuration;
+            IsDashing = false;
+            dashDuration = _baseStats.dashDuration;
             dashSpeed = 0;
         }
         else
         {
-            float percent = Mathf.InverseLerp(0, attributes.dashDuration, dashDuration);
+            float percent = Mathf.InverseLerp(0, _baseStats.dashDuration, dashDuration);
             float curvePercent = dashCurve.Evaluate(percent);
             Debug.Log(percent + " - " + curvePercent);
-            dashSpeed = Mathf.Lerp(0, attributes.dashSpeed, curvePercent);
+            dashSpeed = Mathf.Lerp(0, _baseStats.defaultDashSpeed, curvePercent);
             Vector3 move = fpsCam.transform.forward;
-            controller.Move(dashSpeed * Time.deltaTime * move);
+            _controller.Move(dashSpeed * Time.deltaTime * move);
             dashDuration -= Time.deltaTime;
         }
     }
 
     private void Sprinting()
     {
-        if(attributes.stamina > sprintStamina)
+        if(_character.stamina > sprintStamina)
         {
             float percentage = Mathf.InverseLerp(0, sprintMaxSpeedTime, sprintDuration);
-            speed = Mathf.SmoothStep(speed,attributes.sprintSpeed, percentage);
-            attributes.stamina -= sprintStamina * Time.deltaTime;
+            speed = Mathf.SmoothStep(speed,_baseStats.defaultSprintSpeed, percentage);
+            _character.stamina -= sprintStamina * Time.deltaTime;
             sprintDuration += Time.deltaTime;
         }
     }
 
     private void SlowDown()
     {
-        if (speed > attributes.speed)
+        if (speed > _baseStats.defaultSpeed)
         {
             float percentage = Mathf.InverseLerp(0, sprintMaxSpeedTime, slowDownDuration);
-            speed = Mathf.SmoothStep(attributes.sprintSpeed, attributes.speed, percentage);
+            speed = Mathf.SmoothStep(_baseStats.defaultSprintSpeed, _baseStats.defaultSpeed, percentage);
             slowDownDuration += Time.deltaTime;
             slowDownDuration = Mathf.Clamp(slowDownDuration, 0, sprintMaxSpeedTime);
         }
