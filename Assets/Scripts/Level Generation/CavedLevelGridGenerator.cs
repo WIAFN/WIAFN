@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [RequireComponent(typeof(LevelMeshController))]
-public class LevelGridGenerator : MonoBehaviour
+public class CavedLevelGridGenerator : MonoBehaviour
 {
     public int width, height;
     private LevelMeshController levelMeshController;
@@ -29,19 +29,19 @@ public class LevelGridGenerator : MonoBehaviour
 
                 for (int y = 5; y > 3; y--)
                 {
-                    grid.GetCell(x, terrainHeight - y, z).SetValue(RangeUtilities.map(terrainPerlin.Noise3D(x, -y, z, 0.15f, 0.8f, 2), 0f, 1f, 0, 0.5f));
+                    grid.GetCell(x, terrainHeight - y, z).SetValue(terrainPerlin.Noise3D(x, -y, z, 0.15f, 0.8f, 2));
                 }
 
                 for (int y = 3; y > 0; y--)
                 {
-                    grid.GetCell(x, terrainHeight - y, z).SetValue(RangeUtilities.map(terrainPerlin.Noise3D(x, -y, z, 0.15f, 0.8f, 2), 0f, 1f, 0.5f, 1f));
+                    grid.GetCell(x, terrainHeight - y, z).SetValue(terrainPerlin.Noise3D(x, -y, z, 0.15f, 0.8f, 2)).SetFilled(true);
                 }
 
-                grid.GetCell(x, terrainHeight, z).SetValue(RangeUtilities.map(noiseValue, 0f, 1f, 0.5f, 1f));
+                grid.GetCell(x, terrainHeight, z).SetValue(noiseValue).SetFilled(true);
 
                 for (int y = -1; y > -3; y--)
                 {
-                    grid.GetCell(x, terrainHeight - y, z).SetValue(RangeUtilities.map(terrainPerlin.Noise3D(x, -y, z, 0.15f, 0.8f, 2), 0f, 1f, 0, 0.5f));
+                    grid.GetCell(x, terrainHeight - y, z).SetValue(terrainPerlin.Noise3D(x, -y, z, 0.15f, 0.8f, 2));
                 }
             }
         }
@@ -58,6 +58,11 @@ public class LevelGridGenerator : MonoBehaviour
                     if (cell.IsEmpty)
                     {
                         cell.SetValue(noiseValue);
+
+                        if (noiseValue > 0.5f)
+                        {
+                            cell.SetFilled(true);
+                        }
                     }
                 }
             }
