@@ -24,7 +24,7 @@ public class CharacterMove : MonoBehaviour
     //Walking
     [Header("Speed")]
     public float speed = 12f;
-    Vector3 velocity;
+    public Vector3 Velocity;
     //Sprinting
     public float sprintMaxSpeedTime = 0.5f;
     public float sprintDuration = 0f;
@@ -98,16 +98,15 @@ public class CharacterMove : MonoBehaviour
     }
     private void ApplyGravity()
     {
-        velocity.y += gravity * Time.deltaTime;
-
-        _controller.Move(velocity * Time.deltaTime);
+        Velocity.y += gravity * Time.deltaTime;
+        _controller.Move(Velocity * Time.deltaTime);
     }
 
     private void PlayerActions()
     {
         if (Input.GetButtonDown("Jump") && (IsGrounded || remainingJump > 0))
         {
-            velocity.y = Mathf.Sqrt(_baseStats.jumpHeight * -2f * gravity);
+            Velocity.y = Mathf.Sqrt(_baseStats.jumpHeight * -2f * gravity);
             remainingJump--;
         }
         if (Input.GetKeyDown(KeyCode.LeftShift) && remainingDashes > 0 && _character.stamina > _baseStats.dashCost && IsMoving)
@@ -144,9 +143,9 @@ public class CharacterMove : MonoBehaviour
     {
         IsGrounded = Physics.CheckSphere(feet.position, groundDistance, groundMask);
 
-        if (IsGrounded && velocity.y < 0)
+        if (IsGrounded && Velocity.y < 0)
         {
-            velocity.y = -10f;
+            Velocity.y = -10f;
             remainingJump = _baseStats.multiJumps;
         }
     }

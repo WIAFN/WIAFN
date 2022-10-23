@@ -31,11 +31,18 @@ public class Character : MonoBehaviour
 
     public void Update()
     {
-        if (!_characterMove.IsSprinting && !_characterMove.IsDashing)
+        if (health <= 0)
         {
-            if (stamina < _baseStats.maxStamina)
+            Destroy(gameObject);
+        }
+        if (_characterMove != null)
+        {
+            if (!_characterMove.IsSprinting && !_characterMove.IsDashing)
             {
-                RegenStamina();
+                if (stamina < _baseStats.maxStamina)
+                {
+                    RegenStamina();
+                }
             }
         }
     }
@@ -49,6 +56,11 @@ public class Character : MonoBehaviour
     public void RemoveStamina(float stamina)
     {
         this.stamina -= stamina;
+    }
+
+    public void RemoveHealth(float health)
+    {
+        this.health -= health;
     }
 
     public CharacterBaseStats BaseStats
