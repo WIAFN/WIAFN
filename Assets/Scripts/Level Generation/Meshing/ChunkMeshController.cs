@@ -1,8 +1,7 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public abstract class ChunkMeshController: MonoBehaviour
+public abstract class ChunkMeshController : MonoBehaviour
 {
     public LevelMeshController levelMeshController;
     public Vector3Int ChunkAddress { get; private set; }
@@ -18,6 +17,7 @@ public abstract class ChunkMeshController: MonoBehaviour
 
     protected Mesh mesh;
     protected MeshFilter meshFilter;
+    protected MeshCollider meshCollider;
 
     protected List<Vector3> vertices;
     protected List<int> triangles;
@@ -28,6 +28,10 @@ public abstract class ChunkMeshController: MonoBehaviour
         mesh = new Mesh();
         meshFilter = gameObject.AddComponent<MeshFilter>();
         meshFilter.mesh = mesh;
+
+        meshCollider = gameObject.AddComponent<MeshCollider>();
+        meshCollider.enabled = false;
+        //meshCollider.sharedMesh = mesh;
 
         vertices = new List<Vector3>();
         triangles = new List<int>();
@@ -55,15 +59,31 @@ public abstract class ChunkMeshController: MonoBehaviour
 
     public void UpdateMesh()
     {
-        mesh.Clear();
+        if (ShouldUpdateMesh())
+        {
+            mesh.Clear();
 
-        mesh.vertices = vertices.ToArray();
-        mesh.triangles = triangles.ToArray();
-        mesh.normals = normals.ToArray();
-        //mesh.RecalculateNormals();
+            mesh.vertices = vertices.ToArray();
+            mesh.triangles = triangles.ToArray();
+            mesh.normals = normals.ToArray();
+            //mesh.RecalculateNormals();
 
-        GetComponent<MeshRenderer>().material = TerrainMaterial;
+            GetComponent<MeshRenderer>().material = TerrainMaterial;
 
-        ClearData();
+            //Debug.Log(gameObject.name);
+            if (vertices.Count > 30)
+            {
+                // TODO - Safa: [Physics.PhysX] cleaning the mesh failed çöz. 3 0 16ta oluyor mesela.
+                meshCollider.sharedMesh = mesh;
+                meshCollider.enabled = true;
+            }
+
+            ClearData();
+        }
+    }
+
+    public virtual bool ShouldUpdateMesh()
+    {
+        return true;
     }
 }

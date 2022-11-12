@@ -150,4 +150,21 @@ public class ChunkMeshControllerSmooth : ChunkMeshController
 
         return Vector3.Normalize(normal);
     }
+
+    public override bool ShouldUpdateMesh()
+    {
+        // Check if chunk is worth drawing.
+        bool notWorth = true;
+        for (int i = 0; i < vertices.Count; i++)
+        {
+            Vector3 vertex = vertices[i];
+            if (vertex.y > 0.01f)
+            {
+                notWorth = false;
+                break;
+            }
+        }
+
+        return !notWorth;
+    }
 }
