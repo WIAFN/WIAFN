@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
+using UnityEditor.UIElements;
 using UnityEngine;
 
 [RequireComponent(typeof(LevelGeneratorBase))]
@@ -12,6 +13,8 @@ public class LevelMeshController : MonoBehaviour
 
     public Vector3Int ChunkSizeInVoxels { get; private set; }
     public Vector3 VoxelSizeInMeters { get; private set; }
+
+    public int layerOfMeshes;
 
     public Vector3 MeshSizeInMeters
     {
@@ -77,6 +80,8 @@ public class LevelMeshController : MonoBehaviour
         
         ChunkMeshController chunkController = chunkObject.AddComponent<ChunkMeshControllerSmooth>();
         chunkController.SetChunkAddress(chunkAddress);
+        chunkController.SetLayer(layerOfMeshes);
+
         Vector3 chunkSizeInMeters = ChunkSizeInMeters;
         chunkController.SetChunkSizeInMeters(chunkSizeInMeters);
 

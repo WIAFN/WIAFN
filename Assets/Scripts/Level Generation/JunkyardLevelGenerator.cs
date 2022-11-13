@@ -53,7 +53,7 @@ public class JunkyardLevelGenerator : LevelGeneratorBase
         {
             for (int z = 0; z < width; z++)
             {
-                float noiseValue = GetJunkHeight(x, z);
+                float noiseValue = GetNoiseValueAt(x, z);
 
                 if (noiseValue <= 0.5f)
                 {
@@ -87,6 +87,7 @@ public class JunkyardLevelGenerator : LevelGeneratorBase
         for (int i = 0; i < itemCount; i++)
         {
             GameObject selectedItem = ChooseRandomItem();
+            Debug.Assert(selectedItem != null);
             GameObject newItem = Instantiate(selectedItem, GenerateRandomPosition(), GenerateRandomRotation(), _itemsParent);
 
         }
@@ -98,7 +99,7 @@ public class JunkyardLevelGenerator : LevelGeneratorBase
     {
         float x = Random.Range(-HalfLevelSizeInMeters.x, HalfLevelSizeInMeters.x);
         float z = Random.Range(-HalfLevelSizeInMeters.z, HalfLevelSizeInMeters.z);
-        float y = Random.Range(GetJunkHeightFromWorldPos(x, z), HalfLevelSizeInMeters.y);
+        float y = Random.Range(GetNoiseValueFromWorldPos(x, z), HalfLevelSizeInMeters.y);
         return new Vector3(x, y, z);
     }
 
@@ -133,20 +134,23 @@ public class JunkyardLevelGenerator : LevelGeneratorBase
         return levelObjects[currIndex].levelObject;
     }
 
+    public float GetJunkHeight(int x, int z)
+    {
+        return GetNoiseValueAt(x, z) * levelSizeInMeters.y;
+    }
 
-
-    public float GetJunkHeightFromWorldPos(float x, float z)
+    public float GetNoiseValueFromWorldPos(float x, float z)
     {
         Vector3Int gridPos = _levelMeshController.GetGridPosOfWorldPos(new Vector3(x, 0f, z) + HalfLevelSizeInMeters);
-        return GetJunkHeight(gridPos.x, gridPos.z);
+        return GetNoiseValueAt(gridPos.x, gridPos.z);
     }
 
-    public float GetJunkHeight(Vector2Int point)
+    public float GetNoiseValueAt(Vector2Int point)
     {
-        return GetJunkHeight(point.x, point.y);
+        return GetNoiseValueAt(point.x, point.y);
     }
 
-    public float GetJunkHeight(int x, int z)
+    public float GetNoiseValueAt(int x, int z)
     {
         return _terrainPerlin.Noise2D(x, z, 0.155f, 0.9f, 3);
     }

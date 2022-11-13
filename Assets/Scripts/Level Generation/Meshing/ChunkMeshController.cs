@@ -38,6 +38,11 @@ public abstract class ChunkMeshController : MonoBehaviour
         normals = new List<Vector3>();
     }
 
+    public void SetLayer(int layer)
+    {
+        gameObject.layer = layer;
+    }
+
     public void SetChunkAddress(Vector3Int chunkAddress)
     {
         ChunkAddress = chunkAddress;
