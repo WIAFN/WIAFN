@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 7050132638606837736}
   - component: {fileID: 2296929029664502077}
   - component: {fileID: 4988920693663178641}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Washing Machine
   m_TagString: Untagged
   m_Icon: {fileID: 0}
