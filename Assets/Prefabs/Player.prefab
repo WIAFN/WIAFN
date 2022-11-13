@@ -141,7 +141,7 @@ Camera:
     y: 0
     width: 1
     height: 1
-  near clip plane: 0.03
+  near clip plane: 0.01
   far clip plane: 1000
   field of view: 60
   orthographic: 0
@@ -150,7 +150,7 @@ Camera:
   m_CullingMask:
     serializedVersion: 2
     m_Bits: 4294967295
-  m_RenderingPath: -1
+  m_RenderingPath: 3
   m_TargetTexture: {fileID: 0}
   m_TargetDisplay: 0
   m_TargetEye: 3
@@ -263,6 +263,7 @@ MonoBehaviour:
   gravity: -24.5
   remainingJump: 0
   speed: 12
+  Velocity: {x: 0, y: 0, z: 0}
   sprintMaxSpeedTime: 0.5
   sprintDuration: 0
   slowDownDuration: 0
@@ -473,6 +474,37 @@ Transform:
   m_Father: {fileID: 5899578701194276614}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &8260610114536966974
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 122854274341654795}
+  m_Layer: 0
+  m_Name: GunTip
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &122854274341654795
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8260610114536966974}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0.003, y: 0.04, z: 0.447}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 6220943259657979433}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &5899578700931473858
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -538,7 +570,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: fcc6227bc6b41b44eb6b8e56622f1379, type: 3}
       propertyPath: m_Name
-      value: AssaultRiffle_A
+      value: Gun
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: fcc6227bc6b41b44eb6b8e56622f1379, type: 3}
@@ -552,6 +584,21 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: fcc6227bc6b41b44eb6b8e56622f1379, type: 3}
   m_PrefabInstance: {fileID: 5899578700931473858}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &214833286
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6710058072027831443}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2dac274abb2cb414d9f5830c13c48ea4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  fireRate: 10
+  characterMove: {fileID: 5899578701194276615}
+  gunTip: {fileID: 122854274341654795}
 --- !u!114 &5899578700876131440
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -567,4 +614,7 @@ MonoBehaviour:
   gunLookLayerMask:
     serializedVersion: 2
     m_Bits: 64
+  pfBullet: {fileID: 4427255567824485446, guid: 45a10db4a7585a845a28bda56c5cc137, type: 3}
+  gunTip: {fileID: 122854274341654795}
+  playerWeapon: {fileID: 214833286}
   fpsCam: {fileID: 5899578700955753649}
