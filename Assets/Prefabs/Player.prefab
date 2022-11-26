@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 5899578700373983627}
   - component: {fileID: 5899578700373983625}
   - component: {fileID: 5899578700373983624}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Capsule
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -95,7 +95,7 @@ GameObject:
   - component: {fileID: 5899578700955753649}
   - component: {fileID: 5899578700955753648}
   - component: {fileID: 5899578700955753651}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: FirstPersonCamera
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -332,7 +332,6 @@ MonoBehaviour:
   healthRegen: 0
   jumpHeight: 4
   multiJumps: 2
-  speedCoefficient: 1
   defaultSpeed: 12
   defaultSprintSpeed: 30
   defaultDashSpeed: 300
@@ -340,6 +339,7 @@ MonoBehaviour:
   dashDuration: 0.2
   dashCooldown: 5
   dashCost: 40
+  speedCoefficient: 1
 --- !u!114 &5899578701194276610
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -378,7 +378,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5899578701663933411}
   - component: {fileID: 5899578701663933409}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: ThirdPersonCamera
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -452,7 +452,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5899578701678605089}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Feet
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -483,7 +483,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 122854274341654795}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: GunTip
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -571,6 +571,10 @@ PrefabInstance:
     - target: {fileID: 919132149155446097, guid: fcc6227bc6b41b44eb6b8e56622f1379, type: 3}
       propertyPath: m_Name
       value: Gun
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: fcc6227bc6b41b44eb6b8e56622f1379, type: 3}
+      propertyPath: m_Layer
+      value: 7
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: fcc6227bc6b41b44eb6b8e56622f1379, type: 3}

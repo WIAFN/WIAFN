@@ -207,7 +207,7 @@ GameObject:
   - component: {fileID: 157185656571648468}
   - component: {fileID: 157185656571648470}
   - component: {fileID: 157185656571648469}
-  - component: {fileID: 157185656571648471}
+  - component: {fileID: 157185657154573922}
   m_Layer: 0
   m_Name: Generator
   m_TagString: Untagged
@@ -242,7 +242,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8c7d98947f3fdc24cbb30a815cc7aea8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  levelSizeInChunks: {x: 20, y: 1, z: 20}
+  levelSizeInChunks: {x: 20, y: 5, z: 20}
   terrainMaterial: {fileID: 2100000, guid: 955dcfd5fbc188f4faf158fe4367c067, type: 2}
   layerOfMeshes: 6
 --- !u!114 &157185656571648469
@@ -267,20 +267,24 @@ MonoBehaviour:
     weight: 30
   - levelObject: {fileID: 6949989976748031422, guid: c5f1f2e190c22304abb4c8692cd0abed, type: 3}
     weight: 3
---- !u!64 &157185656571648471
-MeshCollider:
+--- !u!114 &157185657154573922
+MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 157185656571648467}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
   m_Enabled: 1
-  serializedVersion: 4
-  m_Convex: 0
-  m_CookingOptions: 30
-  m_Mesh: {fileID: 0}
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4fd35be20816644459bf0b6c02710707, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  navMeshUpdateInterval: 1
+  includeLayers:
+    serializedVersion: 2
+    m_Bits: 887
+  distantChunksUpdateInterval: 10
+  chunkDistanceToUpdateSlower: 3
 --- !u!1 &157185657184755021
 GameObject:
   m_ObjectHideFlags: 0
@@ -564,7 +568,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 40
   m_IsActive: 1
 --- !u!4 &157185658256519916
 Transform:

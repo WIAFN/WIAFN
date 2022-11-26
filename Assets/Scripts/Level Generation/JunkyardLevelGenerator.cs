@@ -141,7 +141,7 @@ public class JunkyardLevelGenerator : LevelGeneratorBase
 
     public float GetNoiseValueFromWorldPos(float x, float z)
     {
-        Vector3Int gridPos = _levelMeshController.GetGridPosOfWorldPos(new Vector3(x, 0f, z) + HalfLevelSizeInMeters);
+        Vector3Int gridPos = _levelMeshController.GetGridAddressOfWorldPos(new Vector3(x, 0f, z) + HalfLevelSizeInMeters);
         return GetNoiseValueAt(gridPos.x, gridPos.z);
     }
 
