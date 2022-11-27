@@ -40,6 +40,7 @@ public class ChunkedNavMeshGenerator : NavMeshGeneratorBase
         while (true)
         {
             yield return null;
+            yield return null;
 
             if (_distantChunksToUpdate.Count > 0)
             {
@@ -93,7 +94,7 @@ public class ChunkedNavMeshGenerator : NavMeshGeneratorBase
                 }
             }
 
-            _nextCloseChunksUpdate = Time.realtimeSinceStartup + navMeshUpdateInterval;
+            _nextCloseChunksUpdate = Time.realtimeSinceStartup;
         }
 
         // Update distant chunks.
@@ -119,7 +120,7 @@ public class ChunkedNavMeshGenerator : NavMeshGeneratorBase
                 }
             }
 
-            _nextDistantChunksUpdate = Time.realtimeSinceStartup + distantChunksUpdateInterval;
+            _nextDistantChunksUpdate = Time.realtimeSinceStartup;
         }
     }
 }

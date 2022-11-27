@@ -208,8 +208,9 @@ GameObject:
   - component: {fileID: 157185656571648470}
   - component: {fileID: 157185656571648469}
   - component: {fileID: 157185657154573922}
+  - component: {fileID: 966865597}
   m_Layer: 0
-  m_Name: Generator
+  m_Name: Generators
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -285,6 +286,21 @@ MonoBehaviour:
     m_Bits: 887
   distantChunksUpdateInterval: 10
   chunkDistanceToUpdateSlower: 3
+--- !u!114 &966865597
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 157185656571648467}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ae3a7d72da9bf6847bdc0256cadcabdc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  enemyCount: 300
+  enemies:
+  - {fileID: 3275076730903004484, guid: 8a466741ad8f48f45a4eeab15269389e, type: 3}
 --- !u!1 &157185657184755021
 GameObject:
   m_ObjectHideFlags: 0

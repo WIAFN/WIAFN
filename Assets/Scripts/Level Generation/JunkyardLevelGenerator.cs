@@ -19,6 +19,8 @@ public class JunkyardLevelGenerator : LevelGeneratorBase
     public int itemCount;
     public List<LevelObjectData> levelObjects;
 
+    public event GenerationCompletion OnGenerationCompleted;
+
     private LevelMeshController _levelMeshController;
     private Grid _currentGrid;
     private Perlin _terrainPerlin;
@@ -34,14 +36,24 @@ public class JunkyardLevelGenerator : LevelGeneratorBase
 
         _itemsParent = (new GameObject("Items")).transform;
         _itemsParent.parent = transform.parent;
+
+        _levelMeshController = GetComponent<LevelMeshController>();
     }
 
     void Start()
     {
-        _levelMeshController = GetComponent<LevelMeshController>();
+        GenerateLevel();
+    }
 
+    public void GenerateLevel()
+    {
         GenerateGrid();
         GenerateItems();
+
+        if (OnGenerationCompleted != null)
+        {
+            OnGenerationCompleted();
+        }
     }
 
     public void GenerateGrid()
@@ -95,15 +107,15 @@ public class JunkyardLevelGenerator : LevelGeneratorBase
 
     }
 
-    private Vector3 GenerateRandomPosition()
+    public Vector3 GenerateRandomPosition()
     {
         float x = Random.Range(-HalfLevelSizeInMeters.x, HalfLevelSizeInMeters.x);
         float z = Random.Range(-HalfLevelSizeInMeters.z, HalfLevelSizeInMeters.z);
-        float y = Random.Range(GetNoiseValueFromWorldPos(x, z), HalfLevelSizeInMeters.y);
+        float y = Random.Range(GetJunkHeightAtWorldPos(x, z), levelSizeInMeters.y);
         return new Vector3(x, y, z);
     }
 
-    private Quaternion GenerateRandomRotation()
+    public Quaternion GenerateRandomRotation()
     {
         return Quaternion.Euler(Random.Range(0.0f, 360.0f), Random.Range(0.0f, 360.0f), Random.Range(0.0f, 360.0f)); ;
     }
@@ -134,6 +146,11 @@ public class JunkyardLevelGenerator : LevelGeneratorBase
         return levelObjects[currIndex].levelObject;
     }
 
+    public float GetJunkHeightAtWorldPos(float x, float z)
+    {
+        return GetNoiseValueFromWorldPos(x, z) * levelSizeInMeters.y;
+    }
+
     public float GetJunkHeight(int x, int z)
     {
         return GetNoiseValueAt(x, z) * levelSizeInMeters.y;
@@ -154,4 +171,7 @@ public class JunkyardLevelGenerator : LevelGeneratorBase
     {
         return _terrainPerlin.Noise2D(x, z, 0.155f, 0.9f, 3);
     }
+
+
+    public delegate void GenerationCompletion();
 }

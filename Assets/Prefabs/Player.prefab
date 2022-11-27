@@ -617,7 +617,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   gunLookLayerMask:
     serializedVersion: 2
-    m_Bits: 64
+    m_Bits: 1856
   pfBullet: {fileID: 4427255567824485446, guid: 45a10db4a7585a845a28bda56c5cc137, type: 3}
   gunTip: {fileID: 122854274341654795}
   playerWeapon: {fileID: 214833286}

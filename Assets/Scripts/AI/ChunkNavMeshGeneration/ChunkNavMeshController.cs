@@ -24,7 +24,7 @@ public class ChunkNavMeshController : MonoBehaviour
 
     private IEnumerator BuildNavMeshAfter()
     {
-        yield return new WaitForSeconds(0.5f);
+        yield return null;
 
         BuildNavMesh();
         _initialized = true;
