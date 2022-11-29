@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using Unity.AI.Navigation;
 using UnityEngine;
 
 public abstract class ChunkMeshController : MonoBehaviour
@@ -90,5 +91,29 @@ public abstract class ChunkMeshController : MonoBehaviour
     public virtual bool ShouldUpdateMesh()
     {
         return true;
+    }
+
+    public bool HasNeighbour(Vector3Int direction)
+    {
+        Debug.Assert(direction.sqrMagnitude <= 2);
+
+        JunkyardLevelGenerator junkyardLevelGenerator = (JunkyardLevelGenerator)levelMeshController.LevelGenerator;
+        return junkyardLevelGenerator.CurrentGrid.CheckIfInGrid(ChunkAddress + direction);
+    }
+
+    public Vector3Int[] GetNeighbours()
+    {
+        List<Vector3Int> neighbourAddresses = new List<Vector3Int>();
+        Vector3Int[] directions = new Vector3Int[] { Vector3Int.up, Vector3Int.right, Vector3Int.forward, Vector3Int.down, Vector3Int.left, Vector3Int.back };
+
+        foreach (var direction in directions)
+        {
+            if (HasNeighbour(direction))
+            {
+                neighbourAddresses.Add(ChunkAddress + direction);
+            }
+        }
+
+        return neighbourAddresses.ToArray();
     }
 }

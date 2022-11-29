@@ -5,7 +5,7 @@ using UnityEngine;
 [RequireComponent(typeof(CharacterBaseStats))]
 public class Character : MonoBehaviour
 {
-    private CharacterMove _characterMove;
+    private CharacterMovement _characterMove;
     private CharacterBaseStats _baseStats;
 
     // Runtime Stats
@@ -18,7 +18,7 @@ public class Character : MonoBehaviour
 
     private void Awake()
     {
-        _characterMove = GetComponent<CharacterMove>();
+        _characterMove = GetComponent<CharacterMovement>();
         _baseStats = GetComponent<CharacterBaseStats>();
     }
 

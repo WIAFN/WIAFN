@@ -19,13 +19,13 @@ namespace WIAFN.AI
 
         public void OnEnter(AIController ai)
         {
-            ai.NPCController.SetTarget(target);
+            ai.NPCController.Follow(target);
             _canSeeCheckTime = 0f;
         }
 
         public void OnUpdate(AIController ai)
         {
-            NPCController npc = ai.NPCController;
+            NPCControllerBase npc = ai.NPCController;
 
             if (RunState.CheckCondition(ai))
             {

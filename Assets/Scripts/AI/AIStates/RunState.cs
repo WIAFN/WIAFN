@@ -17,7 +17,7 @@ namespace WIAFN.AI
 
         public void OnEnter(AIController ai)
         {
-            NPCController npc = ai.NPCController;
+            NPCControllerBase npc = ai.NPCController;
             SetRunTargetPos(ai);
         }
 
@@ -41,16 +41,16 @@ namespace WIAFN.AI
 
         private void SetRunTargetPos(AIController ai)
         {
-            NPCController npc = ai.NPCController;
+            NPCControllerBase npc = ai.NPCController;
             Vector3 runDirection = (npc.transform.position - fromCharacter.transform.position).normalized;
             runDirection = Quaternion.Euler(runDirectionRandomize, runDirectionRandomize, runDirectionRandomize) * runDirection * runDistance;
 
-            npc.SetRelativeTarget(runDirection);
+            npc.MoveToRelative(runDirection);
         }
 
         public static bool CheckCondition(AIController ai)
         {
-            NPCController npc = ai.NPCController;
+            NPCControllerBase npc = ai.NPCController;
             return npc.character.health < npc.character.BaseStats.maxHealth / 4f;
         }
     }

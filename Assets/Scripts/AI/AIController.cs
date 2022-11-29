@@ -1,14 +1,14 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Assertions;
 
 namespace WIAFN.AI
 {
-    [RequireComponent(typeof(NPCController))]
     public class AIController : MonoBehaviour
     {
         private AIStateBase _state;
-        private NPCController _npcController;
+        private NPCControllerBase _npcController;
 
         public float maxIdleTime;
         public float maxPatrolDistance;
@@ -21,7 +21,8 @@ namespace WIAFN.AI
 
         private void Awake()
         {
-            _npcController = GetComponent<NPCController>();
+            _npcController = GetComponent<NPCControllerBase>();
+            Debug.Assert(_npcController != null, $"{gameObject.name} named NPC doesn't have an AI Controller.");
         }
 
         void Start()
@@ -31,6 +32,7 @@ namespace WIAFN.AI
 
         public void ChangeState(AIStateBase targetState)
         {
+            Debug.Assert(targetState != null);
             _state?.OnExit(this);
             _state = targetState;
             _state?.OnEnter(this);
@@ -39,7 +41,7 @@ namespace WIAFN.AI
         // Update is called once per frame
         void Update()
         {
-            _state?.OnUpdate(this);
+            _state.OnUpdate(this);
         }
 
         public bool AttackIfCanSeePlayer()
@@ -75,7 +77,7 @@ namespace WIAFN.AI
         }
 
         public AIStateBase State => _state;
-        public NPCController NPCController => _npcController;
-        public bool IsStopped => _npcController.IsStopped;
+        public NPCControllerBase NPCController => _npcController;
+        public bool IsStopped => _npcController.IsStopped();
     }
 }

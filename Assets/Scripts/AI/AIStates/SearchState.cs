@@ -28,7 +28,7 @@ namespace WIAFN.AI
         public void OnEnter(AIController ai)
         {
             stopping = false;
-            ai.NPCController.SetTarget(lastSeenPosition);
+            ai.NPCController.MoveTo(lastSeenPosition);
             _searchStartTime = Time.realtimeSinceStartup;
 
             _canSeeCheckTime = 0f;
@@ -36,7 +36,7 @@ namespace WIAFN.AI
 
         public void OnUpdate(AIController ai)
         {
-            NPCController npc = ai.NPCController;
+            NPCControllerBase npc = ai.NPCController;
             _canSeeCheckTime += Time.deltaTime;
             if (_canSeeCheckTime > canSeeCheckDeltaTime)
             {
@@ -47,7 +47,7 @@ namespace WIAFN.AI
             // Wait and look around.
             if (!stopping && ai.IsStopped)
             {
-                npc.Stop();
+                npc.StopMoving();
                 stopping = true;
                 _updateSearchAtTime = Time.realtimeSinceStartup + Random.Range(0f, 3f);
             }
@@ -55,7 +55,7 @@ namespace WIAFN.AI
             // Continue searching.
             if (stopping && Time.realtimeSinceStartup > _updateSearchAtTime)
             {
-                npc.SetTarget(lastSeenPosition + (Random.insideUnitSphere * ai.maxPatrolDistance));
+                npc.MoveTo(lastSeenPosition + (Random.insideUnitSphere * ai.maxPatrolDistance));
                 stopping = false;
             }
 
@@ -67,7 +67,7 @@ namespace WIAFN.AI
 
         public void OnExit(AIController ai)
         {
-            ai.NPCController.Stop();
+            ai.NPCController.StopMoving();
         }
     }
 }

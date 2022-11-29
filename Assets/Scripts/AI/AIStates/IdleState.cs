@@ -14,7 +14,7 @@ namespace WIAFN.AI
         private const float canSeeCheckDeltaTime = 0.1f;
         public void OnEnter(AIController ai)
         {
-            ai.NPCController.Stop();
+            ai.NPCController.StopMoving();
             _passedTime = 0f;
             _canSeeCheckTime = 0f;
             _chosenIdleTime = Random.Range(0f, ai.maxIdleTime);

@@ -241,9 +241,10 @@ GameObject:
   - component: {fileID: 3275076730903004490}
   - component: {fileID: 3275076730903004491}
   - component: {fileID: 3275076730903004488}
-  - component: {fileID: 3275076730903004489}
   - component: {fileID: 3275076730903004486}
-  - component: {fileID: 3275076730903004487}
+  - component: {fileID: 1948059376}
+  - component: {fileID: 1948059374}
+  - component: {fileID: 1948059375}
   m_Layer: 10
   m_Name: Dummy Enemy
   m_TagString: Untagged
@@ -325,7 +326,7 @@ CapsuleCollider:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3275076730903004484}
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_Enabled: 1
   m_Radius: 0.5
   m_Height: 2
@@ -347,8 +348,8 @@ MonoBehaviour:
   maxStamina: 50
   staminaRegen: 0
   healthRegen: 0
-  jumpHeight: 0
-  multiJumps: 0
+  jumpHeight: 4
+  multiJumps: 1
   defaultSpeed: 12
   defaultSprintSpeed: 30
   defaultDashSpeed: 0
@@ -371,19 +372,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   health: 0
   stamina: 0
---- !u!114 &3275076730903004489
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3275076730903004484}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f7a07a79ea37e4543ab1912f5672835a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  character: {fileID: 0}
 --- !u!114 &3275076730903004486
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -398,31 +386,72 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxIdleTime: 5
   maxPatrolDistance: 30
-  viewRange: 50
-  viewAngle: 30
+  viewRange: 30
+  viewAngle: 60
   seeCheckObstacles:
     serializedVersion: 2
     m_Bits: 832
   searchDuration: 20
---- !u!195 &3275076730903004487
-NavMeshAgent:
+--- !u!143 &1948059376
+CharacterController:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3275076730903004484}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Height: 2
+  m_Radius: 0.5000001
+  m_SlopeLimit: 45
+  m_StepOffset: 0.3
+  m_SkinWidth: 0.08
+  m_MinMoveDistance: 0.001
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &1948059374
+MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3275076730903004484}
   m_Enabled: 1
-  m_AgentTypeID: 0
-  m_Radius: 0.5000001
-  m_Speed: 10
-  m_Acceleration: 40
-  avoidancePriority: 50
-  m_AngularSpeed: 360
-  m_StoppingDistance: 3
-  m_AutoTraverseOffMeshLink: 1
-  m_AutoBraking: 1
-  m_AutoRepath: 1
-  m_Height: 2
-  m_BaseOffset: 1
-  m_WalkableMask: 4294967295
-  m_ObstacleAvoidanceType: 2
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6ff3ff3e168323c46bbd5c6360b8e814, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  character: {fileID: 0}
+  head: {fileID: 0}
+  eyeHeight: 2.01
+  angularSpeed: 360
+  lookAtTheMovementDirection: 1
+--- !u!114 &1948059375
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3275076730903004484}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3d5d4d5e43b1ed0409486e22607c1982, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  feet: {fileID: 0}
+  groundMask:
+    serializedVersion: 2
+    m_Bits: 832
+  groundDistance: 0.4
+  gravityMultiplier: 1
+  sprintMaxSpeedTime: 0.5
+  sprintDuration: 0
+  slowDownDuration: 0
+  sprintStamina: 10
+  dashCurve:
+    serializedVersion: 2
+    m_Curve: []
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4

@@ -172,6 +172,8 @@ public class JunkyardLevelGenerator : LevelGeneratorBase
         return _terrainPerlin.Noise2D(x, z, 0.155f, 0.9f, 3);
     }
 
+    public Grid CurrentGrid => _currentGrid;
+
 
     public delegate void GenerationCompletion();
 }

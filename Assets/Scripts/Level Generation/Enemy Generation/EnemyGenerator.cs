@@ -36,6 +36,7 @@ public class EnemyGenerator : MonoBehaviour
 
     public void OnGenerationCompleted()
     {
+        if (!isActiveAndEnabled) {  return; }
         StartCoroutine(GenerateEnemies());
     }
 

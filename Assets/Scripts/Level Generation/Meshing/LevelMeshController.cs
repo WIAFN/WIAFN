@@ -178,4 +178,6 @@ public class LevelMeshController : MonoBehaviour
             return new Vector3(meshSizeInMeters.x / levelSizeInChunks.x, meshSizeInMeters.y / levelSizeInChunks.y, meshSizeInMeters.z / levelSizeInChunks.z);
         }
     }
+
+    public LevelGeneratorBase LevelGenerator => _levelGenerator;
 }
