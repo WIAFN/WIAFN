@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public abstract class Projectile : MonoBehaviour
@@ -15,16 +16,28 @@ public abstract class Projectile : MonoBehaviour
 
     private Vector3 _oldPos;
     private Vector3 _parentVelocity;        //Parent velocity
+    private MeshRenderer _meshRenderer;     //Get mesh renderer from child
 
     private void Awake()
     {
-        TrailRenderer = transform.GetChild(0).GetComponent<TrailRenderer>();
+        TrailRenderer = GetComponent<TrailRenderer>();
+        //FIRST AND ONLY CHILD IS ALWAYS THE MESH
+        _meshRenderer = transform.GetChild(0).GetComponent<MeshRenderer>();
     }
 
     protected virtual void Start()
     {
         _oldPos = transform.position;
+        _meshRenderer.enabled = false;
+        StartCoroutine(EnableMesh());
     }
+
+    private IEnumerator EnableMesh() 
+    {
+        yield return null;
+        _meshRenderer.enabled = true;
+    }
+
     // Update is called once per frame
     private void Update()
     {
@@ -64,13 +77,20 @@ public abstract class Projectile : MonoBehaviour
         Vector3 reflect = Vector3.Reflect(transform.forward, hit.normal);
 
         //On hit particle System
-        GameObject ps = Instantiate(impactParticleSystem, hit.point, Quaternion.LookRotation(reflect, Vector3.up));
+        GameObject ps = Instantiate(
+            impactParticleSystem,
+            hit.point + (hit.normal * .01f),
+            Quaternion.LookRotation(reflect, Vector3.up));
         Destroy(ps, 0.3f);
 
         //Impact point
-        GameObject ip = Instantiate(impactHole, hit.point, Quaternion.LookRotation(-transform.forward, transform.up));
-        Debug.DrawRay(ip.transform.position, ip.transform.forward, Color.red);
-        Destroy(ip, 3f);
+        GameObject ip = Instantiate(
+            impactHole, 
+            hit.point + (hit.normal * .01f), 
+            Quaternion.LookRotation(Vector3.up, hit.normal)
+            );
+        
+        Destroy(ip, 10f);
 
         GameObject hitObject = hit.transform.gameObject;
         Character hitCharacter = hitObject.GetComponent<Character>();

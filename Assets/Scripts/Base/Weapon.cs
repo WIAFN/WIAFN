@@ -1,8 +1,5 @@
-using System.Collections;
-using System.Collections.Generic;
-using System.Diagnostics;
 using UnityEngine;
-using UnityEngine.UIElements;
+
 
 [RequireComponent(typeof(Transform))]
 public abstract class Weapon : MonoBehaviour
@@ -10,13 +7,13 @@ public abstract class Weapon : MonoBehaviour
     public float fireRate;
     public CharacterMove characterMove;
     public Transform gunTip;
+    public ParticleSystem muzzleFlash;
     public float Delay { get; protected set; }
 
     private float _firePeriod { get { return (1f / fireRate); } }
 
     private void Start()
     {
-        gunTip = transform.GetChild(0);
         Delay = 0;
     }
 
@@ -38,6 +35,8 @@ public abstract class Weapon : MonoBehaviour
         GameObject projectile = Instantiate(projectilePrefab, gunTip.position, Quaternion.LookRotation(aimVector, Vector3.up));
         Projectile a = projectile.GetComponent<Projectile>();
         a.SetInitialVelocity(characterMove.Velocity);
+        //Gun Flare
+        muzzleFlash.Play();
         Delay = 0;
     }
 }
