@@ -270,12 +270,10 @@ MonoBehaviour:
   feet: {fileID: 5899578701678605089}
   groundMask:
     serializedVersion: 2
-    m_Bits: 832
+    m_Bits: 1856
   groundDistance: 0.4
   gravityMultiplier: 1
   sprintMaxSpeedTime: 0.5
-  sprintDuration: 0
-  slowDownDuration: 0
   sprintStamina: 10
   dashCurve:
     serializedVersion: 2

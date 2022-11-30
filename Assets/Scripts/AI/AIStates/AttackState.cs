@@ -27,6 +27,8 @@ namespace WIAFN.AI
         {
             NPCControllerBase npc = ai.NPCController;
 
+            npc.TryAttack(target);
+
             if (RunState.CheckCondition(ai))
             {
                 ai.ChangeState(new RunState(target));
@@ -46,7 +48,7 @@ namespace WIAFN.AI
 
         public void OnExit(AIController ai)
         {
-
+            ai.NPCController.ClearFollow();
         }
     }
 }

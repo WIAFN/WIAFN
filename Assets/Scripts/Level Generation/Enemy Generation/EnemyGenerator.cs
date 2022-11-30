@@ -50,10 +50,10 @@ public class EnemyGenerator : MonoBehaviour
 
             Vector3 worldPos = _levelGenerator.GenerateRandomPosition();
             worldPos.y = _levelGenerator.GetJunkHeightAtWorldPos(worldPos.x, worldPos.z);
-            if (NavMesh.SamplePosition(worldPos, out NavMeshHit hit, 100f, -1) && hit.position.y < worldPos.y + 10f)
-            {
-                GameObject enemyInstance = Instantiate(enemy, hit.position, Quaternion.identity, _enemiesParent);
-            }
+            //if (NavMesh.SamplePosition(worldPos, out NavMeshHit hit, 100f, -1) && hit.position.y < worldPos.y + 10f)
+            //{
+                GameObject enemyInstance = Instantiate(enemy, worldPos/*hit.position*/, Quaternion.identity, _enemiesParent);
+            //}
 
         }
     }

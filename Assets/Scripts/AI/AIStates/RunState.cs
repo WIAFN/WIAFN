@@ -43,7 +43,7 @@ namespace WIAFN.AI
         {
             NPCControllerBase npc = ai.NPCController;
             Vector3 runDirection = (npc.transform.position - fromCharacter.transform.position).normalized;
-            runDirection = Quaternion.Euler(runDirectionRandomize, runDirectionRandomize, runDirectionRandomize) * runDirection * runDistance;
+            runDirection = Quaternion.Euler(runDirectionRandomize, runDirectionRandomize, runDirectionRandomize) * runDirection * Random.Range(runDistance/10f, runDistance);
 
             npc.MoveToRelative(runDirection);
         }
@@ -51,7 +51,7 @@ namespace WIAFN.AI
         public static bool CheckCondition(AIController ai)
         {
             NPCControllerBase npc = ai.NPCController;
-            return npc.character.health < npc.character.BaseStats.maxHealth / 4f;
+            return npc.character.health < npc.character.BaseStats.maxHealth / 3f;
         }
     }
 }

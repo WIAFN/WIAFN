@@ -9,11 +9,13 @@ public class GroundedNPCController : NPCControllerBase
     private CharacterController _characterController;
     private CharacterMovement _cm;
 
-    public bool lookAtTheMovementDirection;
+    public bool rotateBodyTowardsMovement;
 
     private Vector3 _currentTargetPosition;
 
     private bool _isStopped;
+
+    public event StoppingHandler OnReached;
 
     // Start is called before the first frame update
     public override void Start()
@@ -29,6 +31,7 @@ public class GroundedNPCController : NPCControllerBase
 
     private void OnDestroy()
     {
+
     }
 
     // Update is called once per frame
@@ -38,12 +41,27 @@ public class GroundedNPCController : NPCControllerBase
 
         if (!_isStopped)
         {
-            MoveTowardsTargetPosition();
+            MoveCharacterTowardsPosition(_currentTargetPosition);
+            CheckIfReached(_currentTargetPosition);
         }
 
-        if (lookAtTheMovementDirection)
+        if (rotateBodyTowardsMovement)
         {
-            LookAt(_currentTargetPosition, true);
+            RotateBodyTowardsPosition(_currentTargetPosition);
+        }
+
+        if (CheckIfReached(_currentTargetPosition))
+        {
+            _isStopped = true;
+            if (OnReached != null)
+            {
+                OnReached();
+            }
+        }
+
+        if (DebugManager.instance.debugAi)
+        {
+            Debug.DrawLine(transform.position, _currentTargetPosition);
         }
     }
 
@@ -54,15 +72,25 @@ public class GroundedNPCController : NPCControllerBase
 
     public override bool MoveTo(Vector3 position)
     {
-        _currentTargetPosition = position;
-        _isStopped = position == transform.position;
-        return true;
+        bool completed = base.MoveTo(position);
+
+        if (completed)
+        {
+            _currentTargetPosition = position;
+            _isStopped = position == transform.position;
+        }
+
+        return completed;
     }
 
     public override bool TryAttack(Character character)
     {
-        return false;
-        //throw new System.NotImplementedException();
+        // TODO - Safa: AI - Implement with weapons.
+        if ((character.transform.position - transform.position).sqrMagnitude <= 6f)
+        {
+            character.RemoveHealth(15f * Time.deltaTime);
+        }
+        return true;
     }
 
     public override bool StopMoving()
@@ -76,9 +104,9 @@ public class GroundedNPCController : NPCControllerBase
         return _isStopped;
     }
 
-    private void MoveTowardsTargetPosition()
+    private void MoveCharacterTowardsPosition(Vector3 position)
     {
-        bool moved = _cm.GroundedMoveTowards(_currentTargetPosition);
+        bool moved = _cm.GroundedMoveTowards(position);
 
         if (!moved)
         {
@@ -86,6 +114,13 @@ public class GroundedNPCController : NPCControllerBase
         }
     }
 
+    public override bool CheckIfReached(Vector3 targetPosition)
+    {
+        return new Vector3(transform.position.x - targetPosition.x, 0f, transform.position.z - targetPosition.z).sqrMagnitude <= reachCheckSqr;
+    }
+
     public CharacterMovement CharacterMovement => _cm;
     public Vector3 Velocity => _characterController.velocity;
+
+    public delegate void StoppingHandler();
 }

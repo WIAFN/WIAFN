@@ -207,7 +207,6 @@ GameObject:
   - component: {fileID: 157185656571648468}
   - component: {fileID: 157185656571648470}
   - component: {fileID: 157185656571648469}
-  - component: {fileID: 157185657154573922}
   - component: {fileID: 966865597}
   m_Layer: 0
   m_Name: Generators
@@ -268,24 +267,6 @@ MonoBehaviour:
     weight: 30
   - levelObject: {fileID: 6949989976748031422, guid: c5f1f2e190c22304abb4c8692cd0abed, type: 3}
     weight: 3
---- !u!114 &157185657154573922
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 157185656571648467}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4fd35be20816644459bf0b6c02710707, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  navMeshUpdateInterval: 1
-  includeLayers:
-    serializedVersion: 2
-    m_Bits: 887
-  distantChunksUpdateInterval: 10
-  chunkDistanceToUpdateSlower: 3
 --- !u!114 &966865597
 MonoBehaviour:
   m_ObjectHideFlags: 0

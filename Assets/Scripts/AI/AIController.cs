@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Assertions;
+using UnityEngine.TextCore.Text;
 
 namespace WIAFN.AI
 {
@@ -28,6 +29,20 @@ namespace WIAFN.AI
         void Start()
         {
             ChangeState(new IdleState());
+
+            Character character = GetComponent<Character>();
+            character.OnDamageTaken += OnDamageTaken;
+        }
+
+        private void OnDamageTaken(float damageTaken)
+        {
+            ChangeState(new AttackState(GameManager.instance.mainPlayer));
+        }
+
+        private void OnDestroy()
+        {
+            Character character = GetComponent<Character>();
+            character.OnDamageTaken -= OnDamageTaken;
         }
 
         public void ChangeState(AIStateBase targetState)

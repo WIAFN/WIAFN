@@ -20,6 +20,8 @@ public class NavMeshNPCController : NPCControllerBase
 
     public override bool MoveTo(Vector3 position)
     {
+        base.MoveTo(position);
+
         return SetTargetInternal(position);
     }
 

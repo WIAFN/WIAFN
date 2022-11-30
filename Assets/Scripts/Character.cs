@@ -10,11 +10,13 @@ public class Character : MonoBehaviour
 
     // Runtime Stats
     [HideInInspector]
-    public float health;
+    public float health { get; private set; }
 
     [HideInInspector]
-    public float stamina;
+    public float stamina { get; private set; }
 
+    public event DamageTakeHandler OnDamageTaken;
+    public event VoidHandler OnDied;
 
     private void Awake()
     {
@@ -33,8 +35,14 @@ public class Character : MonoBehaviour
     {
         if (health <= 0)
         {
+            if (OnDied != null)
+            {
+                OnDied();
+            }
+
             Destroy(gameObject);
         }
+
         if (_characterMove != null)
         {
             if (!_characterMove.IsSprinting && !_characterMove.IsDashing)
@@ -61,6 +69,11 @@ public class Character : MonoBehaviour
     public void RemoveHealth(float health)
     {
         this.health -= health;
+
+        if (OnDamageTaken != null)
+        {
+            OnDamageTaken(health);
+        }
     }
 
     public CharacterBaseStats BaseStats
@@ -70,4 +83,7 @@ public class Character : MonoBehaviour
             return _baseStats;
         }
     }
+
+    public delegate void DamageTakeHandler(float damageTaken);
+    public delegate void VoidHandler();
 }

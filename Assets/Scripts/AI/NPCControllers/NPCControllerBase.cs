@@ -12,13 +12,17 @@ public abstract class NPCControllerBase : MonoBehaviour
     public Transform head;
     public float eyeHeight;
     public float angularSpeed;
+    private const float headAngleLimit = 60f;
 
     protected Character followCharacter;
 
     private float _targetCharacterPositionUpdateDelta;
-    private const float targetPosUpdateInterval = 0.5f;
+    private const float targetPosUpdateInterval = 0f;
 
     private Character _lookAtCharacter;
+
+    // TODO - Safa: Maybe we should move all constants to a single file.
+    protected const float reachCheckSqr = 7f;
 
     public virtual void Awake()
     {
@@ -56,53 +60,50 @@ public abstract class NPCControllerBase : MonoBehaviour
 
     }
 
+    public void RotateBodyTowardsPosition(Vector3 facePosition)
+    {
+        RotateBody(facePosition - transform.position);
+    }
+
+    public void RotateBody(Vector3 direction)
+    {
+        Plane xzPlane = new Plane(Vector3.up, 0f);
+        Vector3 closestPoint = xzPlane.ClosestPointOnPlane(direction.normalized);
+
+        if (DebugManager.instance.generalDebug)
+        {
+            Debug.DrawRay(transform.position, closestPoint * 3f, Color.yellow);
+        }
+
+        if (closestPoint == Vector3.zero) return;
+
+        transform.forward = closestPoint;
+    }
+
     public void LookAt(Vector3 lookAtPosition, bool addEyeHeight = false)
     {
-        bool isHead = true;
-        Transform toRotate = head;
-        if (toRotate == null)
-        {
-            isHead = false;
-            toRotate = transform;
-        }
-        Vector3 eulerAngles;
+        if (head == null) return;
 
-        if (addEyeHeight)
-        {
-            lookAtPosition += Vector3.up * eyeHeight;
-        }
-        Vector3 forward;
-        if (isHead)
-        {
-            forward = toRotate.parent.forward;
-        }
-        else
-        {
-            forward = Vector3.forward;
-        }
+        Transform toRotate = head;
+
+        Vector3 forward = toRotate.parent.forward;
 
         if (toRotate.position == lookAtPosition)
         {
             return;
         }
 
+        if (addEyeHeight)
+        {
+            lookAtPosition += Vector3.up * eyeHeight;
+        }
+
         Quaternion newRotation = Quaternion.FromToRotation(forward, lookAtPosition - toRotate.position);
+
         newRotation = Quaternion.RotateTowards(toRotate.localRotation, newRotation, Time.deltaTime * angularSpeed);
-        eulerAngles = newRotation.eulerAngles;
+        newRotation = Quaternion.RotateTowards(Quaternion.identity, newRotation, headAngleLimit);
 
-        if (isHead)
-        {
-            eulerAngles.z = Mathf.Clamp(eulerAngles.z, -5f, 5f);
-            eulerAngles.y = Mathf.Clamp(eulerAngles.y, -60f, 60f);
-            eulerAngles.x = Mathf.Clamp(eulerAngles.x, -40f, 40f);
-        }
-        else
-        {
-            eulerAngles.z = 0f;
-            eulerAngles.x = 0f;
-        }
-
-        toRotate.localRotation = Quaternion.Euler(eulerAngles);
+        toRotate.localRotation = newRotation;
     }
 
     public void LookAt(Character lookAt)
@@ -117,7 +118,10 @@ public abstract class NPCControllerBase : MonoBehaviour
 
     public abstract bool IsStopped();
 
-    public abstract bool MoveTo(Vector3 position);
+    public virtual bool MoveTo(Vector3 position)
+    {
+        return true;
+    }
 
     public bool MoveTo(Character targetCharacter)
     {
@@ -131,7 +135,7 @@ public abstract class NPCControllerBase : MonoBehaviour
 
     public virtual bool StopMoving()
     {
-        followCharacter = null;
+        ClearFollow();
         return true;
     }
 
@@ -140,7 +144,17 @@ public abstract class NPCControllerBase : MonoBehaviour
         followCharacter = character;
     }
 
+    public void ClearFollow()
+    {
+        followCharacter = null;
+    }
+
     public abstract bool TryAttack(Character character);
+
+    public virtual bool CheckIfReached(Vector3 targetPosition)
+    {
+        return (transform.position - targetPosition).sqrMagnitude <= reachCheckSqr;
+    }
 
     public bool IsFollowing => followCharacter != null;
     public bool LookAtSpecified => _lookAtCharacter != null;

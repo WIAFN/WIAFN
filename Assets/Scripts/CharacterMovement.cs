@@ -47,9 +47,6 @@ public class CharacterMovement : MonoBehaviour
     public bool IsDashing { get; private set; }
     public bool IsSprinting { get; private set; }
 
-    public event StoppingHandler OnStopped;
-    public event StoppingHandler OnReached;
-
     void Start()
     {
         _controller = GetComponent<CharacterController>();
@@ -68,9 +65,6 @@ public class CharacterMovement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        bool oldIsMoving = IsMoving;
-        IsMoving = false;
-
         GravityCheck();
 
         CharacterCooldowns();
@@ -84,14 +78,6 @@ public class CharacterMovement : MonoBehaviour
         }
 
         ApplyGravity();
-
-        if (oldIsMoving && !IsMoving)
-        {
-            if (OnStopped != null)
-            {
-                OnStopped();
-            }
-        }
     }
 
     private void UpdateMovementSkills()
@@ -161,17 +147,13 @@ public class CharacterMovement : MonoBehaviour
     }
 
     /// <summary>
-    /// Moves the character in the direction. Direction is expected to be unit vector.
+    /// Moves the character in the direction. Direction is usually a unit vector.
     /// </summary>
-    /// <param name="direction">The direction to be moved.</param>
-    public bool Move(Vector3 direction)
+    /// <param name="weightedDirection">The direction to be moved.</param>
+    public bool Move(Vector3 weightedDirection)
     {
-        IsMoving = direction.x != 0 || direction.y != 0 || direction.z != 0;
-        if (!IsMoving && OnReached != null)
-        {
-            OnReached();
-        }
-        _controller.Move(_speed * Time.deltaTime * direction);
+        IsMoving = weightedDirection.x != 0f || weightedDirection.y != 0f || weightedDirection.z != 0f;
+        _controller.Move(_speed * Time.deltaTime * weightedDirection);
         return IsMoving;
     }
 
@@ -203,7 +185,7 @@ public class CharacterMovement : MonoBehaviour
         {
             IsDashing = true;
             _remainingDashes--;
-            _character.stamina -= _baseStats.dashCost;
+            _character.RemoveStamina(_baseStats.dashCost);
         }
 
         return IsDashing;
@@ -266,7 +248,7 @@ public class CharacterMovement : MonoBehaviour
         {
             float percentage = Mathf.InverseLerp(0, sprintMaxSpeedTime, sprintDuration);
             _speed = Mathf.SmoothStep(_speed,_baseStats.defaultSprintSpeed, percentage);
-            _character.stamina -= sprintStamina * Time.deltaTime;
+            _character.RemoveStamina(sprintStamina * Time.deltaTime);
             sprintDuration += Time.deltaTime;
         }
     }
@@ -288,6 +270,4 @@ public class CharacterMovement : MonoBehaviour
     public Vector3 AppliedGravity => Physics.gravity * gravityMultiplier;
 
     public bool IsStopped => !IsMoving;
-
-    public delegate void StoppingHandler();
 }

@@ -331,7 +331,7 @@ CapsuleCollider:
   m_Radius: 0.5
   m_Height: 2
   m_Direction: 1
-  m_Center: {x: 0.000000059604645, y: 0, z: -0.00000008940697}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &3275076730903004491
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -426,7 +426,7 @@ MonoBehaviour:
   head: {fileID: 0}
   eyeHeight: 2.01
   angularSpeed: 360
-  lookAtTheMovementDirection: 1
+  rotateBodyTowardsMovement: 1
 --- !u!114 &1948059375
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -442,12 +442,10 @@ MonoBehaviour:
   feet: {fileID: 0}
   groundMask:
     serializedVersion: 2
-    m_Bits: 832
+    m_Bits: 1856
   groundDistance: 0.4
   gravityMultiplier: 1
   sprintMaxSpeedTime: 0.5
-  sprintDuration: 0
-  slowDownDuration: 0
   sprintStamina: 10
   dashCurve:
     serializedVersion: 2
