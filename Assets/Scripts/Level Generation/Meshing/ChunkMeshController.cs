@@ -1,8 +1,8 @@
-using System.Collections;
 using System.Collections.Generic;
+using Unity.AI.Navigation;
 using UnityEngine;
 
-public abstract class ChunkMeshController: MonoBehaviour
+public abstract class ChunkMeshController : MonoBehaviour
 {
     public LevelMeshController levelMeshController;
     public Vector3Int ChunkAddress { get; private set; }
@@ -18,6 +18,7 @@ public abstract class ChunkMeshController: MonoBehaviour
 
     protected Mesh mesh;
     protected MeshFilter meshFilter;
+    protected MeshCollider meshCollider;
 
     protected List<Vector3> vertices;
     protected List<int> triangles;
@@ -29,9 +30,18 @@ public abstract class ChunkMeshController: MonoBehaviour
         meshFilter = gameObject.AddComponent<MeshFilter>();
         meshFilter.mesh = mesh;
 
+        meshCollider = gameObject.AddComponent<MeshCollider>();
+        meshCollider.enabled = false;
+        //meshCollider.sharedMesh = mesh;
+
         vertices = new List<Vector3>();
         triangles = new List<int>();
         normals = new List<Vector3>();
+    }
+
+    public void SetLayer(int layer)
+    {
+        gameObject.layer = layer;
     }
 
     public void SetChunkAddress(Vector3Int chunkAddress)
@@ -55,15 +65,55 @@ public abstract class ChunkMeshController: MonoBehaviour
 
     public void UpdateMesh()
     {
-        mesh.Clear();
+        if (ShouldUpdateMesh())
+        {
+            mesh.Clear();
 
-        mesh.vertices = vertices.ToArray();
-        mesh.triangles = triangles.ToArray();
-        mesh.normals = normals.ToArray();
-        //mesh.RecalculateNormals();
+            mesh.vertices = vertices.ToArray();
+            mesh.triangles = triangles.ToArray();
+            mesh.normals = normals.ToArray();
+            //mesh.RecalculateNormals();
 
-        GetComponent<MeshRenderer>().material = TerrainMaterial;
+            GetComponent<MeshRenderer>().material = TerrainMaterial;
 
-        ClearData();
+            //Debug.Log(gameObject.name);
+            if (vertices.Count > 30)
+            {
+                // TODO - Safa: [Physics.PhysX] cleaning the mesh failed çöz. 3 0 16ta oluyor mesela.
+                meshCollider.sharedMesh = mesh;
+                meshCollider.enabled = true;
+            }
+
+            ClearData();
+        }
+    }
+
+    public virtual bool ShouldUpdateMesh()
+    {
+        return true;
+    }
+
+    public bool HasNeighbour(Vector3Int direction)
+    {
+        Debug.Assert(direction.sqrMagnitude <= 2);
+
+        JunkyardLevelGenerator junkyardLevelGenerator = (JunkyardLevelGenerator)levelMeshController.LevelGenerator;
+        return junkyardLevelGenerator.CurrentGrid.CheckIfInGrid(ChunkAddress + direction);
+    }
+
+    public Vector3Int[] GetNeighbours()
+    {
+        List<Vector3Int> neighbourAddresses = new List<Vector3Int>();
+        Vector3Int[] directions = new Vector3Int[] { Vector3Int.up, Vector3Int.right, Vector3Int.forward, Vector3Int.down, Vector3Int.left, Vector3Int.back };
+
+        foreach (var direction in directions)
+        {
+            if (HasNeighbour(direction))
+            {
+                neighbourAddresses.Add(ChunkAddress + direction);
+            }
+        }
+
+        return neighbourAddresses.ToArray();
     }
 }

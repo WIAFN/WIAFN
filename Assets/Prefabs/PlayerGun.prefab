@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 5899578700373983627}
   - component: {fileID: 5899578700373983625}
   - component: {fileID: 5899578700373983624}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Capsule
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -95,7 +95,7 @@ GameObject:
   - component: {fileID: 5899578700955753649}
   - component: {fileID: 5899578700955753648}
   - component: {fileID: 5899578700955753651}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: FirstPersonCamera
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -127,8 +127,8 @@ Camera:
   m_GameObject: {fileID: 5899578700955753653}
   m_Enabled: 1
   serializedVersion: 2
-  m_ClearFlags: 1
-  m_BackGroundColor: {r: 0.19215687, g: 0.3019608, b: 0.4745098, a: 0}
+  m_ClearFlags: 2
+  m_BackGroundColor: {r: 0, g: 0, b: 0, a: 0}
   m_projectionMatrixMode: 1
   m_GateFitMode: 2
   m_FOVAxisMode: 0
@@ -194,6 +194,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5899578701194276614}
   - component: {fileID: 5899578701194276617}
+  - component: {fileID: 458827169360884299}
   - component: {fileID: 5899578701194276615}
   - component: {fileID: 5899578701194276612}
   - component: {fileID: 5899578701194276610}
@@ -242,6 +243,18 @@ CharacterController:
   m_SkinWidth: 0.08
   m_MinMoveDistance: 0.001
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &458827169360884299
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5899578701194276616}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b1bada01a0402f447a522bf769a216a2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &5899578701194276615
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -254,24 +267,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3d5d4d5e43b1ed0409486e22607c1982, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  fpsCam: {fileID: 5899578700955753649}
   feet: {fileID: 5899578701678605089}
   groundMask:
     serializedVersion: 2
-    m_Bits: 64
+    m_Bits: 1856
   groundDistance: 0.4
-  gravity: -24.5
-  remainingJump: 0
-  speed: 12
-  Velocity: {x: 0, y: 0, z: 0}
+  gravityMultiplier: 1
   sprintMaxSpeedTime: 0.5
-  sprintDuration: 0
-  slowDownDuration: 0
   sprintStamina: 10
-  remainingDashes: 0
-  dashDuration: 0
-  dashCooldown: 0
-  dashSpeed: 0
   dashCurve:
     serializedVersion: 2
     m_Curve:
@@ -329,10 +332,9 @@ MonoBehaviour:
   maxHealth: 100
   maxStamina: 100
   staminaRegen: 20
-  healthRegen: 0
+  healthRegen: 0.5
   jumpHeight: 4
   multiJumps: 2
-  speedCoefficient: 1
   defaultSpeed: 12
   defaultSprintSpeed: 30
   defaultDashSpeed: 300
@@ -340,6 +342,7 @@ MonoBehaviour:
   dashDuration: 0.2
   dashCooldown: 5
   dashCost: 40
+  speedCoefficient: 1
 --- !u!114 &5899578701194276610
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -352,8 +355,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6924bce6974233047a0310734d9f9399, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  health: 0
-  stamina: 0
 --- !u!114 &5899578701194276613
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -378,7 +379,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5899578701663933411}
   - component: {fileID: 5899578701663933409}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: ThirdPersonCamera
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -452,7 +453,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5899578701678605089}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Feet
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -483,7 +484,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 122854274341654795}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: GunTip
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -572,6 +573,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Gun
       objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: fcc6227bc6b41b44eb6b8e56622f1379, type: 3}
+      propertyPath: m_Layer
+      value: 7
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: fcc6227bc6b41b44eb6b8e56622f1379, type: 3}
 --- !u!4 &6220943259657979433 stripped
@@ -613,7 +618,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   gunLookLayerMask:
     serializedVersion: 2
-    m_Bits: 64
+    m_Bits: 1856
   pfBullet: {fileID: 4427255567824485446, guid: 45a10db4a7585a845a28bda56c5cc137, type: 3}
   gunTip: {fileID: 122854274341654795}
   playerWeapon: {fileID: 214833286}

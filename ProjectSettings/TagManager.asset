@@ -14,9 +14,9 @@ TagManager:
   - UI
   - Ground
   - Player
-  - 
-  - 
-  - 
+  - Wall
+  - Noninteractable Wall
+  - Enemy
   - 
   - 
   - 

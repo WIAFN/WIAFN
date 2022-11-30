@@ -26,7 +26,24 @@ public class Perlin
 
     public float Noise2D(float x, float y, float frequency, float persistence, int octave)
     {
-        return Noise3D(x, y, 0f, frequency, persistence, octave);
+        float amplitude = 1f;
+        float noise = 0.0f;
+        const float perlinScaler = 0.15f;
+
+        for (int i = 0; i < octave; ++i)
+        {
+            // Get all permutations of noise for each individual axis
+            float noiseXY = Mathf.PerlinNoise((x * frequency + seed) * perlinScaler, (y * frequency + seed) * perlinScaler) * amplitude;
+
+            // Use the average of the noise functions
+            noise += noiseXY;
+
+            amplitude *= persistence;
+            frequency *= 2.0f;
+        }
+
+        // Use the average of all octaves
+        return noise / octave;
     }
 
     public float SimpleNoise3D(float x, float y, float z)
