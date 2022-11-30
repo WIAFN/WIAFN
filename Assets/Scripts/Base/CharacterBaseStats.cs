@@ -17,7 +17,6 @@ public class CharacterBaseStats : MonoBehaviour
     public float jumpHeight = 4f;
     public int multiJumps = 2;
 
-    public float speedCoefficient = 1f;
     public float defaultSpeed = 12f;
     public float defaultSprintSpeed = 30f;
     public float defaultDashSpeed = 300f;
@@ -25,6 +24,10 @@ public class CharacterBaseStats : MonoBehaviour
     public float dashDuration = 0.3f;
     public float dashCooldown = 5f;
     public float dashCost = 40f;
+
+    [Header("Runtime Variables")]
+    [HideInInspector]
+    public float speedCoefficient = 1f;
 
     public float Speed
     {

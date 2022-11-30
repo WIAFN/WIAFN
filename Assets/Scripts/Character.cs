@@ -5,20 +5,22 @@ using UnityEngine;
 [RequireComponent(typeof(CharacterBaseStats))]
 public class Character : MonoBehaviour
 {
-    private CharacterMove _characterMove;
+    private CharacterMovement _characterMove;
     private CharacterBaseStats _baseStats;
 
     // Runtime Stats
     [HideInInspector]
-    public float health;
+    public float health { get; private set; }
 
     [HideInInspector]
-    public float stamina;
+    public float stamina { get; private set; }
 
+    public event DamageTakeHandler OnDamageTaken;
+    public event VoidHandler OnDied;
 
     private void Awake()
     {
-        _characterMove = GetComponent<CharacterMove>();
+        _characterMove = GetComponent<CharacterMovement>();
         _baseStats = GetComponent<CharacterBaseStats>();
     }
 
@@ -33,8 +35,14 @@ public class Character : MonoBehaviour
     {
         if (health <= 0)
         {
+            if (OnDied != null)
+            {
+                OnDied();
+            }
+
             Destroy(gameObject);
         }
+
         if (_characterMove != null)
         {
             if (!_characterMove.IsSprinting && !_characterMove.IsDashing)
@@ -44,6 +52,11 @@ public class Character : MonoBehaviour
                     RegenStamina();
                 }
             }
+        }
+
+        if (health < _baseStats.maxHealth)
+        {
+            RegenHealth();
         }
     }
 
@@ -58,9 +71,20 @@ public class Character : MonoBehaviour
         this.stamina -= stamina;
     }
 
+    public void RegenHealth()
+    {
+        health += _baseStats.healthRegen * Time.deltaTime;
+        health = Mathf.Clamp(health, 0, _baseStats.maxHealth);
+    }
+
     public void RemoveHealth(float health)
     {
         this.health -= health;
+
+        if (OnDamageTaken != null)
+        {
+            OnDamageTaken(health);
+        }
     }
 
     public CharacterBaseStats BaseStats
@@ -70,4 +94,7 @@ public class Character : MonoBehaviour
             return _baseStats;
         }
     }
+
+    public delegate void DamageTakeHandler(float damageTaken);
+    public delegate void VoidHandler();
 }

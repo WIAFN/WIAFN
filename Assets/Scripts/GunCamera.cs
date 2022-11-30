@@ -8,7 +8,6 @@ public class GunCamera : MonoBehaviour
 {
     public LayerMask gunLookLayerMask;
     public GameObject pfBullet;
-    public Transform gunTip;
     public PlayerWeapon playerWeapon;
     private bool _isShooting = false;
 
@@ -18,7 +17,7 @@ public class GunCamera : MonoBehaviour
     void Update()
     {
         Physics.Raycast(fpsCam.transform.position, fpsCam.transform.forward, out RaycastHit hit, 100.0f, gunLookLayerMask);
-        RotateGun(hit);
+        //RotateGun(hit);
 
         if (_isShooting && hit.transform != null)
         {
@@ -41,7 +40,7 @@ public class GunCamera : MonoBehaviour
         Vector3 gunLocalPos = transform.parent.InverseTransformPoint(hit.point);
         if (hit.transform == null || transform.rotation.y < -15f)
         {
-            gunLocalPos = Quaternion.Euler(new Vector3(30f, -50f, 0f)) * Vector3.forward;
+            gunLocalPos = Quaternion.Euler(new Vector3(0f, -30f, -90f)) * Vector3.forward;
         }
         transform.localRotation = Quaternion.LookRotation(gunLocalPos - transform.localPosition);
     }

@@ -11,6 +11,18 @@ public class LevelMeshController : MonoBehaviour
 
     public Material terrainMaterial;
 
+    public delegate void ChunkCreation(ChunkMeshController chunkMeshController, Vector3Int chunkAddress);
+
+    public event ChunkCreation OnChunkCreated;
+
+    public ChunkMeshController[,,] ChunkGrid
+    { 
+        get
+        {
+            return _chunkGrid;
+        }
+    }
+
     public Vector3Int ChunkSizeInVoxels { get; private set; }
     public Vector3 VoxelSizeInMeters { get; private set; }
 
@@ -90,6 +102,12 @@ public class LevelMeshController : MonoBehaviour
         chunkObject.transform.position = Vector3.Scale(chunkAddress, chunkSizeInMeters);
 
         _chunkGrid[chunkAddress.x, chunkAddress.y, chunkAddress.z] = chunkController;
+
+        if (OnChunkCreated != null)
+        {
+            OnChunkCreated(chunkController, chunkAddress);
+        }
+
         return chunkController;
     }
 
@@ -119,7 +137,7 @@ public class LevelMeshController : MonoBehaviour
     }
 
 
-    public Vector3Int GetGridPosOfWorldPos(Vector3 worldPos)
+    public Vector3Int GetGridAddressOfWorldPos(Vector3 worldPos)
     {
         int x = Mathf.FloorToInt(worldPos.x / VoxelSizeInMeters.x);
         int y = Mathf.FloorToInt(worldPos.y / VoxelSizeInMeters.y);
@@ -160,4 +178,6 @@ public class LevelMeshController : MonoBehaviour
             return new Vector3(meshSizeInMeters.x / levelSizeInChunks.x, meshSizeInMeters.y / levelSizeInChunks.y, meshSizeInMeters.z / levelSizeInChunks.z);
         }
     }
+
+    public LevelGeneratorBase LevelGenerator => _levelGenerator;
 }
