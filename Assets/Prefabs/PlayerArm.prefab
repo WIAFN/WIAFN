@@ -27,8 +27,7 @@ Transform:
   m_LocalPosition: {x: -0.00006200267, y: 0.0006210001, z: 0.00004499992}
   m_LocalScale: {x: -0.009471863, y: 0.009471862, z: 0.009471864}
   m_ConstrainProportionsScale: 0
-  m_Children:
-  - {fileID: 5979097320594821274}
+  m_Children: []
   m_Father: {fileID: 3080792776699576748}
   m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: -16.164, y: -186.338, z: -1.02}
@@ -226,6 +225,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5899578701194276614}
   - component: {fileID: 5899578701194276617}
+  - component: {fileID: 7041732354870725784}
   - component: {fileID: 5899578701194276615}
   - component: {fileID: 5899578701194276612}
   - component: {fileID: 5899578701194276610}
@@ -272,6 +272,18 @@ CharacterController:
   m_SkinWidth: 0.08
   m_MinMoveDistance: 0.001
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &7041732354870725784
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5899578701194276616}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b1bada01a0402f447a522bf769a216a2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &5899578701194276615
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -284,24 +296,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3d5d4d5e43b1ed0409486e22607c1982, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  fpsCam: {fileID: 5899578700955753649}
   feet: {fileID: 5899578701678605089}
   groundMask:
     serializedVersion: 2
-    m_Bits: 64
+    m_Bits: 1856
   groundDistance: 0.4
-  gravity: -24.5
-  remainingJump: 0
-  speed: 12
-  Velocity: {x: 0, y: 0, z: 0}
+  gravityMultiplier: 0
   sprintMaxSpeedTime: 0.5
-  sprintDuration: 0
-  slowDownDuration: 0
   sprintStamina: 10
-  remainingDashes: 0
-  dashDuration: 0
-  dashCooldown: 0
-  dashSpeed: 0
   dashCurve:
     serializedVersion: 2
     m_Curve:
@@ -350,10 +352,9 @@ MonoBehaviour:
   maxHealth: 100
   maxStamina: 100
   staminaRegen: 20
-  healthRegen: 0
+  healthRegen: 0.5
   jumpHeight: 4
   multiJumps: 2
-  speedCoefficient: 1
   defaultSpeed: 12
   defaultSprintSpeed: 30
   defaultDashSpeed: 200
@@ -361,6 +362,7 @@ MonoBehaviour:
   dashDuration: 0.3
   dashCooldown: 5
   dashCost: 40
+  speedCoefficient: 1
 --- !u!114 &5899578701194276610
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -373,8 +375,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6924bce6974233047a0310734d9f9399, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  health: 0
-  stamina: 0
 --- !u!1 &5899578701678605088
 GameObject:
   m_ObjectHideFlags: 0
@@ -455,7 +455,7 @@ MonoBehaviour:
   fireRate: 10
   characterMove: {fileID: 5899578701194276615}
   gunTip: {fileID: 1794825177412158981}
-  muzzleFlash: {fileID: 6617064121005875310}
+  muzzleFlash: {fileID: 7813738118887920440, guid: d83a64ab26efb3d489852e0878c8e490, type: 3}
 --- !u!114 &3688455548262271109
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -470,7 +470,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   gunLookLayerMask:
     serializedVersion: 2
-    m_Bits: 64
+    m_Bits: 1856
   pfBullet: {fileID: 2206067794516419196, guid: ef0cfbfe4ad97014d91137ec1452d82d, type: 3}
   playerWeapon: {fileID: 4338300248111827085}
   fpsCam: {fileID: 5899578700955753649}
@@ -1248,71 +1248,4 @@ Transform:
 Transform:
   m_CorrespondingSourceObject: {fileID: -5234448375175369897, guid: 84c41b587e2d4e04c971a46b745a9373, type: 3}
   m_PrefabInstance: {fileID: 2133206878397246203}
-  m_PrefabAsset: {fileID: 0}
---- !u!1001 &4015928467500036950
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    m_TransformParent: {fileID: 1794825177412158981}
-    m_Modifications:
-    - target: {fileID: 7296241498796630988, guid: 9afa50d68c6ab79418141f5a31b4ae06, type: 3}
-      propertyPath: m_RootOrder
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7296241498796630988, guid: 9afa50d68c6ab79418141f5a31b4ae06, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7296241498796630988, guid: 9afa50d68c6ab79418141f5a31b4ae06, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7296241498796630988, guid: 9afa50d68c6ab79418141f5a31b4ae06, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7296241498796630988, guid: 9afa50d68c6ab79418141f5a31b4ae06, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 7296241498796630988, guid: 9afa50d68c6ab79418141f5a31b4ae06, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7296241498796630988, guid: 9afa50d68c6ab79418141f5a31b4ae06, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7296241498796630988, guid: 9afa50d68c6ab79418141f5a31b4ae06, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7296241498796630988, guid: 9afa50d68c6ab79418141f5a31b4ae06, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7296241498796630988, guid: 9afa50d68c6ab79418141f5a31b4ae06, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7296241498796630988, guid: 9afa50d68c6ab79418141f5a31b4ae06, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8290734678281796164, guid: 9afa50d68c6ab79418141f5a31b4ae06, type: 3}
-      propertyPath: m_Name
-      value: MuzzleFlash
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: 9afa50d68c6ab79418141f5a31b4ae06, type: 3}
---- !u!4 &5979097320594821274 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 7296241498796630988, guid: 9afa50d68c6ab79418141f5a31b4ae06, type: 3}
-  m_PrefabInstance: {fileID: 4015928467500036950}
-  m_PrefabAsset: {fileID: 0}
---- !u!198 &6617064121005875310 stripped
-ParticleSystem:
-  m_CorrespondingSourceObject: {fileID: 7813738118887920440, guid: 9afa50d68c6ab79418141f5a31b4ae06, type: 3}
-  m_PrefabInstance: {fileID: 4015928467500036950}
   m_PrefabAsset: {fileID: 0}

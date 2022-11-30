@@ -604,6 +604,7 @@ MonoBehaviour:
   fireRate: 10
   characterMove: {fileID: 5899578701194276615}
   gunTip: {fileID: 122854274341654795}
+  muzzleFlash: {fileID: 7813738118887920440, guid: d83a64ab26efb3d489852e0878c8e490, type: 3}
 --- !u!114 &5899578700876131440
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -619,7 +620,6 @@ MonoBehaviour:
   gunLookLayerMask:
     serializedVersion: 2
     m_Bits: 1856
-  pfBullet: {fileID: 4427255567824485446, guid: 45a10db4a7585a845a28bda56c5cc137, type: 3}
-  gunTip: {fileID: 122854274341654795}
+  pfBullet: {fileID: 2206067794516419196, guid: ef0cfbfe4ad97014d91137ec1452d82d, type: 3}
   playerWeapon: {fileID: 214833286}
   fpsCam: {fileID: 5899578700955753649}
