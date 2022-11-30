@@ -455,7 +455,7 @@ MonoBehaviour:
   fireRate: 10
   characterMove: {fileID: 5899578701194276615}
   gunTip: {fileID: 1794825177412158981}
-  muzzleFlash: {fileID: 7813738118887920440, guid: d83a64ab26efb3d489852e0878c8e490, type: 3}
+  muzzleFlash: {fileID: 7813738118887920440, guid: aa4113ced9d865c4b9c8d69eebc46ac3, type: 3}
 --- !u!114 &3688455548262271109
 MonoBehaviour:
   m_ObjectHideFlags: 0
