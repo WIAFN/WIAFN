@@ -7,17 +7,17 @@ public class StaminaBarChange : MonoBehaviour
 {
     private Character _character;
     private Image StaminaBar;
-    public float CurrentStamina;
-    private float MaxStamina = 100f;
+    private float CurrentStamina;
 
     public void Start()
     {
         StaminaBar = GetComponent<Image>();
+        _character = GameManager.instance.mainPlayer;
     }
 
     private void Update()
     {
         CurrentStamina = _character.stamina;
-        StaminaBar.fillAmount = CurrentStamina / MaxStamina;
+        StaminaBar.fillAmount = CurrentStamina / _character.BaseStats.maxStamina;
     }
 }

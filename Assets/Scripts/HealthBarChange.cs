@@ -7,17 +7,17 @@ public class HealthBarChange : MonoBehaviour
 {
     private Character _character;
     private Image HealthBar;
-    public float CurrentHealth;
-    private float MaxHealth = 100f;
+    private float CurrentHealth;
 
     public void Start()
     {
         HealthBar = GetComponent<Image>();
+        _character = GameManager.instance.mainPlayer;
     }
 
     private void Update()
     {
         CurrentHealth = _character.health;
-        HealthBar.fillAmount = CurrentHealth / MaxHealth;
+        HealthBar.fillAmount = CurrentHealth / _character.BaseStats.maxHealth;
     }
 }
