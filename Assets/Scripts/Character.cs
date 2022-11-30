@@ -53,6 +53,11 @@ public class Character : MonoBehaviour
                 }
             }
         }
+
+        if (health < _baseStats.maxHealth)
+        {
+            RegenHealth();
+        }
     }
 
     public void RegenStamina()
@@ -64,6 +69,12 @@ public class Character : MonoBehaviour
     public void RemoveStamina(float stamina)
     {
         this.stamina -= stamina;
+    }
+
+    public void RegenHealth()
+    {
+        health += _baseStats.healthRegen * Time.deltaTime;
+        health = Mathf.Clamp(health, 0, _baseStats.maxHealth);
     }
 
     public void RemoveHealth(float health)

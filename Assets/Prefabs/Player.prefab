@@ -332,7 +332,7 @@ MonoBehaviour:
   maxHealth: 100
   maxStamina: 100
   staminaRegen: 20
-  healthRegen: 0
+  healthRegen: 0.5
   jumpHeight: 4
   multiJumps: 2
   defaultSpeed: 12
@@ -355,8 +355,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6924bce6974233047a0310734d9f9399, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  health: 0
-  stamina: 0
 --- !u!114 &5899578701194276613
 MonoBehaviour:
   m_ObjectHideFlags: 0
