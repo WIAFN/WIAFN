@@ -977,18 +977,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 1313769177612419119, guid: be983a9015e8d504093d81daf4e23214, type: 3}
-      propertyPath: LightsModule.ratio
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 3688455548262271109, guid: be983a9015e8d504093d81daf4e23214, type: 3}
-      propertyPath: pfBullet
-      value: 
-      objectReference: {fileID: 2206067794516419196, guid: ef0cfbfe4ad97014d91137ec1452d82d, type: 3}
-    - target: {fileID: 4338300248111827085, guid: be983a9015e8d504093d81daf4e23214, type: 3}
-      propertyPath: muzzleFlash
-      value: 
-      objectReference: {fileID: 7813738118887920440, guid: 4f5bdde34720a064d8d1b749cdea0184, type: 3}
     - target: {fileID: 5899578701194276614, guid: be983a9015e8d504093d81daf4e23214, type: 3}
       propertyPath: m_RootOrder
       value: 10
