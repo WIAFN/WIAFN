@@ -11,6 +11,8 @@ namespace WIAFN.AI
         private AIStateBase _state;
         private NPCControllerBase _npcController;
 
+        private bool _inCombat;
+
         public float maxIdleTime;
         public float maxPatrolDistance;
 
@@ -30,6 +32,8 @@ namespace WIAFN.AI
         {
             ChangeState(new IdleState());
 
+            _inCombat = false;
+
             Character character = GetComponent<Character>();
             character.OnDamageTaken += OnDamageTaken;
         }
@@ -48,6 +52,9 @@ namespace WIAFN.AI
         public void ChangeState(AIStateBase targetState)
         {
             Debug.Assert(targetState != null);
+
+            ClearInCombat();
+
             _state?.OnExit(this);
             _state = targetState;
             _state?.OnEnter(this);
@@ -56,15 +63,16 @@ namespace WIAFN.AI
         // Update is called once per frame
         void Update()
         {
-            _state.OnUpdate(this);
+            _state.UpdateState(this);
+            _state.UpdateNPCBehaviour(this);
         }
 
-        public bool AttackIfCanSeePlayer()
+        public bool SwitchToAttackIfCanSeePlayer()
         {
-            return AttackIfCanSeeCharacter(GameManager.instance.mainPlayer);
+            return SwitchToAttackIfCanSeeCharacter(GameManager.instance.mainPlayer);
         }
 
-        public bool AttackIfCanSeeCharacter(Character character)
+        public bool SwitchToAttackIfCanSeeCharacter(Character character)
         {
             bool canSeePlayer = CanSeeCharacter(character);
             if (canSeePlayer)
@@ -80,7 +88,7 @@ namespace WIAFN.AI
             Vector3 directionToTarget = character.transform.position - transform.position;
             float angle = Vector3.Angle(transform.forward, directionToTarget);
             float distance = directionToTarget.magnitude;
-            return CanFeelCharacter(character) && (angle < viewAngle || distance < viewRange / 5f);
+            return CanFeelCharacter(character) && (InCombat || angle < viewAngle || distance < viewRange / 5f);
         }
 
         // What kind of a naming convention is this...
@@ -91,8 +99,20 @@ namespace WIAFN.AI
             return distance <= viewRange && !Physics.Linecast(transform.position, character.transform.position, seeCheckObstacles, QueryTriggerInteraction.Ignore);
         }
 
+        public void SetInCombat(bool inCombat)
+        {
+            _inCombat = inCombat;
+        }
+
+        public void ClearInCombat()
+        {
+            SetInCombat(false);
+        }
+
         public AIStateBase State => _state;
         public NPCControllerBase NPCController => _npcController;
         public bool IsStopped => _npcController.IsStopped();
+
+        public bool InCombat => _inCombat;
     }
 }

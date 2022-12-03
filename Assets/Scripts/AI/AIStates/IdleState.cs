@@ -14,13 +14,14 @@ namespace WIAFN.AI
         private const float canSeeCheckDeltaTime = 0.1f;
         public void OnEnter(AIController ai)
         {
-            ai.NPCController.StopMoving();
+            NPCControllerBase npc = ai.NPCController;
+            npc.StopMoving();
             _passedTime = 0f;
             _canSeeCheckTime = 0f;
             _chosenIdleTime = Random.Range(0f, ai.maxIdleTime);
         }
 
-        public void OnUpdate(AIController ai)
+        public void UpdateState(AIController ai)
         {
             _passedTime += Time.deltaTime;
             _canSeeCheckTime += Time.deltaTime;
@@ -28,7 +29,7 @@ namespace WIAFN.AI
             if (_canSeeCheckTime > canSeeCheckDeltaTime)
             {
                 _canSeeCheckTime = 0f;
-                if (ai.AttackIfCanSeePlayer())
+                if (ai.SwitchToAttackIfCanSeePlayer())
                 {
                     return;
                 }
@@ -40,9 +41,13 @@ namespace WIAFN.AI
             }
         }
 
+        public void UpdateNPCBehaviour(AIController ai)
+        {
+            
+        }
+
         public void OnExit(AIController ai)
         {
-
         }
     }
 }

@@ -279,9 +279,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ae3a7d72da9bf6847bdc0256cadcabdc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  enemyCount: 300
+  enemyCount: 150
   enemies:
-  - {fileID: 3275076730903004484, guid: 8a466741ad8f48f45a4eeab15269389e, type: 3}
+  - {fileID: 3293409358827904580, guid: 33a3ba6d5fbfe8349b5548c83f5a40f9, type: 3}
 --- !u!1 &157185657184755021
 GameObject:
   m_ObjectHideFlags: 0

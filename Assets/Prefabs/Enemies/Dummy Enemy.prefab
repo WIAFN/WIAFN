@@ -370,8 +370,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6924bce6974233047a0310734d9f9399, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  health: 0
-  stamina: 0
 --- !u!114 &3275076730903004486
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -390,7 +388,7 @@ MonoBehaviour:
   viewAngle: 60
   seeCheckObstacles:
     serializedVersion: 2
-    m_Bits: 832
+    m_Bits: 1856
   searchDuration: 20
 --- !u!143 &1948059376
 CharacterController:

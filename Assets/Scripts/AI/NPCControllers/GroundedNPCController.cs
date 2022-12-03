@@ -1,4 +1,3 @@
-using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -10,6 +9,8 @@ public class GroundedNPCController : NPCControllerBase
     private CharacterMovement _cm;
 
     public bool rotateBodyTowardsMovement;
+
+    public float shootingErrorRateToDistance;
 
     private Vector3 _currentTargetPosition;
 
@@ -85,12 +86,13 @@ public class GroundedNPCController : NPCControllerBase
 
     public override bool TryAttack(Character character)
     {
-        // TODO - Safa: AI - Implement with weapons.
-        if ((character.transform.position - transform.position).sqrMagnitude <= 6f)
+        bool shot = false;
+        Weapon[] weapons = GetComponentsInChildren<Weapon>();
+        foreach (Weapon weapon in weapons)
         {
-            character.RemoveHealth(15f * Time.deltaTime);
+            shot |= weapon.TryShoot(character.transform.position);
         }
-        return true;
+        return shot;
     }
 
     public override bool StopMoving()
@@ -121,6 +123,8 @@ public class GroundedNPCController : NPCControllerBase
 
     public CharacterMovement CharacterMovement => _cm;
     public Vector3 Velocity => _characterController.velocity;
+
+    public override Vector3 CurrentTargetPosition => _currentTargetPosition;
 
     public delegate void StoppingHandler();
 }

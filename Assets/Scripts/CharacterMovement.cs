@@ -267,6 +267,8 @@ public class CharacterMovement : MonoBehaviour
     public float Speed => _speed;
     public Vector3 VerticalVelocity => _verticalVelocity;
 
+    public Vector3 Velocity => _controller.velocity;
+
     public Vector3 AppliedGravity => Physics.gravity * gravityMultiplier;
 
     public bool IsStopped => !IsMoving;

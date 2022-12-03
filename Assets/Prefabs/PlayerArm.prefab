@@ -349,7 +349,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3bc2f76b11a00af449c8ffb0a843e45a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHealth: 100
+  maxHealth: 300
   maxStamina: 100
   staminaRegen: 20
   healthRegen: 0.5
@@ -362,6 +362,7 @@ MonoBehaviour:
   dashDuration: 0.3
   dashCooldown: 5
   dashCost: 40
+  shootingErrorRateMinMax: {x: 0, y: 0.1}
   speedCoefficient: 1
 --- !u!114 &5899578701194276610
 MonoBehaviour:
@@ -452,10 +453,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2dac274abb2cb414d9f5830c13c48ea4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  character: {fileID: 0}
   fireRate: 10
-  characterMove: {fileID: 5899578701194276615}
   gunTip: {fileID: 1794825177412158981}
   muzzleFlash: {fileID: 7813738118887920440, guid: aa4113ced9d865c4b9c8d69eebc46ac3, type: 3}
+  projectilePrefab: {fileID: 2206067794516419196, guid: ef0cfbfe4ad97014d91137ec1452d82d, type: 3}
 --- !u!114 &3688455548262271109
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -471,7 +473,6 @@ MonoBehaviour:
   gunLookLayerMask:
     serializedVersion: 2
     m_Bits: 1856
-  pfBullet: {fileID: 2206067794516419196, guid: ef0cfbfe4ad97014d91137ec1452d82d, type: 3}
   playerWeapon: {fileID: 4338300248111827085}
   fpsCam: {fileID: 5899578700955753649}
 --- !u!1001 &2133206878397246203

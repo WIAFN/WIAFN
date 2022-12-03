@@ -15,7 +15,7 @@ namespace WIAFN.AI
             _canSeeCheckTime = 0f;
         }
 
-        public void OnUpdate(AIController ai)
+        public void UpdateState(AIController ai)
         {
             NPCControllerBase npc = ai.NPCController;
 
@@ -24,7 +24,7 @@ namespace WIAFN.AI
             if (_canSeeCheckTime > canSeeCheckDeltaTime)
             {
                 _canSeeCheckTime = 0f;
-                if (ai.AttackIfCanSeePlayer())
+                if (ai.SwitchToAttackIfCanSeePlayer())
                 {
                     return;
                 }
@@ -36,9 +36,15 @@ namespace WIAFN.AI
             }
         }
 
+        public void UpdateNPCBehaviour(AIController ai)
+        {
+            
+        }
+
         public void OnExit(AIController ai)
         {
 
         }
+
     }
 }

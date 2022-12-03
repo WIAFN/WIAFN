@@ -34,15 +34,24 @@ namespace WIAFN.AI
             _canSeeCheckTime = 0f;
         }
 
-        public void OnUpdate(AIController ai)
+        public void UpdateState(AIController ai)
         {
-            NPCControllerBase npc = ai.NPCController;
             _canSeeCheckTime += Time.deltaTime;
             if (_canSeeCheckTime > canSeeCheckDeltaTime)
             {
                 _canSeeCheckTime = 0f;
-                if (ai.AttackIfCanSeeCharacter(searchTarget)) { return; }
+                if (ai.SwitchToAttackIfCanSeeCharacter(searchTarget)) { return; }
             }
+
+            if (Time.realtimeSinceStartup - _searchStartTime > ai.searchDuration)
+            {
+                ai.ChangeState(new IdleState());
+            }
+        }
+
+        public void UpdateNPCBehaviour(AIController ai)
+        {
+            NPCControllerBase npc = ai.NPCController;
 
             // Wait and look around.
             if (!stopping && ai.IsStopped)
@@ -58,16 +67,12 @@ namespace WIAFN.AI
                 npc.MoveTo(lastSeenPosition + (Random.insideUnitSphere * ai.maxPatrolDistance));
                 stopping = false;
             }
-
-            if (Time.realtimeSinceStartup - _searchStartTime > ai.searchDuration)
-            {
-                ai.ChangeState(new IdleState());
-            }
         }
 
         public void OnExit(AIController ai)
         {
             ai.NPCController.StopMoving();
         }
+
     }
 }

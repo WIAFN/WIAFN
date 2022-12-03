@@ -7,7 +7,6 @@ using static UnityEngine.GraphicsBuffer;
 public class GunCamera : MonoBehaviour
 {
     public LayerMask gunLookLayerMask;
-    public GameObject pfBullet;
     public PlayerWeapon playerWeapon;
     private bool _isShooting = false;
 
@@ -21,7 +20,7 @@ public class GunCamera : MonoBehaviour
 
         if (_isShooting && hit.transform != null)
         {
-            playerWeapon.Shoot(hit.point, pfBullet);
+            playerWeapon.TryShoot(hit.point);
         }
 
         if (Input.GetMouseButtonDown(0))

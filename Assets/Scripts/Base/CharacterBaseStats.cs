@@ -25,6 +25,8 @@ public class CharacterBaseStats : MonoBehaviour
     public float dashCooldown = 5f;
     public float dashCost = 40f;
 
+    public Vector2 shootingErrorRateMinMax;
+
     [Header("Runtime Variables")]
     [HideInInspector]
     public float speedCoefficient = 1f;
@@ -50,6 +52,14 @@ public class CharacterBaseStats : MonoBehaviour
         get
         {
             return defaultDashSpeed * speedCoefficient;
+        }
+    }
+
+    public float MaxRunSpeed
+    {
+        get
+        {
+            return Math.Max(defaultSpeed, defaultSprintSpeed);
         }
     }
 }
