@@ -26,7 +26,10 @@ public class CharacterMovement : MonoBehaviour
     //Walking
     [Header("Speed")]
     private float _speed = 12f;
+
+    private Vector3 _velocity;
     private Vector3 _verticalVelocity;
+
     //Sprinting
     public float sprintMaxSpeedTime = 0.5f;
     private float sprintDuration = 0f;
@@ -65,6 +68,9 @@ public class CharacterMovement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        _controller.Move(_velocity);
+        _velocity = Vector3.zero;
+
         GravityCheck();
 
         CharacterCooldowns();
@@ -110,7 +116,8 @@ public class CharacterMovement : MonoBehaviour
     private void ApplyGravity()
     {
         _verticalVelocity.y += AppliedGravity.y * Time.deltaTime;
-        _controller.Move(_verticalVelocity * Time.deltaTime);
+        _velocity += _verticalVelocity * Time.deltaTime;
+        //_controller.Move(_verticalVelocity * Time.deltaTime);
     }
 
     private void CharacterActions()
@@ -153,7 +160,8 @@ public class CharacterMovement : MonoBehaviour
     public bool Move(Vector3 weightedDirection)
     {
         IsMoving = weightedDirection.x != 0f || weightedDirection.y != 0f || weightedDirection.z != 0f;
-        _controller.Move(_speed * Time.deltaTime * weightedDirection);
+        _velocity += _speed * weightedDirection * Time.deltaTime;
+        //_controller.Move(_speed * Time.deltaTime * weightedDirection);
         return IsMoving;
     }
 
@@ -237,7 +245,8 @@ public class CharacterMovement : MonoBehaviour
             //Debug.Log(percent + " - " + curvePercent);
             _dashCurrentSpeed = Mathf.Lerp(0, _baseStats.defaultDashSpeed, curvePercent);
             Vector3 move = new Vector3(_controller.velocity.x, 0f, _controller.velocity.z);
-            _controller.Move(_dashCurrentSpeed * Time.deltaTime * move.normalized);
+            //_controller.Move(_dashCurrentSpeed * Time.deltaTime * move.normalized);
+            _velocity += _dashCurrentSpeed * move.normalized * Time.deltaTime;
             _dashDuration -= Time.deltaTime;
         }
     }
