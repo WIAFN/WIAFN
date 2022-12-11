@@ -362,7 +362,7 @@ MonoBehaviour:
   dashDuration: 0.3
   dashCooldown: 5
   dashCost: 40
-  shootingErrorRateMinMax: {x: 0, y: 0}
+  shootingErrorRateMinMax: {x: 0, y: 0.1}
   speedCoefficient: 1
 --- !u!114 &5899578701194276610
 MonoBehaviour:

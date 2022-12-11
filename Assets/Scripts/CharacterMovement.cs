@@ -25,9 +25,10 @@ public class CharacterMovement : MonoBehaviour
 
     //Walking
     [Header("Speed")]
-    private float _speed = 12f;
+    private float _targetSpeed = 12f;
 
     private Vector3 _velocity;
+    private float _speed;
     private Vector3 _verticalVelocity;
 
     //Sprinting
@@ -68,6 +69,7 @@ public class CharacterMovement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        _speed = _controller.velocity.magnitude;
         _controller.Move(_velocity);
         _velocity = Vector3.zero;
 
@@ -78,7 +80,7 @@ public class CharacterMovement : MonoBehaviour
         CharacterActions();
         UpdateMovementSkills();
 
-        if (_speed != _baseStats.Speed && !IsDashing && !IsSprinting)
+        if (_targetSpeed != _baseStats.Speed && !IsDashing && !IsSprinting)
         {
             SlowDown();
         }
@@ -160,7 +162,7 @@ public class CharacterMovement : MonoBehaviour
     public bool Move(Vector3 weightedDirection)
     {
         IsMoving = weightedDirection.x != 0f || weightedDirection.y != 0f || weightedDirection.z != 0f;
-        _velocity += _speed * weightedDirection * Time.deltaTime;
+        _velocity += _targetSpeed * weightedDirection * Time.deltaTime;
         //_controller.Move(_speed * Time.deltaTime * weightedDirection);
         return IsMoving;
     }
@@ -256,7 +258,7 @@ public class CharacterMovement : MonoBehaviour
         if(_character.stamina > sprintStamina)
         {
             float percentage = Mathf.InverseLerp(0, sprintMaxSpeedTime, sprintDuration);
-            _speed = Mathf.SmoothStep(_speed,_baseStats.defaultSprintSpeed, percentage);
+            _targetSpeed = Mathf.SmoothStep(_targetSpeed,_baseStats.defaultSprintSpeed, percentage);
             _character.RemoveStamina(sprintStamina * Time.deltaTime);
             sprintDuration += Time.deltaTime;
         }
@@ -264,10 +266,10 @@ public class CharacterMovement : MonoBehaviour
 
     private void SlowDown()
     {
-        if (_speed > _baseStats.defaultSpeed)
+        if (_targetSpeed > _baseStats.defaultSpeed)
         {
             float percentage = Mathf.InverseLerp(0, sprintMaxSpeedTime, slowDownDuration);
-            _speed = Mathf.SmoothStep(_baseStats.defaultSprintSpeed, _baseStats.defaultSpeed, percentage);
+            _targetSpeed = Mathf.SmoothStep(_baseStats.defaultSprintSpeed, _baseStats.defaultSpeed, percentage);
             slowDownDuration += Time.deltaTime;
             slowDownDuration = Mathf.Clamp(slowDownDuration, 0, sprintMaxSpeedTime);
         }

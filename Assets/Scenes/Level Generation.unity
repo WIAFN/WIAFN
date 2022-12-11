@@ -802,6 +802,14 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 8367758595243342951, guid: 3a2ec70bea7363746994e7627bc40222, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8367758596106620280, guid: 3a2ec70bea7363746994e7627bc40222, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 8367758596179137115, guid: 3a2ec70bea7363746994e7627bc40222, type: 3}
       propertyPath: m_Name
       value: NewUI

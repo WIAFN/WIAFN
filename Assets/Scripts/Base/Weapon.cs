@@ -49,8 +49,7 @@ public abstract class Weapon : MonoBehaviour
         float shootingError = 0f;
         if (character != null)
         {
-            Vector2 shootingErrorMinMax = character.BaseStats.shootingErrorRateMinMax;
-            shootingError = RangeUtilities.map(_characterMove.Velocity.magnitude, 0f, character.BaseStats.MaxRunSpeed, shootingErrorMinMax.x, shootingErrorMinMax.y);
+            shootingError = character.GetFiringErrorRate();
         }
         shootAt = AddShootingError(shootAt, shootingError);
 
