@@ -146,7 +146,7 @@ public class ChunkMeshControllerSmooth : ChunkMeshController
 
     private Vector3 CalculateNormal(Vector3 pos1, Vector3 pos2, Vector3 pos3)
     {
-        Vector3 normal = Vector3.Cross(pos1 - pos2, pos3 - pos2);
+        Vector3 normal = Vector3.Cross(pos3 - pos2, pos1 - pos2);
 
         return Vector3.Normalize(normal);
     }

@@ -23,10 +23,12 @@ public abstract class ChunkMeshController : MonoBehaviour
     protected List<Vector3> vertices;
     protected List<int> triangles;
     protected List<Vector3> normals;
+    //protected List<Vector2> uvs;
 
     private void Awake()
     {
         mesh = new Mesh();
+        mesh.name = $"Chunk {ChunkAddress} Mesh";
         meshFilter = gameObject.AddComponent<MeshFilter>();
         meshFilter.mesh = mesh;
 
@@ -37,6 +39,7 @@ public abstract class ChunkMeshController : MonoBehaviour
         vertices = new List<Vector3>();
         triangles = new List<int>();
         normals = new List<Vector3>();
+        //uvs = new List<Vector2>();
     }
 
     public void SetLayer(int layer)
@@ -61,6 +64,7 @@ public abstract class ChunkMeshController : MonoBehaviour
         vertices.Clear();
         triangles.Clear();
         normals.Clear();
+        //uvs.Clear();
     }
 
     public void UpdateMesh()
@@ -73,6 +77,7 @@ public abstract class ChunkMeshController : MonoBehaviour
             mesh.triangles = triangles.ToArray();
             mesh.normals = normals.ToArray();
             //mesh.RecalculateNormals();
+            //mesh.uv = uvs.ToArray();
 
             GetComponent<MeshRenderer>().material = TerrainMaterial;
 
