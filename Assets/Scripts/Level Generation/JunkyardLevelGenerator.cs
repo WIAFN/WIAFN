@@ -67,15 +67,6 @@ public class JunkyardLevelGenerator : LevelGeneratorBase
             {
                 float noiseValue = GetNoiseValueAt(x, z);
 
-                if (noiseValue <= 0.5f)
-                {
-                    noiseValue = 0f;
-                }
-                else
-                {
-                    noiseValue = RangeUtilities.map(noiseValue, 0.5f, 1f, 0f, 1f);
-                }
-
                 int terrainHeight = Mathf.FloorToInt(noiseValue * height);
                 for (int y = 0; y < terrainHeight; y++)
                 {
@@ -169,7 +160,22 @@ public class JunkyardLevelGenerator : LevelGeneratorBase
 
     public float GetNoiseValueAt(int x, int z)
     {
-        return _terrainPerlin.Noise2D(x, z, 0.155f, 0.9f, 3);
+        float firstNoise = _terrainPerlin.Noise2D(x, z, 0.155f, 0.9f, 3);
+
+        if (firstNoise <= 0.5f)
+        {
+            firstNoise = 0f;
+        }
+        else
+        {
+            firstNoise = RangeUtilities.map(firstNoise, 0.5f, 1f, 0f, 1f);
+        }
+
+        float secondNoise = _terrainPerlin.Noise2D(x, z, 0.1f, 0.8f, 1);
+        secondNoise = Mathf.Max(secondNoise - 0.3f, 0f); ;
+        float result = Mathf.Clamp(firstNoise + 0.1f * secondNoise, 0f, 1f);
+
+        return result;
     }
 
     public Grid CurrentGrid => _currentGrid;

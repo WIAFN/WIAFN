@@ -141,6 +141,11 @@ public class ChunkMeshControllerSmooth : ChunkMeshController
 
         Vector3 position = posA + t * (posB - posA);
 
+        if (position.y <= 0f)
+        {
+            position.y -= 1f;
+        }
+
         vertices.Add(position);
     }
 

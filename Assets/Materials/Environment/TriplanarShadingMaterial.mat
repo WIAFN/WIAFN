@@ -42,8 +42,8 @@ Material:
     - _Ambient_Occlussion: 0.7
     - _BUILTIN_QueueControl: 0
     - _BUILTIN_QueueOffset: 0
-    - _Metallic: 0.7
-    - _Smoothness: 0.1
-    - _Tile_Num: 0.13
+    - _Metallic: 0.75
+    - _Smoothness: 0.06
+    - _Tile_Num: 0.1
     m_Colors: []
   m_BuildTextureStacks: []
