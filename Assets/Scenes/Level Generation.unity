@@ -259,6 +259,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 3688455548262271109, guid: f7892f497e1c7004092b7e2e36df8cc1, type: 3}
+      propertyPath: gunLookLayerMask.m_Bits
+      value: 2147483647
+      objectReference: {fileID: 0}
     - target: {fileID: 5899578700955753649, guid: f7892f497e1c7004092b7e2e36df8cc1, type: 3}
       propertyPath: m_ClearFlags
       value: 2
