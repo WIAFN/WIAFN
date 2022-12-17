@@ -128,7 +128,7 @@ GameObject:
   - component: {fileID: 5899578700955753651}
   m_Layer: 0
   m_Name: FirstPersonCamera
-  m_TagString: Untagged
+  m_TagString: MainCamera
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -231,7 +231,7 @@ GameObject:
   - component: {fileID: 5899578701194276610}
   m_Layer: 7
   m_Name: PlayerArm
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -453,9 +453,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   fireRate: 10
+  damage: 0
   characterMove: {fileID: 5899578701194276615}
   gunTip: {fileID: 1794825177412158981}
-  muzzleFlash: {fileID: 7813738118887920440, guid: bbace6dace5e7984fb564c64378b28dc, type: 3}
+  muzzleFlash: {fileID: 7813738118887920440, guid: 9afa50d68c6ab79418141f5a31b4ae06, type: 3}
 --- !u!114 &3688455548262271109
 MonoBehaviour:
   m_ObjectHideFlags: 0

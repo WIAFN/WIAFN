@@ -7,6 +7,10 @@ public class Character : MonoBehaviour
 {
     private CharacterMovement _characterMove;
     private CharacterBaseStats _baseStats;
+    private Weapon _weapon;
+
+    //Getter
+    public Weapon Weapon => _weapon;
 
     // Runtime Stats
     [HideInInspector]
@@ -22,6 +26,7 @@ public class Character : MonoBehaviour
     {
         _characterMove = GetComponent<CharacterMovement>();
         _baseStats = GetComponent<CharacterBaseStats>();
+        _weapon = GetComponentInChildren<Weapon>();
     }
 
     public void Start()
@@ -92,6 +97,34 @@ public class Character : MonoBehaviour
         get
         {
             return _baseStats;
+        }
+    }
+
+    public void GetUpgrade(string attributeName, float value)
+    {
+        switch (attributeName)
+        {
+            case "maxHealth":
+                BaseStats.maxHealth += value;
+                break;
+            case "maxStamina":
+                BaseStats.maxStamina += value;
+                break;
+            case "healthRegen":
+                BaseStats.healthRegen += value;
+                break;
+            case "staminaRegen":
+                BaseStats.staminaRegen += value;
+                break;
+            case "speedCoefficient":
+                BaseStats.speedCoefficient += value;
+                break;
+            case "Damage":
+                Weapon.damage += value;
+                break;
+            case "FireRate":
+                Weapon.fireRate += value;
+                break;
         }
     }
 

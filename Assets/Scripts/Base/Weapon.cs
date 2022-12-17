@@ -1,10 +1,10 @@
 using UnityEngine;
 
-
 [RequireComponent(typeof(Transform))]
 public abstract class Weapon : MonoBehaviour
 {
     public float fireRate;
+    public float damage;
     public CharacterMovement characterMove;
     public Transform gunTip;
     public ParticleSystem muzzleFlash;
@@ -33,8 +33,9 @@ public abstract class Weapon : MonoBehaviour
         }
         Vector3 aimVector = (shootAt - gunTip.position).normalized;
         GameObject projectile = Instantiate(projectilePrefab, gunTip.position, Quaternion.LookRotation(aimVector, Vector3.up));
-        Projectile a = projectile.GetComponent<Projectile>();
-        a.SetInitialVelocity(characterMove.VerticalVelocity);
+        Projectile proj = projectile.GetComponent<Projectile>();
+        proj.SetInitialVelocity(characterMove.VerticalVelocity);
+        proj.SetDamage(damage);
         //Gun Flare
         muzzleFlash.Play();
         Delay = 0;
