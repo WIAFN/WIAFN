@@ -58,10 +58,10 @@ public abstract class Weapon : MonoBehaviour
         GameObject projectileGameObject = Instantiate(projectilePrefab, gunTip.position, Quaternion.LookRotation(aimVector, Vector3.up));
         Projectile projectile = projectileGameObject.GetComponent<Projectile>();
 
-        if (_characterMove != null)
-        {
-            projectile.SetInitialVelocity(_characterMove.Velocity);
-        }
+        //if (_characterMove != null)
+        //{
+        //    projectile.SetInitialVelocity(_characterMove.Velocity);
+        //}
 
         //Gun Flare
         muzzleFlash.Play();
