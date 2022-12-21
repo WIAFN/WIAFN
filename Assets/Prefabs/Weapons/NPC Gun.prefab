@@ -126,7 +126,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 69e4d9ff8e54ae9428c97891de7608e3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  characterMove: {fileID: 0}
+  character: {fileID: 0}
   fireRate: 1
   gunTip: {fileID: 122854274341654795}
   muzzleFlash: {fileID: 7813738118887920440, guid: aa4113ced9d865c4b9c8d69eebc46ac3, type: 3}
