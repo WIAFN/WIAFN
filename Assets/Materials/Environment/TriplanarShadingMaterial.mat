@@ -48,8 +48,10 @@ Material:
     - _Ambient_Occlussion: 0.7
     - _BUILTIN_QueueControl: 0
     - _BUILTIN_QueueOffset: 0
-    - _Metallic: 0.75
-    - _Smoothness: 0.06
+    - _Metallic: 0.7
+    - _Orange_Perlin_Scale: 0.048
+    - _Second_Perlin_Scale: 0.04
+    - _Smoothness: 0
     - _Tile_Num: 0.08
     m_Colors: []
   m_BuildTextureStacks: []

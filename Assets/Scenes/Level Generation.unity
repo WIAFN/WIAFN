@@ -1014,18 +1014,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 966865597, guid: 88026c5f6b34abc4c9a7235dd7ed02d1, type: 3}
-      propertyPath: m_Enabled
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 157185656571648469, guid: 88026c5f6b34abc4c9a7235dd7ed02d1, type: 3}
-      propertyPath: resolution.y
-      value: 300
-      objectReference: {fileID: 0}
-    - target: {fileID: 157185656571648470, guid: 88026c5f6b34abc4c9a7235dd7ed02d1, type: 3}
-      propertyPath: terrainMaterial
-      value: 
-      objectReference: {fileID: 2100000, guid: 534f418d4241ad143b8b6ef70e3059e5, type: 2}
     - target: {fileID: 157185657184755021, guid: 88026c5f6b34abc4c9a7235dd7ed02d1, type: 3}
       propertyPath: m_Name
       value: Level 0
