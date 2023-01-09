@@ -37,13 +37,19 @@ Material:
         m_Texture: {fileID: 2800000, guid: f7a82d7300efbdb4daaf27d74cfd2c3b, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
+    - _Albedo_2:
+        m_Texture: {fileID: 2800000, guid: c14b6e3a38a79664ebfa27012fd4440a, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
+    - _Albedo_1_Tile_Num: 0.08
+    - _Albedo_2_Tile_Num: 0.08
     - _Ambient_Occlussion: 0.7
     - _BUILTIN_QueueControl: 0
     - _BUILTIN_QueueOffset: 0
     - _Metallic: 0.75
     - _Smoothness: 0.06
-    - _Tile_Num: 0.1
+    - _Tile_Num: 0.08
     m_Colors: []
   m_BuildTextureStacks: []
