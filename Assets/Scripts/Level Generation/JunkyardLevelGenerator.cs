@@ -70,7 +70,16 @@ public class JunkyardLevelGenerator : LevelGeneratorBase
                 int terrainHeight = Mathf.FloorToInt(noiseValue * height);
                 for (int y = 0; y < terrainHeight; y++)
                 {
-                    grid.GetCell(x, y, z).SetValue(noiseValue).SetFilled(true);
+                    //grid.GetCell(x, y, z).SetValue(noiseValue).SetFilled(true);
+                    float heightValue = (height - y) / height;
+                    grid.GetCell(x, y, z).SetValue(RangeUtilities.map(heightValue, 0f, 1f, 0.5f, 1f));
+                }
+
+                float heightDiff = height - terrainHeight;
+                for (int y = 0; y < heightDiff; y++)
+                {
+                    float heightValue = (heightDiff - y) / heightDiff;
+                    grid.GetCell(x, terrainHeight + y, z).SetValue(RangeUtilities.map(heightValue, 0f, 1f, 0f, 0.5f));
                 }
             }
         }

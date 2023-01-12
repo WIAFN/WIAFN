@@ -43,8 +43,8 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
-    - _Albedo_1_Tile_Num: 0.08
-    - _Albedo_2_Tile_Num: 0.08
+    - _Albedo_1_Tile_Num: 0.04
+    - _Albedo_2_Tile_Num: 0.04
     - _Ambient_Occlussion: 0.7
     - _BUILTIN_QueueControl: 0
     - _BUILTIN_QueueOffset: 0

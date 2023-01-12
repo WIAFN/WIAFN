@@ -94,7 +94,6 @@ public abstract class ChunkMeshController : MonoBehaviour
 
             if (zeroCount < 2)
             {
-                // TODO - Safa: [Physics.PhysX] cleaning the mesh failed çöz. 3 0 16ta oluyor mesela.
                 meshCollider.sharedMesh = mesh;
                 meshCollider.enabled = true;
             }
