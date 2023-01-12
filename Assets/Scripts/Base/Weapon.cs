@@ -1,6 +1,5 @@
 using UnityEngine;
 
-
 [RequireComponent(typeof(Transform))]
 public abstract class Weapon : MonoBehaviour
 {
@@ -9,6 +8,8 @@ public abstract class Weapon : MonoBehaviour
     private CharacterMovement _characterMove;
 
     public float fireRate;
+    public float damage;
+    public CharacterMovement characterMove;
     public Transform gunTip;
     public ParticleSystem muzzleFlash;
     public float Delay { get; protected set; }

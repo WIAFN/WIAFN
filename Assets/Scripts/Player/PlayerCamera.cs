@@ -1,12 +1,14 @@
-using System.Collections;
-using System.Collections.Generic;
+using UnityEditor.PackageManager;
+using UnityEditor.PackageManager;
 using UnityEngine;
 
-public class GunCamera : MonoBehaviour
+public class PlayerCamera : MonoBehaviour
 {
     public LayerMask gunLookLayerMask;
     public PlayerWeapon playerWeapon;
     private bool _isShooting = false;
+
+    public static event InteractHandler OnInteract;
 
 
     // Update is called once per frame
@@ -30,6 +32,14 @@ public class GunCamera : MonoBehaviour
             _isShooting = false;
         }
 
+        if (Input.GetKeyDown(KeyCode.E))
+        {
+            if(OnInteract != null)
+            {
+                OnInteract();
+            }
+        }
+
     }
 
     private void RotateGun(RaycastHit hit)
@@ -41,4 +51,6 @@ public class GunCamera : MonoBehaviour
         }
         playerWeapon.transform.localRotation = Quaternion.LookRotation(gunLocalPos - playerWeapon.transform.localPosition);
     }
+
+    public delegate void InteractHandler();
 }
