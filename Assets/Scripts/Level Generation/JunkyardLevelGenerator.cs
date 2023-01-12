@@ -48,11 +48,11 @@ public class JunkyardLevelGenerator : LevelGeneratorBase
     public void GenerateLevel()
     {
         GenerateGrid();
-        //GenerateItems();
+        GenerateItems();
 
         if (OnGenerationCompleted != null)
         {
-            //OnGenerationCompleted();
+            OnGenerationCompleted();
         }
     }
 
