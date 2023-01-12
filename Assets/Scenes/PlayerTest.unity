@@ -134,6 +134,10 @@ PrefabInstance:
       propertyPath: damage
       value: 5
       objectReference: {fileID: 0}
+    - target: {fileID: 4338300248111827085, guid: 2afcc91ed22d2be4d8863a293e012a7d, type: 3}
+      propertyPath: projectilePrefab
+      value: 
+      objectReference: {fileID: 2206067794516419196, guid: ef0cfbfe4ad97014d91137ec1452d82d, type: 3}
     - target: {fileID: 5899578701194276614, guid: 2afcc91ed22d2be4d8863a293e012a7d, type: 3}
       propertyPath: m_RootOrder
       value: 6

@@ -1,7 +1,4 @@
 UserSettings*
-Assets/Models/
-Assets/Sprites/
-Assets/Textures/
 
 # This .gitignore file should be placed at the root of your Unity project directory
 #
@@ -62,3 +59,7 @@ sysinfo.txt
 
 # Crashlytics generated file
 crashlytics-build.properties
+
+Assets/Models/*
+Assets/Sprites/*
+Assets/Textures/*

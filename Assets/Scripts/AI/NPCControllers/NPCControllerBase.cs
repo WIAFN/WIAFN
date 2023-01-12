@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UIElements;
+using WIAFN.AI;
 
 [RequireComponent(typeof(Character))]
 public abstract class NPCControllerBase : MonoBehaviour
@@ -12,14 +13,16 @@ public abstract class NPCControllerBase : MonoBehaviour
     public Transform head;
     public float eyeHeight;
     public float angularSpeed;
-    private const float headAngleLimit = 60f;
+    private const float headAngleLimit = 100f;
 
     protected Character followCharacter;
 
     private float _targetCharacterPositionUpdateDelta;
     private const float targetPosUpdateInterval = 0f;
 
-    private Character _lookAtCharacter;
+    private LookAtOrder _lookAtOrder;
+
+    public virtual Vector3 CurrentTargetPosition { get; }
 
     // TODO - Safa: Maybe we should move all constants to a single file.
     protected const float reachCheckSqr = 7f;
@@ -34,6 +37,8 @@ public abstract class NPCControllerBase : MonoBehaviour
     {
         character = GetComponent<Character>();
         _targetCharacterPositionUpdateDelta = 0f;
+
+        ClearLookAt();
     }
 
     // Update is called once per frame
@@ -53,11 +58,7 @@ public abstract class NPCControllerBase : MonoBehaviour
             _targetCharacterPositionUpdateDelta = 0f;
         }
 
-        if (LookAtSpecified)
-        {
-            LookAt(_lookAtCharacter.transform.position, true);
-        }
-
+        UpdateLookAt();
     }
 
     public void RotateBodyTowardsPosition(Vector3 facePosition)
@@ -77,25 +78,38 @@ public abstract class NPCControllerBase : MonoBehaviour
 
         if (closestPoint == Vector3.zero) return;
 
-        transform.forward = closestPoint;
+        Vector3 parentForward;
+        if (transform.parent != null)
+        {
+            parentForward = transform.parent.forward;
+        }
+        else
+        {
+            parentForward = Vector3.forward;
+        }
+
+        transform.localRotation = Quaternion.Lerp(transform.localRotation, Quaternion.FromToRotation(parentForward, closestPoint), Time.deltaTime * angularSpeed);
+        //transform.forward = closestPoint;
     }
 
-    public void LookAt(Vector3 lookAtPosition, bool addEyeHeight = false)
+    private void UpdateLookAt()
     {
         if (head == null) return;
-
         Transform toRotate = head;
 
         Vector3 forward = toRotate.parent.forward;
 
-        if (toRotate.position == lookAtPosition)
+        if (!LookAtSpecified)
         {
+            toRotate.forward = forward;
             return;
         }
 
-        if (addEyeHeight)
+        Vector3 lookAtPosition = _lookAtOrder.Position;
+
+        if (toRotate.position == lookAtPosition)
         {
-            lookAtPosition += Vector3.up * eyeHeight;
+            return;
         }
 
         Quaternion newRotation = Quaternion.FromToRotation(forward, lookAtPosition - toRotate.position);
@@ -106,14 +120,31 @@ public abstract class NPCControllerBase : MonoBehaviour
         toRotate.localRotation = newRotation;
     }
 
-    public void LookAt(Character lookAt)
+    public void LookAt(Vector3 lookAtPosition, bool addEyeHeight = false)
     {
-        _lookAtCharacter = lookAt;
+        float additionalHeight = 0f;
+        if (addEyeHeight)
+        {
+            additionalHeight += eyeHeight;
+        }
+
+        _lookAtOrder = new LookAtOrder(lookAtPosition, additionalHeight);
+    }
+
+    public void LookAt(Character lookAt, bool addEyeHeight = false)
+    {
+        float additionalHeight = 0f;
+        if (addEyeHeight)
+        {
+            additionalHeight += eyeHeight;
+        }
+
+        _lookAtOrder = new LookAtOrder(lookAt, additionalHeight);
     }
 
     public void ClearLookAt()
     {
-        _lookAtCharacter = null;
+        _lookAtOrder = null;
     }
 
     public abstract bool IsStopped();
@@ -157,6 +188,7 @@ public abstract class NPCControllerBase : MonoBehaviour
     }
 
     public bool IsFollowing => followCharacter != null;
-    public bool LookAtSpecified => _lookAtCharacter != null;
-    public Character LookAtCharacter => _lookAtCharacter;
+
+    public bool LookAtSpecified => _lookAtOrder != null;
+    public LookAtOrder LookAtOrder => _lookAtOrder;
 }
