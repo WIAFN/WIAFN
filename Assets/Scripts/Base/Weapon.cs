@@ -63,15 +63,13 @@ public abstract class Weapon : MonoBehaviour
         //{
         //    projectile.SetInitialVelocity(_characterMove.Velocity);
         //}
+        projectile.SetDamage(damage);
 
         //Gun Flare
         muzzleFlash.Play();
         Delay = 0;
-        
-        if (OnShot != null)
-        {
-            OnShot(projectile);
-        }
+
+        OnShot?.Invoke(projectile);
 
         return true;
     }

@@ -395,7 +395,7 @@ MonoBehaviour:
   dashDuration: 0.3
   dashCooldown: 5
   dashCost: 40
-  shootingErrorRateMinMax: {x: 0, y: 0.1}
+  shootingErrorRateMinMax: {x: 0.03, y: 0.1}
   speedCoefficient: 1
 --- !u!114 &5899578701194276610
 MonoBehaviour:
@@ -457,76 +457,7 @@ Transform:
   m_Father: {fileID: 5899578701194276614}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &8225305876698773773
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1421569816156143705}
-  - component: {fileID: 4338300248111827085}
-  - component: {fileID: 3688455548262271109}
-  m_Layer: 0
-  m_Name: Hand
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &1421569816156143705
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8225305876698773773}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children:
-  - {fileID: 1878024305987865872}
-  m_Father: {fileID: 5899578700955753650}
-  m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &4338300248111827085
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8225305876698773773}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2dac274abb2cb414d9f5830c13c48ea4, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  fireRate: 10
-  damage: 0
-  characterMove: {fileID: 5899578701194276615}
-  gunTip: {fileID: 1794825177412158981}
-  muzzleFlash: {fileID: 7813738118887920440, guid: 9afa50d68c6ab79418141f5a31b4ae06, type: 3}
---- !u!114 &3688455548262271109
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8225305876698773773}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b4f23c412f15c894fb01f458bcd9d728, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  gunLookLayerMask:
-    serializedVersion: 2
-    m_Bits: 1856
-  pfBullet: {fileID: 2206067794516419196, guid: ef0cfbfe4ad97014d91137ec1452d82d, type: 3}
-  playerWeapon: {fileID: 4338300248111827085}
-  fpsCam: {fileID: 5899578700955753649}
---- !u!1001 &2133206878397246203
+--- !u!1001 &91602480
 PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
@@ -642,9 +573,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   character: {fileID: 0}
-  fireRate: 5
+  fireRate: 3
+  damage: 15
+  characterMove: {fileID: 5899578701194276615}
   gunTip: {fileID: 1536409837}
-  muzzleFlash: {fileID: 7813738118887920440, guid: aa4113ced9d865c4b9c8d69eebc46ac3, type: 3}
+  muzzleFlash: {fileID: 7813738118887920440, guid: 9afa50d68c6ab79418141f5a31b4ae06, type: 3}
   projectilePrefab: {fileID: 2206067794516419196, guid: ef0cfbfe4ad97014d91137ec1452d82d, type: 3}
 --- !u!114 &321913326
 MonoBehaviour:

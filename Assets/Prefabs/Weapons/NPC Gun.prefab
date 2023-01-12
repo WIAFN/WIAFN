@@ -56,11 +56,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: fcc6227bc6b41b44eb6b8e56622f1379, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0.43
+      value: 0.4300003
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: fcc6227bc6b41b44eb6b8e56622f1379, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -0.31000018
+      value: -0.754
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: fcc6227bc6b41b44eb6b8e56622f1379, type: 3}
       propertyPath: m_LocalPosition.z
@@ -126,8 +126,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 69e4d9ff8e54ae9428c97891de7608e3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  character: {fileID: 0}
+  fireRate: 3
+  damage: 5
   characterMove: {fileID: 0}
-  fireRate: 1
   gunTip: {fileID: 122854274341654795}
-  muzzleFlash: {fileID: 7813738118887920440, guid: aa4113ced9d865c4b9c8d69eebc46ac3, type: 3}
+  muzzleFlash: {fileID: 7813738118887920440, guid: 9afa50d68c6ab79418141f5a31b4ae06, type: 3}
   projectilePrefab: {fileID: 2206067794516419196, guid: ef0cfbfe4ad97014d91137ec1452d82d, type: 3}
