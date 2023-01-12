@@ -8,4 +8,9 @@ namespace WIAFN.Constants
     {
         public static string Cross = "Cross";
     }
+
+    public class WIAFNAnimatorParams
+    {
+        public static string Attacked = "Attacked";
+    }
 }

@@ -34,10 +34,10 @@ public class CavedLevelGridGenerator : MonoBehaviour
 
                 for (int y = 3; y > 0; y--)
                 {
-                    grid.GetCell(x, terrainHeight - y, z).SetValue(terrainPerlin.Noise3D(x, -y, z, 0.15f, 0.8f, 2)).SetFilled(true);
+                    grid.GetCell(x, terrainHeight - y, z).SetValue(terrainPerlin.Noise3D(x, -y, z, 0.15f, 0.8f, 2))/*.SetFilled(true)*/;
                 }
 
-                grid.GetCell(x, terrainHeight, z).SetValue(noiseValue).SetFilled(true);
+                grid.GetCell(x, terrainHeight, z).SetValue(noiseValue)/*.SetFilled(true)*/;
 
                 for (int y = -1; y > -3; y--)
                 {
@@ -55,14 +55,14 @@ public class CavedLevelGridGenerator : MonoBehaviour
                 {
                     float noiseValue = undergroundPerlin.Noise3D(x, y, z, 0.7f, 1, 1);
                     GridCell cell = grid.GetCell(x, y, z);
-                    if (cell.IsEmpty)
+                    if (cell.Empty)
                     {
                         cell.SetValue(noiseValue);
 
-                        if (noiseValue > 0.5f)
-                        {
-                            cell.SetFilled(true);
-                        }
+                        //if (noiseValue > 0.5f)
+                        //{
+                        //    cell.SetFilled(true);
+                        //}
                     }
                 }
             }

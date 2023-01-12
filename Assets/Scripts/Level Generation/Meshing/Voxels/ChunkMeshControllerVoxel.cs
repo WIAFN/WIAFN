@@ -19,7 +19,7 @@ public class ChunkMeshControllerVoxel : ChunkMeshController
                 {
                     Vector3Int address = new Vector3Int(x, y, z);
 
-                    if (grid.GetCell(address).IsEmpty)
+                    if (grid.GetCell(address).Empty)
                     {
                         continue;
                     }
@@ -28,7 +28,7 @@ public class ChunkMeshControllerVoxel : ChunkMeshController
 
                     for (int p = 0; p < 6; p++)
                     {
-                        if (grid.GetNeighbour(address, VoxelData.faceChecks[p]).IsEmpty)
+                        if (grid.GetNeighbour(address, VoxelData.faceChecks[p]).Empty)
                         {
                             vertices.Add(pos + Vector3.Scale(VoxelData.voxelVerts[VoxelData.voxelTris[p, 0]], gridCellSize));
                             vertices.Add(pos + Vector3.Scale(VoxelData.voxelVerts[VoxelData.voxelTris[p, 1]], gridCellSize));

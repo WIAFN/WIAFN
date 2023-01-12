@@ -243,7 +243,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   levelSizeInChunks: {x: 20, y: 5, z: 20}
-  terrainMaterial: {fileID: 2100000, guid: 955dcfd5fbc188f4faf158fe4367c067, type: 2}
+  terrainMaterial: {fileID: 2100000, guid: 534f418d4241ad143b8b6ef70e3059e5, type: 2}
   layerOfMeshes: 6
 --- !u!114 &157185656571648469
 MonoBehaviour:
@@ -258,7 +258,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   levelSizeInMeters: {x: 600, y: 200, z: 600}
-  resolution: {x: 400, y: 50}
+  resolution: {x: 400, y: 300}
   itemCount: 1500
   levelObjects:
   - levelObject: {fileID: 7712170372860535441, guid: 14b93b07eff764245ab9790eea842e88, type: 3}

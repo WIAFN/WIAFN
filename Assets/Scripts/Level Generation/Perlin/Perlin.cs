@@ -24,6 +24,7 @@ public class Perlin
         return Noise2D(x, y, 1f, 1f, 1);
     }
 
+    // Returns value between 0 and 1.
     public float Noise2D(float x, float y, float frequency, float persistence, int octave)
     {
         float amplitude = 1f;

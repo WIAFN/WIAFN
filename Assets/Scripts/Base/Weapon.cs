@@ -1,5 +1,4 @@
 using UnityEngine;
-using UnityEngine.TextCore.Text;
 
 
 [RequireComponent(typeof(Transform))]
@@ -17,6 +16,8 @@ public abstract class Weapon : MonoBehaviour
     public GameObject projectilePrefab;
 
     private float _firePeriod { get { return (1f / fireRate); } }
+
+    public event ShotHandler OnShot; 
 
     private void Start()
     {
@@ -49,23 +50,27 @@ public abstract class Weapon : MonoBehaviour
         float shootingError = 0f;
         if (character != null)
         {
-            Vector2 shootingErrorMinMax = character.BaseStats.shootingErrorRateMinMax;
-            shootingError = RangeUtilities.map(_characterMove.Velocity.magnitude, 0f, character.BaseStats.MaxRunSpeed, shootingErrorMinMax.x, shootingErrorMinMax.y);
+            shootingError = character.GetFiringErrorRate();
         }
         shootAt = AddShootingError(shootAt, shootingError);
 
         Vector3 aimVector = (shootAt - gunTip.position).normalized;
-        GameObject projectile = Instantiate(projectilePrefab, gunTip.position, Quaternion.LookRotation(aimVector, Vector3.up));
-        Projectile a = projectile.GetComponent<Projectile>();
+        GameObject projectileGameObject = Instantiate(projectilePrefab, gunTip.position, Quaternion.LookRotation(aimVector, Vector3.up));
+        Projectile projectile = projectileGameObject.GetComponent<Projectile>();
 
-        if (_characterMove != null)
-        {
-            a.SetInitialVelocity(_characterMove.VerticalVelocity);
-        }
+        //if (_characterMove != null)
+        //{
+        //    projectile.SetInitialVelocity(_characterMove.Velocity);
+        //}
 
         //Gun Flare
         muzzleFlash.Play();
         Delay = 0;
+        
+        if (OnShot != null)
+        {
+            OnShot(projectile);
+        }
 
         return true;
     }
@@ -75,4 +80,6 @@ public abstract class Weapon : MonoBehaviour
         float distance = Vector3.Distance(shootAt, transform.position);
         return shootAt + Random.insideUnitSphere * distance * errorRateToDistance;
     }
+
+    public delegate void ShotHandler(Projectile projectile);
 }

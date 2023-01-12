@@ -87,6 +87,13 @@ public class Character : MonoBehaviour
         }
     }
 
+    public float GetFiringErrorRate()
+    {
+        Vector2 shootingErrorMinMax = BaseStats.shootingErrorRateMinMax;
+        float shootingError = RangeUtilities.map(_characterMove.Speed, 0f, BaseStats.MaxRunSpeed, shootingErrorMinMax.x, shootingErrorMinMax.y);
+        return shootingError;
+    }
+
     public CharacterBaseStats BaseStats
     {
         get
@@ -94,6 +101,8 @@ public class Character : MonoBehaviour
             return _baseStats;
         }
     }
+
+    public CharacterMovement CharacterMovement => _characterMove;
 
     public delegate void DamageTakeHandler(float damageTaken);
     public delegate void VoidHandler();

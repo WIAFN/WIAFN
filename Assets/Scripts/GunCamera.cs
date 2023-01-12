@@ -1,8 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
-using UnityEditor.PackageManager;
 using UnityEngine;
-using static UnityEngine.GraphicsBuffer;
 
 public class GunCamera : MonoBehaviour
 {
@@ -36,11 +34,11 @@ public class GunCamera : MonoBehaviour
 
     private void RotateGun(RaycastHit hit)
     {
-        Vector3 gunLocalPos = transform.parent.InverseTransformPoint(hit.point);
-        if (hit.transform == null || transform.rotation.y < -15f)
+        Vector3 gunLocalPos = playerWeapon.transform.parent.InverseTransformPoint(hit.point);
+        if (hit.transform == null || playerWeapon.transform.rotation.y < -15f)
         {
             gunLocalPos = Quaternion.Euler(new Vector3(0f, -30f, -90f)) * Vector3.forward;
         }
-        transform.localRotation = Quaternion.LookRotation(gunLocalPos - transform.localPosition);
+        playerWeapon.transform.localRotation = Quaternion.LookRotation(gunLocalPos - playerWeapon.transform.localPosition);
     }
 }

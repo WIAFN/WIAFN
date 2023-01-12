@@ -23,6 +23,7 @@ public abstract class ChunkMeshController : MonoBehaviour
     protected List<Vector3> vertices;
     protected List<int> triangles;
     protected List<Vector3> normals;
+    //protected List<Vector2> uvs;
 
     private void Awake()
     {
@@ -37,6 +38,12 @@ public abstract class ChunkMeshController : MonoBehaviour
         vertices = new List<Vector3>();
         triangles = new List<int>();
         normals = new List<Vector3>();
+        //uvs = new List<Vector2>();
+    }
+
+    private void Start()
+    {
+        mesh.name = $"Chunk {ChunkAddress} Mesh";
     }
 
     public void SetLayer(int layer)
@@ -61,6 +68,7 @@ public abstract class ChunkMeshController : MonoBehaviour
         vertices.Clear();
         triangles.Clear();
         normals.Clear();
+        //uvs.Clear();
     }
 
     public void UpdateMesh()
@@ -73,13 +81,19 @@ public abstract class ChunkMeshController : MonoBehaviour
             mesh.triangles = triangles.ToArray();
             mesh.normals = normals.ToArray();
             //mesh.RecalculateNormals();
+            //mesh.uv = uvs.ToArray();
 
             GetComponent<MeshRenderer>().material = TerrainMaterial;
 
             //Debug.Log(gameObject.name);
-            if (vertices.Count > 30)
+            Vector3 size = mesh.bounds.size;
+            int zeroCount = 0;
+            zeroCount += (size.x == 0) ? 1: 0;
+            zeroCount += (size.y == 0) ? 1: 0;
+            zeroCount += (size.z == 0) ? 1: 0;
+
+            if (zeroCount < 2)
             {
-                // TODO - Safa: [Physics.PhysX] cleaning the mesh failed çöz. 3 0 16ta oluyor mesela.
                 meshCollider.sharedMesh = mesh;
                 meshCollider.enabled = true;
             }

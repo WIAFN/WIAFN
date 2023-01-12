@@ -67,19 +67,19 @@ public class JunkyardLevelGenerator : LevelGeneratorBase
             {
                 float noiseValue = GetNoiseValueAt(x, z);
 
-                if (noiseValue <= 0.5f)
-                {
-                    noiseValue = 0f;
-                }
-                else
-                {
-                    noiseValue = RangeUtilities.map(noiseValue, 0.5f, 1f, 0f, 1f);
-                }
-
                 int terrainHeight = Mathf.FloorToInt(noiseValue * height);
                 for (int y = 0; y < terrainHeight; y++)
                 {
-                    grid.GetCell(x, y, z).SetValue(noiseValue).SetFilled(true);
+                    //grid.GetCell(x, y, z).SetValue(noiseValue).SetFilled(true);
+                    float heightValue = (height - y) / height;
+                    grid.GetCell(x, y, z).SetValue(RangeUtilities.map(heightValue, 0f, 1f, 0.5f, 1f));
+                }
+
+                float heightDiff = height - terrainHeight;
+                for (int y = 0; y < heightDiff; y++)
+                {
+                    float heightValue = (heightDiff - y) / heightDiff;
+                    grid.GetCell(x, terrainHeight + y, z).SetValue(RangeUtilities.map(heightValue, 0f, 1f, 0f, 0.5f));
                 }
             }
         }
@@ -111,7 +111,7 @@ public class JunkyardLevelGenerator : LevelGeneratorBase
     {
         float x = Random.Range(-HalfLevelSizeInMeters.x, HalfLevelSizeInMeters.x);
         float z = Random.Range(-HalfLevelSizeInMeters.z, HalfLevelSizeInMeters.z);
-        float y = Random.Range(GetJunkHeightAtWorldPos(x, z), levelSizeInMeters.y);
+        float y = Random.Range(GetPileHeightAtWorldPos(x, z), levelSizeInMeters.y);
         return new Vector3(x, y, z);
     }
 
@@ -146,12 +146,12 @@ public class JunkyardLevelGenerator : LevelGeneratorBase
         return levelObjects[currIndex].levelObject;
     }
 
-    public float GetJunkHeightAtWorldPos(float x, float z)
+    public float GetPileHeightAtWorldPos(float x, float z)
     {
         return GetNoiseValueFromWorldPos(x, z) * levelSizeInMeters.y;
     }
 
-    public float GetJunkHeight(int x, int z)
+    public float GetPileHeight(int x, int z)
     {
         return GetNoiseValueAt(x, z) * levelSizeInMeters.y;
     }
@@ -169,7 +169,20 @@ public class JunkyardLevelGenerator : LevelGeneratorBase
 
     public float GetNoiseValueAt(int x, int z)
     {
-        return _terrainPerlin.Noise2D(x, z, 0.155f, 0.9f, 3);
+        float firstNoise = _terrainPerlin.Noise2D(x, z, 0.11f, 0.9f, 2);
+        firstNoise -= 0.5f;
+        firstNoise = Mathf.Clamp01(firstNoise);
+        firstNoise *= 2f;
+
+        //firstNoise = Mathf.Sin(RangeUtilities.map(firstNoise, 0f, 1f, 0f, Mathf.PI / 2f));
+        firstNoise = Mathf.Sin(firstNoise * Mathf.PI / 2f);
+
+        //float result = Mathf.Clamp(firstNoise, 0f, 1f);
+        float secondNoise = _terrainPerlin.Noise2D(x, z, 0.1f, 0.8f, 1);
+        secondNoise = Mathf.Max(secondNoise - 0.3f, 0f); ;
+        float result = Mathf.Clamp01(firstNoise + 0.1f * secondNoise);
+
+        return result;
     }
 
     public Grid CurrentGrid => _currentGrid;
