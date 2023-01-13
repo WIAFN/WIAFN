@@ -104,6 +104,7 @@ public class Upgrade : MonoBehaviour
         if (CanCollect())
         {
             _animator.SetTrigger("PickUp");
+            information.gameObject.SetActive(false);
             Debug.Log("Picked up " + gameObject.name + " is picked up: " + _pickedUp);
             foreach (KeyValuePair<string, int> effect in Effects)
             {

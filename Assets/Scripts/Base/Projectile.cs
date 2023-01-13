@@ -86,8 +86,9 @@ public abstract class Projectile : MonoBehaviour
         GameObject ip = Instantiate(
             impactHole, 
             hit.point + (hit.normal * .01f), 
-            Quaternion.LookRotation(Vector3.up, hit.normal)
+            Quaternion.LookRotation(hit.normal)
             );
+        ip.transform.parent = hit.transform;
         
         Destroy(ip, 10f);
 
@@ -97,6 +98,7 @@ public abstract class Projectile : MonoBehaviour
         {
             hitCharacter.RemoveHealth(damage);
         }
+
         //Destroy self if cannot penetrate anymore
         if (penetrationValue < 0)
         {
