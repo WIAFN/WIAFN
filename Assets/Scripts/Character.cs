@@ -40,12 +40,7 @@ public class Character : MonoBehaviour
     {
         if (health <= 0)
         {
-            if (OnDied != null)
-            {
-                OnDied();
-            }
-
-            Destroy(gameObject);
+            Die();
         }
 
         if (_characterMove != null)
@@ -63,6 +58,18 @@ public class Character : MonoBehaviour
         {
             RegenHealth();
         }
+    }
+
+    private void Die()
+    {
+        if (OnDied != null)
+        {
+            OnDied();
+        }
+
+        GameManager.instance.CharacterDied(this);
+
+        Destroy(gameObject);
     }
 
     public void RegenStamina()

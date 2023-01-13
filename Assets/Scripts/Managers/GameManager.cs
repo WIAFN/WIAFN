@@ -8,6 +8,8 @@ public class GameManager : MonoBehaviour
 
     public Character mainPlayer;
 
+    public event CharacterDelegate OnCharacterDied;
+
     private void Awake()
     {
         if (instance == null)
@@ -31,4 +33,12 @@ public class GameManager : MonoBehaviour
     {
         
     }
+
+    // TODO - Safa: We should track characters using their OnDied event.
+    public void CharacterDied(Character character)
+    {
+        OnCharacterDied?.Invoke(character);
+    }
+
+    public delegate void CharacterDelegate(Character character);
 }

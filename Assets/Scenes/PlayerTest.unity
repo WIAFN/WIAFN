@@ -952,6 +952,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Dummy EnemyWithHead
       objectReference: {fileID: 0}
+    - target: {fileID: 3293409358827904580, guid: 33a3ba6d5fbfe8349b5548c83f5a40f9, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 3293409358827904591, guid: 33a3ba6d5fbfe8349b5548c83f5a40f9, type: 3}
       propertyPath: m_RootOrder
       value: 0

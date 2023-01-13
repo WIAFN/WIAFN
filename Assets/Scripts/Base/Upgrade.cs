@@ -10,13 +10,16 @@ public class Upgrade : MonoBehaviour
     public List<KeyValuePair<string, int>> Effects;
     public Color Color;
 
+    [Header("Utility")]
+    public GameObject rotateTowardsPlayer;
+    public UpgradeInformationPanel information;
+
 
     private Animator _animator;
     private MeshRenderer _cubeX;
     private MeshRenderer _cubeY;
     private MeshRenderer _cubeZ;
     private Light _pointLight;
-    private GameObject _information;
     private bool _isVisible;
     private bool _playerInRange;
     private bool _pickedUp;
@@ -26,37 +29,21 @@ public class Upgrade : MonoBehaviour
         OnCreate();
     }
 
-    private void FixedUpdate()
+    private void OnEnable()
     {
-        if (CanCollect())
-        {
-            PlayerCamera.OnInteract += OnPickup;
-        }
-        else
-        {
-            PlayerCamera.OnInteract -= OnPickup;
-        }
-        transform.LookAt(GameManager.instance.mainPlayer.transform);
+        PlayerCamera.OnInteract += OnPickup;
     }
 
-    private void OnTriggerEnter(Collider other)
+    private void OnDisable()
     {
-        Character player = other.gameObject.GetComponent<Character>();
-        Debug.Log(player.tag + " " + player.gameObject.name);
-        if (player.CompareTag("Player"))
-        {
-            PlayerEnteredRange(player);
-        }
+        PlayerCamera.OnInteract -= OnPickup;
     }
 
-    private void OnTriggerExit(Collider other)
+    private void Update()
     {
-        Character player = other.gameObject.GetComponent<Character>();
-        if (player.CompareTag("Player"))
-        {
-            PlayerLeftRange(player);
-        }
+        rotateTowardsPlayer.transform.LookAt(GameManager.instance.mainPlayer.transform.position - Vector3.up * 0.8f);
     }
+
     private void OnBecameVisible()
     {
         _isVisible = true;
@@ -79,9 +66,8 @@ public class Upgrade : MonoBehaviour
         _cubeZ = cubeParent.transform.GetChild(2).GetComponent<MeshRenderer>();
         _pointLight = cubeParent.transform.GetChild(3).GetComponent<Light>();
 
-        //information panel, idk?
-        _information = transform.GetChild(1).gameObject;
-        _information.SetActive(false);
+        information.gameObject.SetActive(false);
+        information.SetTexts(Name, Description);
 
         //TODO how to implement this?
         //upgrade effects go here
@@ -99,23 +85,23 @@ public class Upgrade : MonoBehaviour
 
     }
 
-    private void PlayerEnteredRange(Character player)
+    public void PlayerEnteredRange(Character player)
     {
         Debug.Log("Player in range " + gameObject.name);
-        _information.SetActive(true);
+        information.gameObject.SetActive(true);
         _playerInRange = true;
     }
 
-    private void PlayerLeftRange(Character player)
+    public void PlayerLeftRange(Character player)
     {
         Debug.Log("Player left range of " + gameObject.name);
-        _information.GetComponent<Animator>().SetTrigger("PlayerLeftRange");
+        information.GetComponent<Animator>().SetTrigger("PlayerLeftRange");
         _playerInRange = false;
     }
 
     private void OnPickup()
     {
-        if (!_pickedUp)
+        if (CanCollect())
         {
             _animator.SetTrigger("PickUp");
             Debug.Log("Picked up " + gameObject.name + " is picked up: " + _pickedUp);
@@ -133,6 +119,7 @@ public class Upgrade : MonoBehaviour
     {
         return _isVisible && _playerInRange;
     }
+
     public void SetColors()
     {
         _cubeX.material.color = Color;
