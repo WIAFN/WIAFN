@@ -7,12 +7,12 @@ public class UpgradeTrigger : MonoBehaviour
     private const float CounterDelta = 0.3f;
 
     private float _playerLeftCounter = 0f;
-    private Upgrade _upgradeScript;
+    private EffectBody _upgradeScript;
     private Character _player;
 
     private void Awake()
     {
-        _upgradeScript = GetComponentInParent<Upgrade>();
+        _upgradeScript = GetComponentInParent<EffectBody>();
     }
 
     private void Start()

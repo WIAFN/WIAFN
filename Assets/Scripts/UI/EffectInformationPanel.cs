@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 
-public class UpgradeInformationPanel : MonoBehaviour
+public class EffectInformationPanel : MonoBehaviour
 {
     public TextMeshPro header;
     public TextMeshPro description;

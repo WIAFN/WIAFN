@@ -863,7 +863,7 @@ GameObject:
   - component: {fileID: 7495300434675273175}
   - component: {fileID: 1470557746}
   m_Layer: 2
-  m_Name: pfUpgrade
+  m_Name: pfEffect
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -920,6 +920,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Name: General Upgrade
   Description: Everything will be specified for different upgrades.
+  Effects:
+  - {fileID: 11400000, guid: 2ef4c9781b6fe8e40b10968683e3216b, type: 2}
   Color: {r: 1, g: 0.87503445, b: 0.015686274, a: 0}
   rotateTowardsPlayer: {fileID: 8172268256268696732}
   information: {fileID: 1613892331}

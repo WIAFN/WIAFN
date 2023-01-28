@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using static UnityEngine.Rendering.DebugUI;
 
 [RequireComponent(typeof(CharacterBaseStats))]
 public class Character : MonoBehaviour
@@ -114,29 +115,42 @@ public class Character : MonoBehaviour
         }
     }
 
-    public void GetUpgrade(string attributeName, float value)
+    public void ChangeCharacterStat(int attributeEnum, float value)
     {
-        switch (attributeName)
+        switch (attributeEnum)
         {
-            case "maxHealth":
+            case 0:
                 BaseStats.maxHealth += value;
                 break;
-            case "maxStamina":
+            case 1:
                 BaseStats.maxStamina += value;
                 break;
-            case "healthRegen":
-                BaseStats.healthRegen += value;
-                break;
-            case "staminaRegen":
+            case 2:
                 BaseStats.staminaRegen += value;
                 break;
-            case "speedCoefficient":
+            case 3:
+                BaseStats.healthRegen += value;
+                break;
+            case 4:
                 BaseStats.speedCoefficient += value;
                 break;
-            case "Damage":
+            case 14:
                 Weapon.damage += value;
                 break;
-            case "FireRate":
+            case 15:
+                Weapon.fireRate += value;
+                break;
+        }
+    }
+
+    public void ChangeWeaponStat(int attributeEnum, float value)
+    {
+        switch (attributeEnum)
+        {
+            case 0:
+                Weapon.damage += value;
+                break;
+            case 1:
                 Weapon.fireRate += value;
                 break;
         }
