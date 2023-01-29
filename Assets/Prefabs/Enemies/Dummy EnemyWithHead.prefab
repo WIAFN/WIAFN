@@ -461,7 +461,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3bc2f76b11a00af449c8ffb0a843e45a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHealth: 100
+  maxHealth: 50
   maxStamina: 50
   staminaRegen: 0
   healthRegen: 0
@@ -622,9 +622,9 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7447357728767742493, guid: 176afd004d6c7664387e71def8559718, type: 3}
-      propertyPath: fireRate
-      value: 5
-      objectReference: {fileID: 0}
+      propertyPath: characterMove
+      value: 
+      objectReference: {fileID: 56262782640741871}
     - target: {fileID: 7658037962614244996, guid: 176afd004d6c7664387e71def8559718, type: 3}
       propertyPath: m_Name
       value: NPC Gun

@@ -6,6 +6,9 @@ public class DebugManager : MonoBehaviour
 {
     public static DebugManager instance;
 
+    public bool generalDebug;
+    public bool debugAi;
+
     private void Awake()
     {
         if (instance == null)
@@ -14,10 +17,13 @@ public class DebugManager : MonoBehaviour
         }
         else
         {
-            Destroy(gameObject);
+            Destroy(this);
         }
     }
 
-    public bool generalDebug;
-    public bool debugAi;
+    private void Update()
+    {
+
+    }
+
 }

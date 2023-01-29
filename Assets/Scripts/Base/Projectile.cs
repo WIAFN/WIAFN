@@ -1,13 +1,11 @@
 using System.Collections;
 using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 
 public abstract class Projectile : MonoBehaviour
 {
     public float speed;                     //Unit per second?
     public float timeToLive;                //Time to live (second)
-    public float damage;
     public int penetrationValue;
     public GameObject impactParticleSystem; //Impact
     public GameObject impactHole;
@@ -17,6 +15,7 @@ public abstract class Projectile : MonoBehaviour
     private Vector3 _oldPos;
     private Vector3 _parentVelocity;        //Parent velocity
     private MeshRenderer _meshRenderer;     //Get mesh renderer from child
+    private float damage;                   //Moved from projectile, might do terraria logic for bullet + weapon damage combo
 
     private void Awake()
     {
@@ -87,8 +86,9 @@ public abstract class Projectile : MonoBehaviour
         GameObject ip = Instantiate(
             impactHole, 
             hit.point + (hit.normal * .01f), 
-            Quaternion.LookRotation(Vector3.up, hit.normal)
+            Quaternion.LookRotation(hit.normal)
             );
+        ip.transform.parent = hit.transform;
         
         Destroy(ip, 10f);
 
@@ -98,6 +98,7 @@ public abstract class Projectile : MonoBehaviour
         {
             hitCharacter.RemoveHealth(damage);
         }
+
         //Destroy self if cannot penetrate anymore
         if (penetrationValue < 0)
         {
@@ -127,5 +128,10 @@ public abstract class Projectile : MonoBehaviour
     {
         parentVelocity.y = 0;
         _parentVelocity = parentVelocity;
+    }
+
+    public void SetDamage(float damage)
+    {
+        this.damage = damage;
     }
 }

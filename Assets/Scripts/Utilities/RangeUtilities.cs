@@ -8,4 +8,9 @@ public static class RangeUtilities
     {
         return (x - inMin) * (outMax - outMin) / (inMax - inMin) + outMin;
     }
+
+    public static float map01(float x, float inMin, float inMax)
+    {
+        return map(x, inMin, inMax, 0f, 1f);
+    }
 }

@@ -10,6 +10,8 @@ GameObject:
   m_Component:
   - component: {fileID: 7331057603790362888}
   - component: {fileID: 7331057603790362891}
+  - component: {fileID: 39228896130775932}
+  - component: {fileID: 1238161195}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -45,3 +47,29 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   mainPlayer: {fileID: 0}
+--- !u!114 &39228896130775932
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7331057603790362889}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0677fc689eb311f41a324e959edbd8a4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  lootPercent: 30
+  pfUpgrade: {fileID: 6365665363150068368, guid: 9bc9969bb95d1db4a9abe7a2b5cb8cc1, type: 3}
+--- !u!114 &1238161195
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7331057603790362889}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 972a7b3345a918e4b945067b82a58afc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

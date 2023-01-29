@@ -29,19 +29,19 @@ namespace WIAFN.UI
 
         private void Update()
         {
-            //UpdateFiringError();
+            UpdateFiringError();
         }
 
-        //private void UpdateFiringError()
-        //{
-        //    Character character = GameManager.instance.mainPlayer;
-        //    float firingErrorRate = character.GetFiringErrorRate();
+        private void UpdateFiringError()
+        {
+            Character character = GameManager.instance.mainPlayer;
+            float firingErrorRate = character.GetFiringErrorRate();
 
-        //    foreach (GameObject crosshairLine in _crosshairLines)
-        //    {
-        //        Vector3 startPosition = _crosshairLinesStartingPositions[crosshairLine];
-        //        crosshairLine.transform.localPosition = Vector3.Lerp(crosshairLine.transform.localPosition, startPosition + startPosition * firingErrorRate * crosshairFiringErrorMaxOffset, Time.deltaTime * crosshairFiringErrorSpeed);
-        //    }
-        //}
+            foreach (GameObject crosshairLine in _crosshairLines)
+            {
+                Vector3 startPosition = _crosshairLinesStartingPositions[crosshairLine];
+                crosshairLine.transform.localPosition = Vector3.Lerp(crosshairLine.transform.localPosition, startPosition + startPosition * firingErrorRate * crosshairFiringErrorMaxOffset, Time.deltaTime * crosshairFiringErrorSpeed);
+            }
+        }
     }
 }

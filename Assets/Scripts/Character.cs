@@ -7,6 +7,10 @@ public class Character : MonoBehaviour
 {
     private CharacterMovement _characterMove;
     private CharacterBaseStats _baseStats;
+    private Weapon _weapon;
+
+    //Getter
+    public Weapon Weapon => _weapon;
 
     // Runtime Stats
     [HideInInspector]
@@ -22,6 +26,7 @@ public class Character : MonoBehaviour
     {
         _characterMove = GetComponent<CharacterMovement>();
         _baseStats = GetComponent<CharacterBaseStats>();
+        _weapon = GetComponentInChildren<Weapon>();
     }
 
     public void Start()
@@ -35,12 +40,7 @@ public class Character : MonoBehaviour
     {
         if (health <= 0)
         {
-            if (OnDied != null)
-            {
-                OnDied();
-            }
-
-            Destroy(gameObject);
+            Die();
         }
 
         if (_characterMove != null)
@@ -58,6 +58,18 @@ public class Character : MonoBehaviour
         {
             RegenHealth();
         }
+    }
+
+    private void Die()
+    {
+        if (OnDied != null)
+        {
+            OnDied();
+        }
+
+        GameManager.instance.CharacterDied(this);
+
+        Destroy(gameObject);
     }
 
     public void RegenStamina()
@@ -87,6 +99,13 @@ public class Character : MonoBehaviour
         }
     }
 
+    public float GetFiringErrorRate()
+    {
+        Vector2 shootingErrorMinMax = BaseStats.shootingErrorRateMinMax;
+        float shootingError = RangeUtilities.map(_characterMove.Speed, 0f, BaseStats.MaxRunSpeed, shootingErrorMinMax.x, shootingErrorMinMax.y);
+        return shootingError;
+    }
+
     public CharacterBaseStats BaseStats
     {
         get
@@ -94,6 +113,36 @@ public class Character : MonoBehaviour
             return _baseStats;
         }
     }
+
+    public void GetUpgrade(string attributeName, float value)
+    {
+        switch (attributeName)
+        {
+            case "maxHealth":
+                BaseStats.maxHealth += value;
+                break;
+            case "maxStamina":
+                BaseStats.maxStamina += value;
+                break;
+            case "healthRegen":
+                BaseStats.healthRegen += value;
+                break;
+            case "staminaRegen":
+                BaseStats.staminaRegen += value;
+                break;
+            case "speedCoefficient":
+                BaseStats.speedCoefficient += value;
+                break;
+            case "Damage":
+                Weapon.damage += value;
+                break;
+            case "FireRate":
+                Weapon.fireRate += value;
+                break;
+        }
+    }
+
+    public CharacterMovement CharacterMovement => _characterMove;
 
     public delegate void DamageTakeHandler(float damageTaken);
     public delegate void VoidHandler();
