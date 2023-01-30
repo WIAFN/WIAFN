@@ -134,12 +134,6 @@ public class Character : MonoBehaviour
             case 4:
                 BaseStats.speedCoefficient += value;
                 break;
-            case 14:
-                Weapon.damage += value;
-                break;
-            case 15:
-                Weapon.fireRate += value;
-                break;
         }
     }
 

@@ -12,4 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5e47e66b6c4697f42bf4e0d72ffc9ccd, type: 3}
   m_Name: Effect
   m_EditorClassIdentifier: 
-  Upgrades: []
+  Upgrades:
+  - {fileID: 11400000, guid: 871910b1f6b192e44b6f09f46d679bc7, type: 2}

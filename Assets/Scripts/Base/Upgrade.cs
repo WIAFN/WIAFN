@@ -16,7 +16,7 @@ public struct WeaponStatChange
     public float Value;
 }
 
-[CreateAssetMenu(fileName = "Upgrade", menuName = "ScriptableObjects/SpawnUpgrade", order = 1)]
+[CreateAssetMenu(fileName = "Upgrade", menuName = "ScriptableObjects/CreateUpgrade", order = 1)]
 public class Upgrade:ScriptableObject
 {
     public List<CharacterStatChange> CharacterStatChanges;
