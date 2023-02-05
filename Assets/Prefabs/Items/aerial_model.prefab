@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 7370936065407031324}
   - component: {fileID: 433715662734219267}
   - component: {fileID: 7420363579594842437}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Support
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -109,7 +109,7 @@ GameObject:
   - component: {fileID: 2971730627120349751}
   - component: {fileID: 247198166701700195}
   - component: {fileID: 8692872165316323136}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: DIsh
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -204,7 +204,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5606580676846500149}
   - component: {fileID: 7551468001011732539}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: aerial_model
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -220,7 +220,7 @@ Transform:
   m_GameObject: {fileID: 5081542277251294095}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -1.8484726, y: -0.00000047683716, z: 10.575418}
-  m_LocalScale: {x: 0.016, y: 0.016, z: 0.016}
+  m_LocalScale: {x: 0.022, y: 0.022, z: 0.022}
   m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 1527755540027100886}

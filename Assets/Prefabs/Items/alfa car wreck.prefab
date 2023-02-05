@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 8276564733338862877}
   - component: {fileID: 39289719276592152}
   - component: {fileID: 1360486567831722898}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: wheels
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -95,7 +95,7 @@ GameObject:
   - component: {fileID: 6681261246068782455}
   - component: {fileID: 6726800368362291315}
   - component: {fileID: 244150511988291843}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: alfabody
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -194,7 +194,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5318845964585256833}
   - component: {fileID: 7466128374466159126}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: alfa car wreck
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -210,8 +210,8 @@ Transform:
   m_GameObject: {fileID: 4799577806506794299}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -5.9847174, y: -0.000000007450581, z: 7.3054633}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
+  m_LocalScale: {x: 1.3, y: 1.3, z: 1.3}
+  m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 1567758974192662669}
   - {fileID: 8276564733338862877}

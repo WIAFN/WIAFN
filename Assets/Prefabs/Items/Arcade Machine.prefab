@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 2670863951774686179}
   - component: {fileID: 6281459034019849936}
   - component: {fileID: 4736030061402403306}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Arcade_Guns_low_Cube.042
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -95,7 +95,7 @@ GameObject:
   - component: {fileID: 8773451627732795804}
   - component: {fileID: 935271255142630771}
   - component: {fileID: 760500922600813160}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Arcade_Body_low_Cube.034
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -190,7 +190,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8047264878806843220}
   - component: {fileID: 2413899219578069665}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Arcade Machine
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -205,9 +205,9 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7270622248878368238}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -3.9717305, y: 1.001, z: 7.679777}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 2.5, y: 2.5, z: 2.5}
+  m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 2409141158261466544}
   - {fileID: 2670863951774686179}

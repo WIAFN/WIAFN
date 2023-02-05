@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 6764365503114589345}
   - component: {fileID: -311848382513626997}
   - component: {fileID: -5430617557674584420}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: DP_TNR_TireOld_1
   m_TagString: Untagged
   m_Icon: {fileID: 0}

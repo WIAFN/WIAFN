@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 3520277119352519588}
   - component: {fileID: 794375199159297863}
   - component: {fileID: 6216187297435243575}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: tv2-model
   m_TagString: Untagged
   m_Icon: {fileID: 0}

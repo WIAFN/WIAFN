@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 435831654}
   - component: {fileID: 435831653}
   - component: {fileID: 435831652}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Colliders
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -100,7 +100,7 @@ GameObject:
   - component: {fileID: 2024288782}
   - component: {fileID: 2024288781}
   - component: {fileID: 2024288780}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Other Colliders
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -186,7 +186,7 @@ GameObject:
   - component: {fileID: 2595064255507136023}
   - component: {fileID: 7692896236063255775}
   - component: {fileID: 1071710264872869943}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: polySurface3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -285,7 +285,7 @@ GameObject:
   m_Component:
   - component: {fileID: 274262767084331983}
   - component: {fileID: 1957983221}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: pCube1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -334,7 +334,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6259846128760468105}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: fridge2-model
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -350,7 +350,7 @@ Transform:
   m_GameObject: {fileID: 6743190806731909171}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 130, y: 130, z: 130}
+  m_LocalScale: {x: 150, y: 150, z: 150}
   m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 274262767084331983}
@@ -369,7 +369,7 @@ GameObject:
   - component: {fileID: 8655286795538922084}
   - component: {fileID: 293262962610646590}
   - component: {fileID: 1557032188327398809}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: pCylinder4
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -452,7 +452,7 @@ GameObject:
   - component: {fileID: 6366514785014027434}
   - component: {fileID: 7493783607096838499}
   - component: {fileID: 2122630714713614446}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: polySurface1
   m_TagString: Untagged
   m_Icon: {fileID: 0}

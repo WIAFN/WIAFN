@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 2035044421555438093}
   - component: {fileID: 548360093372938207}
   - component: {fileID: 3974299381340088172}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: AV_front
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -94,7 +94,7 @@ GameObject:
   - component: {fileID: 7769073954464313501}
   - component: {fileID: 4224810355006610238}
   - component: {fileID: 5058010746352417267}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Screw
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -177,7 +177,7 @@ GameObject:
   - component: {fileID: 4746856603627892638}
   - component: {fileID: 7595026478534962048}
   - component: {fileID: 9178701849880280125}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Front_section
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -260,7 +260,7 @@ GameObject:
   - component: {fileID: 4294741482966105194}
   - component: {fileID: 2755899668563632023}
   - component: {fileID: 9071654650618450652}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: rear_section
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -343,7 +343,7 @@ GameObject:
   - component: {fileID: 322277703966224118}
   - component: {fileID: 6085160363148017431}
   - component: {fileID: 1688761347873396179}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Coax_connector
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -426,7 +426,7 @@ GameObject:
   - component: {fileID: 5085212883428005575}
   - component: {fileID: 8322823646975623830}
   - component: {fileID: 5681948433967735191}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Front_buttons
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -509,7 +509,7 @@ GameObject:
   - component: {fileID: 5402440772540413853}
   - component: {fileID: 4333763489152959543}
   - component: {fileID: 5953651405363251296}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: AV_back
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -592,7 +592,7 @@ GameObject:
   - component: {fileID: 3746562858742817866}
   - component: {fileID: 7418508517966047342}
   - component: {fileID: 4005389192649253867}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Logo
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -676,7 +676,7 @@ GameObject:
   - component: {fileID: 3354610641916133238}
   - component: {fileID: 3354610641916133237}
   - component: {fileID: 3354610641916133236}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: tv1-model
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -692,7 +692,7 @@ Transform:
   m_GameObject: {fileID: 8282329630990138732}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -2.2700167, y: 1.39, z: 6.10451}
-  m_LocalScale: {x: 0.035, y: 0.035, z: 0.035}
+  m_LocalScale: {x: 0.045, y: 0.045, z: 0.045}
   m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 5402440772540413853}
@@ -760,7 +760,7 @@ GameObject:
   - component: {fileID: 2704539900475456594}
   - component: {fileID: 1557297595492665101}
   - component: {fileID: 1504598784394502880}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Screen
   m_TagString: Untagged
   m_Icon: {fileID: 0}

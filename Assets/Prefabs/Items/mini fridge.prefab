@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2101206610546979613}
   - component: {fileID: 1140379275687048173}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: mini fridge
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -26,7 +26,7 @@ Transform:
   m_GameObject: {fileID: 1613182479624743335}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -6.9464793, y: 0, z: 6.499217}
-  m_LocalScale: {x: 1.8, y: 1.8, z: 1.8}
+  m_LocalScale: {x: 2.4, y: 2.4, z: 2.4}
   m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 192590749710171919}
@@ -61,7 +61,7 @@ GameObject:
   - component: {fileID: 1560601272972911596}
   - component: {fileID: 2035710411292907128}
   - component: {fileID: 2929751193391571499}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: body_low
   m_TagString: Untagged
   m_Icon: {fileID: 0}

@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 3658814471066337806}
   - component: {fileID: 1234997777380645213}
   - component: {fileID: 3168571868537070533}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: button_1_low
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -94,7 +94,7 @@ GameObject:
   - component: {fileID: 4282272018814325697}
   - component: {fileID: 3724910138367788551}
   - component: {fileID: 897386500369348234}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: legs_low
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -178,7 +178,7 @@ GameObject:
   - component: {fileID: 2294289020070266580}
   - component: {fileID: 2277086431109681162}
   - component: {fileID: 1628083078999115061}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: door_low
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -278,7 +278,7 @@ GameObject:
   - component: {fileID: 1510668511044611391}
   - component: {fileID: 2372415912579432413}
   - component: {fileID: 7173580248809296427}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: button_4_low
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -361,7 +361,7 @@ GameObject:
   - component: {fileID: 1628083078229476999}
   - component: {fileID: 1628083078229476997}
   - component: {fileID: 1628083078229476996}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: door colliders
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -418,7 +418,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1230227695953797853}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: washing machine 2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -434,8 +434,8 @@ Transform:
   m_GameObject: {fileID: 1898677630561695847}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -0.7917056, y: 0.95, z: 10.705684}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
+  m_LocalScale: {x: 1.6, y: 1.6, z: 1.6}
+  m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 1051134842344222415}
   - {fileID: 2050257286380288322}
@@ -453,7 +453,7 @@ GameObject:
   - component: {fileID: 3045015719402587170}
   - component: {fileID: 3183448790183736435}
   - component: {fileID: 7633357835690056044}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: button_2_low
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -536,7 +536,7 @@ GameObject:
   - component: {fileID: 6703564834332288325}
   - component: {fileID: 7814170379010446186}
   - component: {fileID: 8756824997103210605}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: button_3_low
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -619,7 +619,7 @@ GameObject:
   - component: {fileID: 2949613584225515228}
   - component: {fileID: 1003200454117171022}
   - component: {fileID: 4514569022772876141}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: drum_low
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -702,7 +702,7 @@ GameObject:
   - component: {fileID: 4128657990772419077}
   - component: {fileID: 477270809402034279}
   - component: {fileID: 6068535368040027444}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: thing_low
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -785,7 +785,7 @@ GameObject:
   - component: {fileID: 3281228387461536363}
   - component: {fileID: 3819950555832557970}
   - component: {fileID: 6763753432144355663}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: rubber_low
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -870,7 +870,7 @@ GameObject:
   - component: {fileID: 1187281245220571064}
   - component: {fileID: 4525660680067278337}
   - component: {fileID: 4365361558914814095}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: body_low
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -982,7 +982,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5069491609139534875}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: directlyconnected
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1024,7 +1024,7 @@ GameObject:
   - component: {fileID: 2263207494743918996}
   - component: {fileID: 1120906803323200553}
   - component: {fileID: 7018807899256076047}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: cable_low
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1107,7 +1107,7 @@ GameObject:
   - component: {fileID: 4543294119244433389}
   - component: {fileID: 5557256480831230216}
   - component: {fileID: 2474478607467398374}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: hinge_low
   m_TagString: Untagged
   m_Icon: {fileID: 0}

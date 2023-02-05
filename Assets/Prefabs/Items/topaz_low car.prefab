@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 5798612795548740460}
   - component: {fileID: 8442138450090160457}
   - component: {fileID: 5955135503161165003}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: topaz_low car
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -29,8 +29,8 @@ Transform:
   m_GameObject: {fileID: 5438153644293229241}
   m_LocalRotation: {x: -0.7071068, y: 0, z: 0, w: 0.7071068}
   m_LocalPosition: {x: -3.335029, y: -0.00000011920929, z: 7.885502}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
+  m_LocalScale: {x: 4.2, y: 4.2, z: 4.2}
+  m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0

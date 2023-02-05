@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 5830787178430289773}
   - component: {fileID: 6832000773728939934}
   - component: {fileID: 6670726917504813349}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: DOOR_LEFT
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -94,7 +94,7 @@ GameObject:
   - component: {fileID: 1241118955896369958}
   - component: {fileID: 2594861307826509677}
   - component: {fileID: 9169181688679005387}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: WHEEL_REAR_RIGHT
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -177,7 +177,7 @@ GameObject:
   - component: {fileID: 6903419176428449819}
   - component: {fileID: 7602859597141319055}
   - component: {fileID: 4241042737484284632}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: BODY
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -260,7 +260,7 @@ GameObject:
   - component: {fileID: 6658549337602484416}
   - component: {fileID: 4762507311629225963}
   - component: {fileID: 974855054946363145}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: WHEEL_REAR_LEFT
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -343,7 +343,7 @@ GameObject:
   - component: {fileID: 4443710698024916451}
   - component: {fileID: 2931739104496785204}
   - component: {fileID: 3146992118044360739}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: WHEEL_FRONT_LEFT
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -430,7 +430,7 @@ GameObject:
   - component: {fileID: 1426985147175172426}
   - component: {fileID: 878700305468322129}
   - component: {fileID: 878700305468322130}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: MILKMAN Van
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -551,7 +551,7 @@ GameObject:
   - component: {fileID: 1394931493347945921}
   - component: {fileID: 9085135579663138340}
   - component: {fileID: 2010479819818319665}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: WHEEL_FRONT_RIGHT
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -634,7 +634,7 @@ GameObject:
   - component: {fileID: 7708898260305172499}
   - component: {fileID: 2174802412234476189}
   - component: {fileID: 4908429864002193900}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: DOOR_RIGHT
   m_TagString: Untagged
   m_Icon: {fileID: 0}

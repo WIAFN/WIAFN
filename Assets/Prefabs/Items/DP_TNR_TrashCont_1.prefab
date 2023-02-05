@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 7105503982673636311}
   - component: {fileID: -8995822533580368560}
   - component: {fileID: 5239708194945276080}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: DP_TNR_TrashCont_1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -29,7 +29,7 @@ Transform:
   m_GameObject: {fileID: 1106101691439039752}
   m_LocalRotation: {x: -0.5792279, y: -0.40557984, z: -0.40557984, w: 0.5792279}
   m_LocalPosition: {x: -1.768, y: 7.105427e-17, z: -1.912}
-  m_LocalScale: {x: 10.16, y: 10.16, z: 10.16}
+  m_LocalScale: {x: 9.144, y: 9.144, z: 9.144}
   m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 0}

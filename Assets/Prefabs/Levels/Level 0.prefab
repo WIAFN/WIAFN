@@ -300,9 +300,15 @@ MonoBehaviour:
   - name: GasStove
     levelObject: {fileID: 7953445140036018592, guid: 409d42628eed0fd4c8b6430efd02e5da, type: 3}
     weight: 2
+  - name: MILKMAN Van
+    levelObject: {fileID: 3200083635933070105, guid: d4d1df5e37bc0694d96c6ebb6055bfa6, type: 3}
+    weight: 1
   - name: mini fridge
     levelObject: {fileID: 1613182479624743335, guid: 8d0cd1581fee1ec4a8b084107c8f08ad, type: 3}
     weight: 2
+  - name: NewsPaperVendingMachine
+    levelObject: {fileID: 3332045646880585692, guid: 131be5de8a4944648962126f02efc0f6, type: 3}
+    weight: 1
   - name: oldcarwreck
     levelObject: {fileID: 7437782901925533355, guid: beb27da1db17fd04c9ccd0ac117337c7, type: 3}
     weight: 1
@@ -324,6 +330,9 @@ MonoBehaviour:
   - name: van_graffiti
     levelObject: {fileID: 4068398912156888876, guid: ad18ed7574eab8c409deac7b57e0b45e, type: 3}
     weight: 1
+  - name: washing machine 2
+    levelObject: {fileID: 1898677630561695847, guid: a59ec692e3f6ecb4d87c3656a820680d, type: 3}
+    weight: 2
 --- !u!114 &966865597
 MonoBehaviour:
   m_ObjectHideFlags: 0
