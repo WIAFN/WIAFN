@@ -7,6 +7,9 @@ using Random = UnityEngine.Random;
 [System.Serializable]
 public struct LevelObjectData
 {
+    [HideInInspector]
+    public string name;
+
     public GameObject levelObject;
     public float weight;
 }
@@ -189,4 +192,19 @@ public class JunkyardLevelGenerator : LevelGeneratorBase
 
 
     public delegate void GenerationCompletion();
+
+    #region GUI
+    // To name elements according to prefab names.
+    private void OnValidate()
+    {
+        for (int i = 0; i < levelObjects.Count; i++)
+        {
+            var levelObjectData = levelObjects[i];
+            string name = levelObjectData.levelObject == null || string.IsNullOrWhiteSpace(levelObjectData.levelObject.name) ? "": levelObjectData.levelObject.name;
+
+            levelObjectData.name = name;
+            levelObjects[i] = levelObjectData;
+        }
+    }
+    #endregion //GUI
 }
