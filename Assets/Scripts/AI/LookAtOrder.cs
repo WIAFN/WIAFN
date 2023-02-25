@@ -34,13 +34,16 @@ namespace WIAFN.AI
             _additionalHeight = additionalHeight;
         }
 
-        public Vector3 GetLookAtPosition()
-        {
-            return Position;
-        }
-
         public Character Character => _lookAtCharacter;
         public Vector3 Position 
+        {
+            get
+            {
+                return PositionRaw + Vector3.up * _additionalHeight;
+            }
+        }
+
+        public Vector3 PositionRaw
         {
             get
             {
@@ -60,9 +63,9 @@ namespace WIAFN.AI
                         break;
                 }
 
-                result += Vector3.up * _additionalHeight;
                 return result;
             }
+
         }
     }
 }

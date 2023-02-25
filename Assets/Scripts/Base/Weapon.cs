@@ -9,7 +9,6 @@ public abstract class Weapon : MonoBehaviour
 
     public float fireRate;
     public float damage;
-    public CharacterMovement characterMove;
     public Transform gunTip;
     public ParticleSystem muzzleFlash;
     public float Delay { get; protected set; }

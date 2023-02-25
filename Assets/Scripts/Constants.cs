@@ -12,5 +12,7 @@ namespace WIAFN.Constants
     public class WIAFNAnimatorParams
     {
         public static string Attacked = "Attacked";
+        public static string Speed = "Speed";
+        public static string InFight = "InFight";
     }
 }
