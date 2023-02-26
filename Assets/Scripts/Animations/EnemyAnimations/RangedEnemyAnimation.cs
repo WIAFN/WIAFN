@@ -145,7 +145,7 @@ public class RangedEnemyAnimation : MonoBehaviour
             bool hit = Physics.Raycast(_leftLegRoot.position, Vector3.down - leftFootDiff.normalized / 2f, out RaycastHit hitInfo, 10f, legsRaycastLayerMask, QueryTriggerInteraction.UseGlobal);
             if (hit && (hitInfo.point - _rightLegIKTargetPos).sqrMagnitude > _character.CharacterMovement.Speed / 5f)
             {
-                _leftLegIKTargetPos = hitInfo.point + Vector3.up * 1f;
+                _leftLegIKTargetPos = hitInfo.point + Vector3.up * 0.95f;
             }
         }
 
@@ -197,7 +197,7 @@ public class RangedEnemyAnimation : MonoBehaviour
         float targetDistance = 1.6f;
         if (angleToLookAt < -70f)
         {
-            targetDir = (targetDir + _npc.transform.forward * 1.3f).normalized;
+            targetDir = (targetDir + _npc.transform.forward * 0.8f).normalized;
         }
         if (angleToLookAt > 120f || angleToLookAt < -120f)
         {
