@@ -65,9 +65,9 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 9c94c75e65b6a7b46a86edae25eb4e34, type: 3}
-  m_Name: Blit
+  m_Name: FSEffect2
   m_EditorClassIdentifier: 
-  m_Active: 1
+  m_Active: 0
   settings:
     Event: 500
     blitMaterial: {fileID: 2100000, guid: 3c144d6111b73a64e88b158df3bb868c, type: 2}

@@ -47,7 +47,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   speed: 500
   timeToLive: 5
-  damage: 10
   penetrationValue: 0
   impactParticleSystem: {fileID: 107994787288928992, guid: dc3a630b19867be4095c42eee36b0f34, type: 3}
   impactHole: {fileID: 5866310308708066316, guid: 9cf2ca00e3de3834ba765cc0dd58232e, type: 3}

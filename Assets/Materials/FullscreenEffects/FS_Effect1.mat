@@ -21,7 +21,7 @@ Material:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: FS_Effect1
-  m_Shader: {fileID: -6465566751694194690, guid: 7f3f86d7fcf9f414696004f2465628af, type: 3}
+  m_Shader: {fileID: -6465566751694194690, guid: 83d031a3ee8d39a40b2cf4f30a2916e2, type: 3}
   m_ValidKeywords: []
   m_InvalidKeywords: []
   m_LightmapFlags: 4
@@ -103,12 +103,13 @@ Material:
     - _DetailAlbedoMapScale: 1
     - _DetailNormalMapScale: 1
     - _DstBlend: 0
-    - _EffectSize: 8.5
+    - _EffectSize: 10
     - _EnvironmentReflections: 1
     - _FSIntensity: 0.576
     - _GlossMapScale: 0
     - _Glossiness: 0
     - _GlossyReflections: 0
+    - _Intensity: 1
     - _Metallic: 0
     - _OcclusionStrength: 1
     - _Parallax: 0.005
@@ -120,15 +121,16 @@ Material:
     - _SpecularHighlights: 1
     - _SrcBlend: 1
     - _Surface: 0
-    - _VoronoiScale: 50
-    - _VoronoiSpeed: 2
+    - _VoronoiPower: 0.3
+    - _VoronoiScale: 40
+    - _VoronoiSpeed: 3
     - _WorkflowMode: 1
     - _ZTest: 4
     - _ZWrite: 1
     - _ZWriteControl: 0
     m_Colors:
     - _BaseColor: {r: 1, g: 1, b: 1, a: 1}
-    - _Color: {r: 0, g: 0.75592804, b: 1, a: 1}
+    - _Color: {r: 0, g: 3.5137255, b: 4, a: 0.56078434}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
     - _SpecColor: {r: 0.19999996, g: 0.19999996, b: 0.19999996, a: 1}
   m_BuildTextureStacks: []

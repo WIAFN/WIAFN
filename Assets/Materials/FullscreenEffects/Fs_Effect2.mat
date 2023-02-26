@@ -90,12 +90,13 @@ Material:
     - _DetailAlbedoMapScale: 1
     - _DetailNormalMapScale: 1
     - _DstBlend: 0
-    - _EffectSize: 6.8
+    - _EffectSize: 10
     - _EnvironmentReflections: 1
     - _FSIntensity: 0.602
     - _GlossMapScale: 0
     - _Glossiness: 0
     - _GlossyReflections: 0
+    - _Intensity: 1
     - _Metallic: 0
     - _OcclusionStrength: 1
     - _Parallax: 0.005
@@ -107,8 +108,9 @@ Material:
     - _SpecularHighlights: 1
     - _SrcBlend: 1
     - _Surface: 0
-    - _VoronoiScale: 4.7
-    - _VoronoiSpeed: 3.13
+    - _VoronoiPower: 0.34
+    - _VoronoiScale: 17
+    - _VoronoiSpeed: 8.39
     - _WorkflowMode: 1
     - _ZTest: 4
     - _ZWrite: 1
