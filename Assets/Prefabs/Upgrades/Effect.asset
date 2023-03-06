@@ -14,4 +14,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Upgrades:
   - {fileID: 11400000, guid: 871910b1f6b192e44b6f09f46d679bc7, type: 2}
-  ScreenEffect: {fileID: 4923997064971849820, guid: 4a4130d8d2e4335488046c5872bd0dff, type: 2}
+  ScreenEffect: {fileID: 4783136441521015992, guid: 4a4130d8d2e4335488046c5872bd0dff, type: 2}
+  InAnimation: 0
