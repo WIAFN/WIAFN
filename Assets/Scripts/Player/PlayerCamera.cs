@@ -6,6 +6,7 @@ public class PlayerCamera : MonoBehaviour
     public LayerMask gunLookLayerMask;
     public Character Player;
     private bool _isShooting = false;
+    private bool _inEffect = false;
 
     public static event InteractHandler OnInteract;
 
@@ -39,11 +40,19 @@ public class PlayerCamera : MonoBehaviour
             }
         }
 
+        //three ifs, why?!
         if (Input.GetKeyDown(KeyCode.R))
         {
-            Player.Effect.OnEffectStart();
+            if(!Player.Effect.InAnimation)
+            {
+                if (!_inEffect)
+                {
+                    Player.Effect.OnEffectStart();
+                }
+                else Player.Effect.OnEffectEnd();
+                _inEffect = !_inEffect;
+            }
         }
-
     }
 
     private void RotateGun(RaycastHit hit)
