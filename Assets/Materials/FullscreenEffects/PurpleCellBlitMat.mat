@@ -7,7 +7,7 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Fs_Effect2
+  m_Name: PurpleCellBlitMat
   m_Shader: {fileID: -6465566751694194690, guid: 87efbbbf9d347a044a7760cad16711d3, type: 3}
   m_ValidKeywords: []
   m_InvalidKeywords: []
@@ -90,13 +90,13 @@ Material:
     - _DetailAlbedoMapScale: 1
     - _DetailNormalMapScale: 1
     - _DstBlend: 0
-    - _EffectSize: 10
+    - _EffectSize: 7
     - _EnvironmentReflections: 1
     - _FSIntensity: 0.602
     - _GlossMapScale: 0
     - _Glossiness: 0
     - _GlossyReflections: 0
-    - _Intensity: 1
+    - _Intensity: 0
     - _Metallic: 0
     - _OcclusionStrength: 1
     - _Parallax: 0.005
@@ -108,16 +108,16 @@ Material:
     - _SpecularHighlights: 1
     - _SrcBlend: 1
     - _Surface: 0
-    - _VoronoiPower: 0.34
-    - _VoronoiScale: 17
-    - _VoronoiSpeed: 8.39
+    - _VoronoiPower: 0.3
+    - _VoronoiScale: 40
+    - _VoronoiSpeed: 3
     - _WorkflowMode: 1
     - _ZTest: 4
     - _ZWrite: 1
     - _ZWriteControl: 0
     m_Colors:
     - _BaseColor: {r: 1, g: 1, b: 1, a: 1}
-    - _Color: {r: 1, g: 0, b: 0, a: 1}
+    - _Color: {r: 0.5773668, g: 0, b: 1, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
     - _SpecColor: {r: 0.19999996, g: 0.19999996, b: 0.19999996, a: 1}
   m_BuildTextureStacks: []
