@@ -4,7 +4,7 @@ using UnityEngine;
 public class PlayerCamera : MonoBehaviour
 {
     public LayerMask gunLookLayerMask;
-    public PlayerWeapon playerWeapon;
+    public Character Player;
     private bool _isShooting = false;
 
     public static event InteractHandler OnInteract;
@@ -19,7 +19,7 @@ public class PlayerCamera : MonoBehaviour
 
         if (_isShooting && hit.transform != null)
         {
-            playerWeapon.TryShoot(hit.point);
+            Player.Weapon.TryShoot(hit.point);
         }
 
         if (Input.GetMouseButtonDown(0))
@@ -39,16 +39,21 @@ public class PlayerCamera : MonoBehaviour
             }
         }
 
+        if (Input.GetKeyDown(KeyCode.R))
+        {
+            Player.Effect.OnEffectStart();
+        }
+
     }
 
     private void RotateGun(RaycastHit hit)
     {
-        Vector3 gunLocalPos = playerWeapon.transform.parent.InverseTransformPoint(hit.point);
-        if (hit.transform == null || playerWeapon.transform.rotation.y < -15f)
+        Vector3 gunLocalPos = Player.Weapon.transform.parent.InverseTransformPoint(hit.point);
+        if (hit.transform == null || Player.Weapon.transform.rotation.y < -15f)
         {
             gunLocalPos = Quaternion.Euler(new Vector3(0f, -30f, -90f)) * Vector3.forward;
         }
-        playerWeapon.transform.localRotation = Quaternion.LookRotation(gunLocalPos - playerWeapon.transform.localPosition);
+        Player.Weapon.transform.localRotation = Quaternion.LookRotation(gunLocalPos - Player.Weapon.transform.localPosition);
     }
 
     public delegate void InteractHandler();

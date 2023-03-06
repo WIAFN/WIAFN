@@ -9,9 +9,11 @@ public class Character : MonoBehaviour
     private CharacterMovement _characterMove;
     private CharacterBaseStats _baseStats;
     private Weapon _weapon;
+    private Effect _effect;
 
     //Getter
     public Weapon Weapon => _weapon;
+    public Effect Effect => _effect;
 
     // Runtime Stats
     [HideInInspector]
@@ -148,6 +150,11 @@ public class Character : MonoBehaviour
                 Weapon.fireRate += value;
                 break;
         }
+    }
+
+    public void ChangeEffect(Effect effect)
+    {
+        _effect = effect;
     }
 
     public CharacterMovement CharacterMovement => _characterMove;
