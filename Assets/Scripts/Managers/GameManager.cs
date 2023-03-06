@@ -1,9 +1,14 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Rendering.Universal;
+using UnityEngine.Rendering;
+using Cyan;
 
 public class GameManager : MonoBehaviour
 {
+    [SerializeField]
+    private UniversalRendererData _forwardRenderer;
     public static GameManager instance;
 
     public Character mainPlayer;
@@ -40,5 +45,22 @@ public class GameManager : MonoBehaviour
         OnCharacterDied?.Invoke(character);
     }
 
+    public void OnDestroy()
+    {
+        ClearBlits();
+    }
+
+    //Turn all fullscreen effects off when destroyed to prevent them from reoccuring next the game launches
+    private void ClearBlits()
+    {
+        foreach(ScriptableRendererFeature feature in _forwardRenderer.rendererFeatures)
+        {
+            //Doing a check incase we add something non blit to the forward renderer
+            if(feature.GetType() == typeof(Blit)) 
+            {
+                feature.SetActive(false);
+            }
+        }
+    }
     public delegate void CharacterDelegate(Character character);
 }
