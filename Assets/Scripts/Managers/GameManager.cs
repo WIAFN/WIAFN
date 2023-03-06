@@ -58,7 +58,11 @@ public class GameManager : MonoBehaviour
             //Doing a check incase we add something non blit to the forward renderer
             if(feature.GetType() == typeof(Blit)) 
             {
-                feature.SetActive(false);
+                Blit blit = (Blit)feature;
+
+                //Setting intensity to 0 so it doesnt lerp from 1 to 0 instantly when called
+                blit.settings.blitMaterial.SetFloat("_Intensity", 0);
+                blit.SetActive(false);
             }
         }
     }
