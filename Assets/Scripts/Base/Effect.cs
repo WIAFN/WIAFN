@@ -10,6 +10,7 @@ public class Effect : ScriptableObject
 {
     public List<Upgrade> Upgrades;
     public Blit ScreenEffect;
+    public bool InAnimation = false;
     public void OnEffectPickup(Character character)
     {
         character.ChangeEffect(this);
@@ -66,14 +67,39 @@ public class Effect : ScriptableObject
 
     private void StartScreenFX(Blit screenFX)
     {
-        Debug.Log(screenFX.name);
+        Debug.Log("StartScreenFX");
+
         screenFX.SetActive(true);
         Material blitMat = screenFX.settings.blitMaterial;
-        float intensity = blitMat.GetFloat("_FSIntensity");
-        LeanTween.easeOutElastic(0, 1, intensity);
+        Debug.Log(blitMat.GetFloat("_Intensity"));
+        InAnimation = true;
+        LeanTween.value(0, 1, 1.5f)
+            .setEase(LeanTweenType.easeInQuint)
+            .setOnUpdate(l =>
+            {
+                blitMat.SetFloat("_Intensity", l);
+            })
+            .setOnComplete(l => 
+            {
+                InAnimation = false;
+            });
     }
     private void EndScreenFX(Blit screenFX)
     {
-
+        Debug.Log("EndScreenFX");
+        Material blitMat = screenFX.settings.blitMaterial;
+        Debug.Log(blitMat.GetFloat("_Intensity"));
+        InAnimation = true;
+        LeanTween.value(1, 0, 1.5f)
+            .setEase(LeanTweenType.easeOutQuint)
+            .setOnUpdate(l =>
+            {
+                blitMat.SetFloat("_Intensity", l);
+            })
+            .setOnComplete(l =>
+            {
+                InAnimation = false;
+                screenFX.SetActive(false);
+            });
     }
 }
