@@ -47,9 +47,9 @@ public class PlayerCamera : MonoBehaviour
             {
                 if (!_inEffect)
                 {
-                    Player.Effect.OnEffectStart();
+                    Player.Effect.OnEffectStart(Player);
                 }
-                else Player.Effect.OnEffectEnd();
+                else Player.Effect.OnEffectEnd(Player);
                 _inEffect = !_inEffect;
             }
         }

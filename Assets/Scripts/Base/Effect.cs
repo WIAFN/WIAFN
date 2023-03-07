@@ -3,12 +3,14 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.TextCore.Text;
+using static UnityEditor.Progress;
 
 
 [CreateAssetMenu(fileName = "Effect", menuName = "ScriptableObjects/SpawnEffect", order = 1)]
 public class Effect : ScriptableObject
 {
     public List<Upgrade> Upgrades;
+    public List<Upgrade> TempUpgrades;
     public Blit ScreenEffect;
     public bool InAnimation = false;
     public void OnEffectPickup(Character character)
@@ -17,23 +19,36 @@ public class Effect : ScriptableObject
         ApplyUpgrades(character);
     }
 
-    public void OnEffectStart()
+    public void OnEffectStart(Character character)
     {
-        StartScreenFX(ScreenEffect);
+        ApplyUpgrades(character, true);
+        if (ScreenEffect != null)
+        {
+            StartScreenFX(ScreenEffect);
+        }
     }
 
-    public void OnEffectEnd()
+    public void OnEffectEnd(Character character)
     {
-        EndScreenFX(ScreenEffect);
+        RemoveUpgrades(character, true);
+        if (ScreenEffect != null)
+        {
+            EndScreenFX(ScreenEffect);
+        }
     }
     public void OnEffectDrop(Character character)
     {
         RemoveUpgrades(character);
     }
 
-    private void ApplyUpgrades(Character character)
+    private void ApplyUpgrades(Character character, bool isTemp = false)
     {
-        foreach (Upgrade upgrade in Upgrades)
+        List<Upgrade> effectives = this.Upgrades;
+        if (isTemp)
+        {
+            effectives = this.TempUpgrades;
+        }
+        foreach (Upgrade upgrade in effectives)
         {
             foreach (CharacterStatChange statChange in upgrade.CharacterStatChanges)
             {
@@ -47,9 +62,14 @@ public class Effect : ScriptableObject
         }
     }
 
-    private void RemoveUpgrades(Character character)
+    private void RemoveUpgrades(Character character, bool isTemp = false)
     {
-        foreach (Upgrade upgrade in Upgrades)
+        List<Upgrade> effectives = this.Upgrades;
+        if (isTemp)
+        {
+            effectives = this.TempUpgrades;
+        }
+        foreach (Upgrade upgrade in effectives)
         {
             foreach (CharacterStatChange statChange in upgrade.CharacterStatChanges)
             {
