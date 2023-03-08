@@ -45,11 +45,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ccea7294ab05d2c418978337280d28fc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 500
-  timeToLive: 5
-  penetrationValue: 0
-  impactParticleSystem: {fileID: 107994787288928992, guid: dc3a630b19867be4095c42eee36b0f34, type: 3}
-  impactHole: {fileID: 5866310308708066316, guid: 9cf2ca00e3de3834ba765cc0dd58232e, type: 3}
+  Speed: 100
+  TimeToLive: 10
+  PenetrationValue: 1
+  ImpactParticleSystem: {fileID: 107994787288928992, guid: dc3a630b19867be4095c42eee36b0f34, type: 3}
+  ImpactHole: {fileID: 5866310308708066316, guid: 9cf2ca00e3de3834ba765cc0dd58232e, type: 3}
+  Weapon: {fileID: 0}
 --- !u!1 &3799697634361305317
 GameObject:
   m_ObjectHideFlags: 0

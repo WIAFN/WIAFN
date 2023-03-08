@@ -17,8 +17,8 @@ public class PlayerCamera : MonoBehaviour
     {
         Physics.Raycast(fpsCam.transform.position, fpsCam.transform.forward, out RaycastHit hit, 100.0f, gunLookLayerMask);
         //RotateGun(hit);
-
-        if (_isShooting && hit.transform != null)
+        // && hit.transform != null
+        if (_isShooting)
         {
             Player.Weapon.TryShoot(hit.point);
         }
@@ -41,7 +41,7 @@ public class PlayerCamera : MonoBehaviour
         }
 
         //three ifs, why?!
-        if (Input.GetKeyDown(KeyCode.R))
+        if (Input.GetKeyDown(KeyCode.R) && Player.Effect != null)
         {
             if(!Player.Effect.InAnimation)
             {

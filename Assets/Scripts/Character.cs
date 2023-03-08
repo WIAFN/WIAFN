@@ -144,10 +144,10 @@ public class Character : MonoBehaviour
         switch (attributeEnum)
         {
             case 0:
-                Weapon.damage += value;
+                Weapon.Damage += value;
                 break;
             case 1:
-                Weapon.fireRate += value;
+                Weapon.FireRate += value;
                 break;
         }
     }

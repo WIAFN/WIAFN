@@ -4,19 +4,18 @@ using UnityEngine;
 public abstract class Weapon : MonoBehaviour
 {
     [HideInInspector]
-    public Character character;
-    private CharacterMovement _characterMove;
+    public Character Character;
 
-    public float fireRate;
-    public float damage;
-    public CharacterMovement characterMove;
-    public Transform gunTip;
-    public ParticleSystem muzzleFlash;
+    public float FireRate;
+    public float Damage;
+    public CharacterMovement CharacterMove;
+    public Transform GunTip;
+    public ParticleSystem MuzzleFlash;
     public float Delay { get; protected set; }
 
     public GameObject projectilePrefab;
 
-    private float _firePeriod { get { return (1f / fireRate); } }
+    private float _firePeriod { get { return (1f / FireRate); } }
 
     public event ShotHandler OnShot; 
 
@@ -24,12 +23,10 @@ public abstract class Weapon : MonoBehaviour
     {
         Delay = 0;
 
-        if (character == null)
+        if (Character == null)
         {
-            character = GetComponentInParent<Character>();
+            Character = GetComponentInParent<Character>();
         }
-
-        _characterMove = character.GetComponent<CharacterMovement>();
     }
 
     private void Update()
@@ -49,24 +46,20 @@ public abstract class Weapon : MonoBehaviour
         }
 
         float shootingError = 0f;
-        if (character != null)
+        if (Character != null)
         {
-            shootingError = character.GetFiringErrorRate();
+            shootingError = Character.GetFiringErrorRate();
         }
         shootAt = AddShootingError(shootAt, shootingError);
 
-        Vector3 aimVector = (shootAt - gunTip.position).normalized;
-        GameObject projectileGameObject = Instantiate(projectilePrefab, gunTip.position, Quaternion.LookRotation(aimVector, Vector3.up));
+        Vector3 aimVector = (shootAt - GunTip.position).normalized;
+        GameObject projectileGameObject = Instantiate(projectilePrefab, GunTip.position, Quaternion.LookRotation(aimVector, Vector3.up));
         Projectile projectile = projectileGameObject.GetComponent<Projectile>();
 
-        //if (_characterMove != null)
-        //{
-        //    projectile.SetInitialVelocity(_characterMove.Velocity);
-        //}
-        projectile.SetDamage(damage);
+        projectile.SetWeapon(this);
 
         //Gun Flare
-        muzzleFlash.Play();
+        MuzzleFlash.Play();
         Delay = 0;
 
         OnShot?.Invoke(projectile);
