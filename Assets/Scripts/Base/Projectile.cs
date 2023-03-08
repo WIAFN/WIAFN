@@ -125,7 +125,7 @@ public abstract class Projectile : MonoBehaviour
         //Keep the initial momentum
         transform.position += _parentVelocity * Time.deltaTime;
         //Forward thrust
-        transform.position += transform.forward * Speed * Time.deltaTime;
+        transform.position += Speed * Time.deltaTime * transform.forward;
     }
 
     private void ProjectileTTL()

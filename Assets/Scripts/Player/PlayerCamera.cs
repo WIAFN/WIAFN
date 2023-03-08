@@ -15,12 +15,13 @@ public class PlayerCamera : MonoBehaviour
     public Camera fpsCam;
     void Update()
     {
-        Physics.Raycast(fpsCam.transform.position, fpsCam.transform.forward, out RaycastHit hit, 100.0f, gunLookLayerMask);
+        //Physics.Raycast(fpsCam.transform.position, fpsCam.transform.forward, out RaycastHit hit, 100.0f, gunLookLayerMask);
+        Ray ray = new Ray(fpsCam.transform.position, fpsCam.transform.forward);
         //RotateGun(hit);
         // && hit.transform != null
         if (_isShooting)
         {
-            Player.Weapon.TryShoot(hit.point);
+            Player.Weapon.TryShoot(ray.GetPoint(1000f));
         }
 
         if (Input.GetMouseButtonDown(0))
