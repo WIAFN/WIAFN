@@ -7,15 +7,20 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "Effect", menuName = "ScriptableObjects/SpawnEffect", order = 1)]
 public class Effect : ScriptableObject
 {
+    [Header("For Simple Upgrades")]
     public List<Upgrade> Upgrades;
-    public List<Upgrade> TempUpgrades;
+    [Header("For Effect")]
+    public List<Upgrade> Boosts;
     public Blit ScreenEffect;
     public bool InAnimation = false;
     public bool Enabled = false;
+    public float AnimationDuration;
     public float EffectDuration;
     public float EffectCooldown;
     public bool IsUsedOnce;
     public int UseCount;
+    public LeanTweenType animationEaseIn;
+    public LeanTweenType animationEaseOut;
     private Character _owner;
     public void OnEffectPickup(Character character)
     {
@@ -28,6 +33,7 @@ public class Effect : ScriptableObject
     {
         if (ScreenEffect != null)
         {
+            ApplyBoosts();
             StartScreenFX(ScreenEffect);
         }
     }
@@ -36,6 +42,7 @@ public class Effect : ScriptableObject
     {
         if (ScreenEffect != null)
         {
+            RemoveBoosts();
             EndScreenFX(ScreenEffect);
         }
     }
@@ -48,14 +55,9 @@ public class Effect : ScriptableObject
         RemoveUpgrades();
     }
 
-    private void ApplyUpgrades(bool isTemp = false)
+    private void ApplyUpgrades()
     {
-        List<Upgrade> effectives = this.Upgrades;
-        if (isTemp)
-        {
-            effectives = this.TempUpgrades;
-        }
-        foreach (Upgrade upgrade in effectives)
+        foreach (Upgrade upgrade in Upgrades)
         {
             foreach (CharacterStatChange statChange in upgrade.CharacterStatChanges)
             {
@@ -69,14 +71,46 @@ public class Effect : ScriptableObject
         }
     }
 
-    private void RemoveUpgrades(bool isTemp = false)
+    private void ApplyBoosts()
     {
-        List<Upgrade> effectives = this.Upgrades;
-        if (isTemp)
+        //TODO: Find a way to distinguish between boosted stats and base stats, probably need a base stats overhaul
+        foreach (Upgrade boost in Boosts)
         {
-            effectives = this.TempUpgrades;
+            int statId;
+            float currentValue;
+            float calculatedValue;
+            foreach (CharacterStatChange statChange in boost.CharacterStatChanges)
+            {
+                statId = (int)statChange.StatEnum;
+                currentValue = _owner.GetCharacterStat(statId);
+                calculatedValue = currentValue + statChange.Value;
+                LeanTween.value(currentValue, calculatedValue, AnimationDuration)
+                    .setEase(animationEaseIn)
+                    .setOnUpdate( val =>
+                    {
+                        _owner.ChangeCharacterStat(statId, val);
+                    });
+            }
+
+            foreach (WeaponStatChange statChange in boost.WeaponStatChanges)
+            {
+                statId = (int)statChange.StatEnum;
+                currentValue = _owner.GetWeaponStat(statId);
+                calculatedValue = currentValue + statChange.Value;
+                Debug.Log(statId + " " + currentValue + " " + calculatedValue);
+                LeanTween.value(currentValue, calculatedValue, AnimationDuration)
+                    .setEase(animationEaseIn)
+                    .setOnUpdate(val =>
+                    {
+                        _owner.ChangeWeaponStat(statId, val);
+                    });
+            }
         }
-        foreach (Upgrade upgrade in effectives)
+    }
+
+    private void RemoveUpgrades()
+    {
+        foreach (Upgrade upgrade in Upgrades)
         {
             foreach (CharacterStatChange statChange in upgrade.CharacterStatChanges)
             {
@@ -92,6 +126,42 @@ public class Effect : ScriptableObject
         }
     }
 
+    private void RemoveBoosts()
+    {
+        //TODO: Find a way to distinguish between boosted stats and base stats, probably need a base stats overhaul
+        foreach (Upgrade boost in Boosts)
+        {
+            int statId;
+            float currentValue;
+            float calculatedValue;
+            foreach (CharacterStatChange statChange in boost.CharacterStatChanges)
+            {
+                statId = (int)statChange.StatEnum;
+                currentValue = _owner.GetCharacterStat(statId);
+                calculatedValue = currentValue - statChange.Value;
+                LeanTween.value(currentValue, calculatedValue, AnimationDuration)
+                    .setEase(animationEaseOut)
+                    .setOnUpdate(val =>
+                    {
+                        _owner.ChangeCharacterStat(statId, val);
+                    });
+            }
+
+            foreach (WeaponStatChange statChange in boost.WeaponStatChanges)
+            {
+                statId = (int)statChange.StatEnum;
+                currentValue = _owner.GetWeaponStat(statId);
+                calculatedValue = currentValue - statChange.Value;
+                LeanTween.value(currentValue, calculatedValue, AnimationDuration)
+                    .setEase(animationEaseOut)
+                    .setOnUpdate(val =>
+                    {
+                        _owner.ChangeWeaponStat(statId, val);
+                    });
+            }
+        }
+    }
+
     private void StartScreenFX(Blit screenFX)
     {
         Debug.Log("StartScreenFX");
@@ -100,8 +170,9 @@ public class Effect : ScriptableObject
         Material blitMat = screenFX.settings.blitMaterial;
         Debug.Log(blitMat.GetFloat("_Intensity"));
         InAnimation = true;
-        LeanTween.value(0, 1, 1.5f)
-            .setEase(LeanTweenType.easeInQuint)
+
+        LeanTween.value(0, 1, AnimationDuration)
+            .setEase(animationEaseIn)
             .setOnUpdate(l =>
             {
                 blitMat.SetFloat("_Intensity", l);
@@ -109,7 +180,6 @@ public class Effect : ScriptableObject
             .setOnComplete(l => 
             {
                 InAnimation = false;
-                ApplyUpgrades(true);
                 Enabled = true;
                 UseCount++;                
             });
@@ -121,7 +191,7 @@ public class Effect : ScriptableObject
         Debug.Log(blitMat.GetFloat("_Intensity"));
         InAnimation = true;
         LeanTween.value(1, 0, 1.5f)
-            .setEase(LeanTweenType.easeOutQuint)
+            .setEase(animationEaseOut)
             .setOnUpdate(l =>
             {
                 blitMat.SetFloat("_Intensity", l);
@@ -130,7 +200,6 @@ public class Effect : ScriptableObject
             {
                 InAnimation = false;
                 screenFX.SetActive(false);
-                RemoveUpgrades(true);
                 Enabled = false;
             });
     }
