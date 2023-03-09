@@ -1806,6 +1806,79 @@ Transform:
   m_Father: {fileID: 1281052334}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1001 &1693537887
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 6365665363150068368, guid: 9bc9969bb95d1db4a9abe7a2b5cb8cc1, type: 3}
+      propertyPath: m_Name
+      value: pfEffect (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 6365665363150068371, guid: 9bc9969bb95d1db4a9abe7a2b5cb8cc1, type: 3}
+      propertyPath: m_RootOrder
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 6365665363150068371, guid: 9bc9969bb95d1db4a9abe7a2b5cb8cc1, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 8.35
+      objectReference: {fileID: 0}
+    - target: {fileID: 6365665363150068371, guid: 9bc9969bb95d1db4a9abe7a2b5cb8cc1, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 1.971
+      objectReference: {fileID: 0}
+    - target: {fileID: 6365665363150068371, guid: 9bc9969bb95d1db4a9abe7a2b5cb8cc1, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -3.4
+      objectReference: {fileID: 0}
+    - target: {fileID: 6365665363150068371, guid: 9bc9969bb95d1db4a9abe7a2b5cb8cc1, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6365665363150068371, guid: 9bc9969bb95d1db4a9abe7a2b5cb8cc1, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6365665363150068371, guid: 9bc9969bb95d1db4a9abe7a2b5cb8cc1, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6365665363150068371, guid: 9bc9969bb95d1db4a9abe7a2b5cb8cc1, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6365665363150068371, guid: 9bc9969bb95d1db4a9abe7a2b5cb8cc1, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6365665363150068371, guid: 9bc9969bb95d1db4a9abe7a2b5cb8cc1, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6365665363150068371, guid: 9bc9969bb95d1db4a9abe7a2b5cb8cc1, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7495300434675273175, guid: 9bc9969bb95d1db4a9abe7a2b5cb8cc1, type: 3}
+      propertyPath: Color.b
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7495300434675273175, guid: 9bc9969bb95d1db4a9abe7a2b5cb8cc1, type: 3}
+      propertyPath: Color.g
+      value: 0.67253804
+      objectReference: {fileID: 0}
+    - target: {fileID: 7495300434675273175, guid: 9bc9969bb95d1db4a9abe7a2b5cb8cc1, type: 3}
+      propertyPath: Color.r
+      value: 0.015686274
+      objectReference: {fileID: 0}
+    - target: {fileID: 7495300434675273175, guid: 9bc9969bb95d1db4a9abe7a2b5cb8cc1, type: 3}
+      propertyPath: Effects.Array.data[0]
+      value: 
+      objectReference: {fileID: 11400000, guid: 8ee96b5e5a9ccdf4baf22c2032208ba3, type: 2}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 9bc9969bb95d1db4a9abe7a2b5cb8cc1, type: 3}
 --- !u!1 &1804107608
 GameObject:
   m_ObjectHideFlags: 0
@@ -1936,6 +2009,31 @@ Transform:
   m_Father: {fileID: 763911525}
   m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 89.659, z: 0}
+--- !u!1 &1952899234 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3013059812876276189, guid: 9bc9969bb95d1db4a9abe7a2b5cb8cc1, type: 3}
+  m_PrefabInstance: {fileID: 1693537887}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1952899236
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1952899234}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 474bcb49853aa07438625e644c072ee6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Version: 1
+  m_UsePipelineSettings: 1
+  m_AdditionalLightsShadowResolutionTier: 2
+  m_LightLayerMask: 1
+  m_CustomShadowLayers: 0
+  m_ShadowLayerMask: 1
+  m_LightCookieSize: {x: 1, y: 1}
+  m_LightCookieOffset: {x: 0, y: 0}
 --- !u!1 &2011883474
 GameObject:
   m_ObjectHideFlags: 0

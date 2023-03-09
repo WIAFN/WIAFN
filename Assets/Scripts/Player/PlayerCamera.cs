@@ -6,7 +6,6 @@ public class PlayerCamera : MonoBehaviour
     public LayerMask gunLookLayerMask;
     public Character Player;
     private bool _isShooting = false;
-    private bool _inEffect = false;
 
     public static event InteractHandler OnInteract;
 
@@ -42,16 +41,15 @@ public class PlayerCamera : MonoBehaviour
         }
 
         //three ifs, why?!
-        if (Input.GetKeyDown(KeyCode.R) && Player.Effect != null)
+        if (Input.GetKeyDown(KeyCode.R) && Player.HasEffect())
         {
             if(!Player.Effect.InAnimation)
             {
-                if (!_inEffect)
+                if (!Player.Effect.Enabled)
                 {
-                    Player.Effect.OnEffectStart(Player);
+                    Player.Effect.OnEffectStart();
                 }
-                else Player.Effect.OnEffectEnd(Player);
-                _inEffect = !_inEffect;
+                else Player.Effect.OnEffectEnd();
             }
         }
     }

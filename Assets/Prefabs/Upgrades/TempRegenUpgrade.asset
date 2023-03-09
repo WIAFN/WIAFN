@@ -10,11 +10,11 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: a08ac5638a3d94d4097ff49b804dab96, type: 3}
-  m_Name: Upgrade
+  m_Name: TempRegenUpgrade
   m_EditorClassIdentifier: 
   CharacterStatChanges:
-  - StatEnum: 0
-    Value: 20
-  WeaponStatChanges:
-  - StatEnum: 0
-    Value: 2
+  - StatEnum: 3
+    Value: 100
+  - StatEnum: 2
+    Value: 100
+  WeaponStatChanges: []

@@ -2,8 +2,6 @@ using Cyan;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.TextCore.Text;
-using static UnityEditor.Progress;
 
 
 [CreateAssetMenu(fileName = "Effect", menuName = "ScriptableObjects/SpawnEffect", order = 1)]
@@ -13,35 +11,44 @@ public class Effect : ScriptableObject
     public List<Upgrade> TempUpgrades;
     public Blit ScreenEffect;
     public bool InAnimation = false;
+    public bool Enabled = false;
+    public float EffectDuration;
+    public float EffectCooldown;
+    public bool IsUsedOnce;
+    public int UseCount;
+    private Character _owner;
     public void OnEffectPickup(Character character)
     {
-        character.ChangeEffect(this);
-        ApplyUpgrades(character);
+        _owner = character;
+        _owner.ChangeEffect(this);
+        ApplyUpgrades();
     }
 
-    public void OnEffectStart(Character character)
+    public void OnEffectStart()
     {
-        ApplyUpgrades(character, true);
         if (ScreenEffect != null)
         {
             StartScreenFX(ScreenEffect);
         }
     }
 
-    public void OnEffectEnd(Character character)
+    public void OnEffectEnd()
     {
-        RemoveUpgrades(character, true);
         if (ScreenEffect != null)
         {
             EndScreenFX(ScreenEffect);
         }
     }
-    public void OnEffectDrop(Character character)
+    public void OnEffectDrop()
     {
-        RemoveUpgrades(character);
+        if(Enabled)
+        {
+            OnEffectEnd();
+        }
+        RemoveUpgrades();
     }
 
-    private void ApplyUpgrades(Character character, bool isTemp = false)
+    private void ApplyUpgrades(bool isTemp = false)
     {
         List<Upgrade> effectives = this.Upgrades;
         if (isTemp)
@@ -52,17 +59,17 @@ public class Effect : ScriptableObject
         {
             foreach (CharacterStatChange statChange in upgrade.CharacterStatChanges)
             {
-                character.ChangeCharacterStat(((int)statChange.StatEnum), statChange.Value);
+                _owner.ChangeCharacterStat(((int)statChange.StatEnum), statChange.Value);
             }
 
             foreach (WeaponStatChange statChange in upgrade.WeaponStatChanges)
             {
-                character.ChangeWeaponStat(((int)statChange.StatEnum), statChange.Value);
+                _owner.ChangeWeaponStat(((int)statChange.StatEnum), statChange.Value);
             }
         }
     }
 
-    private void RemoveUpgrades(Character character, bool isTemp = false)
+    private void RemoveUpgrades(bool isTemp = false)
     {
         List<Upgrade> effectives = this.Upgrades;
         if (isTemp)
@@ -73,13 +80,13 @@ public class Effect : ScriptableObject
         {
             foreach (CharacterStatChange statChange in upgrade.CharacterStatChanges)
             {
-                character.ChangeCharacterStat(((int)statChange.StatEnum),
+                _owner.ChangeCharacterStat(((int)statChange.StatEnum),
                     -statChange.Value);
             }
 
             foreach (WeaponStatChange statChange in upgrade.WeaponStatChanges)
             {
-                character.ChangeWeaponStat(((int)statChange.StatEnum),
+                _owner.ChangeWeaponStat(((int)statChange.StatEnum),
                     -statChange.Value);
             }
         }
@@ -102,6 +109,9 @@ public class Effect : ScriptableObject
             .setOnComplete(l => 
             {
                 InAnimation = false;
+                ApplyUpgrades(true);
+                Enabled = true;
+                UseCount++;                
             });
     }
     private void EndScreenFX(Blit screenFX)
@@ -120,6 +130,8 @@ public class Effect : ScriptableObject
             {
                 InAnimation = false;
                 screenFX.SetActive(false);
+                RemoveUpgrades(true);
+                Enabled = false;
             });
     }
 }

@@ -154,7 +154,16 @@ public class Character : MonoBehaviour
 
     public void ChangeEffect(Effect effect)
     {
+        if (HasEffect())
+        {
+            _effect.OnEffectDrop();
+        }
         _effect = effect;
+    }
+
+    public bool HasEffect()
+    {
+        return _effect != null;
     }
 
     public CharacterMovement CharacterMovement => _characterMove;
