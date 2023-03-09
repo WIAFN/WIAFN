@@ -18,8 +18,8 @@ namespace WIAFN.Constants
     {
         maxHealth = 0,
         maxStamina = 1,
-        staminaRegen = 2,
-        healthRegen = 3,
+        healthRegen = 2,
+        staminaRegen = 3,
         jumpHeight = 4,
         multiJumps = 5,
         defaultSpeed = 6,

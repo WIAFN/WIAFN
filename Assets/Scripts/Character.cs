@@ -117,6 +117,24 @@ public class Character : MonoBehaviour
         }
     }
 
+    public float GetCharacterStat(int attributeEnum)
+    {
+        switch (attributeEnum)
+        {
+            case 0:
+                return BaseStats.maxHealth;
+            case 1:
+                return BaseStats.maxStamina;
+            case 2:
+                return BaseStats.staminaRegen;
+            case 3:
+                return BaseStats.healthRegen;
+            case 4:
+                return BaseStats.speedCoefficient;
+            default:
+                return BaseStats.maxHealth;
+        }
+    }
     public void ChangeCharacterStat(int attributeEnum, float value)
     {
         switch (attributeEnum)
@@ -128,10 +146,10 @@ public class Character : MonoBehaviour
                 BaseStats.maxStamina += value;
                 break;
             case 2:
-                BaseStats.staminaRegen += value;
+                BaseStats.healthRegen += value;
                 break;
             case 3:
-                BaseStats.healthRegen += value;
+                BaseStats.staminaRegen += value;
                 break;
             case 4:
                 BaseStats.speedCoefficient += value;
@@ -144,12 +162,24 @@ public class Character : MonoBehaviour
         switch (attributeEnum)
         {
             case 0:
-                Weapon.Damage += value;
+                Weapon.Damage = value;
                 break;
             case 1:
-                Weapon.FireRate += value;
+                Weapon.FireRate = value;
                 break;
         }
+    }
+
+    public float GetWeaponStat(int attributeEnum)
+    {
+        switch (attributeEnum)
+        {
+            case 0:
+                return Weapon.Damage;
+            case 1:
+                return Weapon.FireRate;
+        }
+        return 0;
     }
 
     public void ChangeEffect(Effect effect)
