@@ -1,4 +1,3 @@
-using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -21,14 +20,6 @@ public class RangedEnemyAnimation : MonoBehaviour
     public MultiAimConstraint bodyConstraint;
     public ChainIKConstraint rightArmIK;
 
-    [Header("LegIK")]
-    public TwoBoneIKConstraint rightLegIK;
-    public TwoBoneIKConstraint leftLegIK;
-
-    public float legRootTargetDistThreshold;
-
-    public LayerMask legsRaycastLayerMask;
-
     private Character _character;
     private NPCControllerBase _npc;
     private Animator _animator;
@@ -40,13 +31,37 @@ public class RangedEnemyAnimation : MonoBehaviour
 
     private Transform _rightArmIKTarget;
 
-    private Transform _rightLegIKTarget;
-    private Vector3 _rightLegIKTargetPos;
-    private Transform _leftLegIKTarget;
-    private Vector3 _leftLegIKTargetPos;
+    private int _bodyIdleMovementDirection;
+    private float _bodyOffset;
 
-    private Transform _rightLegRoot;
-    private Transform _leftLegRoot;
+    #region Leg IK Variables
+    [Header("LegIK")]
+    public TwoBoneIKConstraint rightLegIK;
+    public TwoBoneIKConstraint leftLegIK;
+
+    public Transform leftLegRootIndicator, rightLegRootIndicator;
+
+    public float legRootTargetDistThresholdSqr, legResetDistanceThresholdSqr;
+
+    public LayerMask legsRaycastLayerMask;
+
+    public float stepHeight, stepLength;
+
+    private Transform _leftLegIKTarget, _rightLegIKTarget;
+
+    private Vector3 _leftLegOldPos, _rightLegOldPos;
+    private Vector3 _leftLegCurrentPos, _rightLegCurrentPos;
+    private Vector3 _leftLegTargetPos, _rightLegTargetPos;
+
+    private Vector3 _leftLegOldNormal, _rightLegOldNormal;
+    private Vector3 _leftLegCurrentNormal, _rightLegCurrentNormal;
+    private Vector3 _leftLegTargetNormal, _rightLegTargetNormal;
+
+    private float _leftLegLerp, _rightLegLerp;
+
+    private bool _leftLegOnGround => _leftLegLerp >= 1f;
+    private bool _rightLegOnGround => _rightLegLerp >= 1f;
+    #endregion Leg IK Variables
 
 
     // Start is called before the first frame update
@@ -60,21 +75,31 @@ public class RangedEnemyAnimation : MonoBehaviour
         SetLookAt(false);
         SetAim(false);
 
+        _bodyIdleMovementDirection = 1;
+        _bodyOffset = 0f;
+
         _headAimObject = headConstraint.data.sourceObjects.GetTransform(0);
         _bodyAimObject = bodyConstraint.data.sourceObjects.GetTransform(0);
+        InitializeLegIK();
+    }
 
+    private void InitializeLegIK()
+    {
         _rightArmIKTarget = rightArmIK.data.target;
 
         _rightLegIKTarget = rightLegIK.data.target;
         _leftLegIKTarget = leftLegIK.data.target;
 
-        _rightLegRoot = rightLegIK.data.root;
-        _leftLegRoot = leftLegIK.data.root;
+        _leftLegTargetPos = _leftLegIKTarget.position;
+        ResetLeftLegIK();
+        _rightLegTargetPos = _rightLegIKTarget.position;
+        ResetRightLegIK();
     }
 
     // Update is called once per frame
     void LateUpdate()
     {
+        //UpdateGeneralBody();
 
         // For body.
         bool lookAtSpecified = _npc.LookAtSpecified;
@@ -110,8 +135,6 @@ public class RangedEnemyAnimation : MonoBehaviour
 
             UpdateGeneralBodyConstraints(lookAtOrder);
             UpdateAimConstraints(lookAtOrder);
-            //UpdateLookAt(_npc.LookAtOrder.PositionRaw, body, bodyAngleLimit, bodyAngularSpeed, restQuat: _bodyRest, useYAxis: true);
-            //UpdateLookAt(_npc.LookAtOrder.Position, head, headAngleLimit, headAngularSpeed, restQuat: _headRest);
         }
 
         // For legs.
@@ -120,6 +143,7 @@ public class RangedEnemyAnimation : MonoBehaviour
         //{
         //    if (speed < 1f)
         //    {
+
         //        speed = 0f;
         //    }
         //    else if (speed < 6f)
@@ -136,30 +160,122 @@ public class RangedEnemyAnimation : MonoBehaviour
 
     private void Update()
     {
-        _leftLegIKTarget.position = _leftLegIKTargetPos;
-        _rightLegIKTarget.position = _rightLegIKTargetPos;
+        UpdateLegs();
+    }
 
-        Vector3 leftFootDiff = _leftLegIKTarget.position - _leftLegRoot.position;
-        if (leftLegIK!= null && leftFootDiff.sqrMagnitude > legRootTargetDistThreshold)
+    private void UpdateGeneralBody()
+    {
+        // Should be called on LateUpdate.
+        // Doesn't work well with legs.
+        _bodyOffset += _bodyIdleMovementDirection * Time.deltaTime * 0.1f;
+        if (Mathf.Abs(_bodyOffset) > 0.05f && _bodyOffset * _bodyIdleMovementDirection > 0f)
         {
-            bool hit = Physics.Raycast(_leftLegRoot.position, Vector3.down - leftFootDiff.normalized / 2f, out RaycastHit hitInfo, 10f, legsRaycastLayerMask, QueryTriggerInteraction.UseGlobal);
-            if (hit && (hitInfo.point - _rightLegIKTargetPos).sqrMagnitude > _character.CharacterMovement.Speed / 5f)
-            {
-                _leftLegIKTargetPos = hitInfo.point + Vector3.up * 0.95f;
-            }
+            _bodyIdleMovementDirection *= -1;
         }
 
-        Vector3 rightFootDiff = _rightLegIKTarget.position - _rightLegRoot.position;
-        if (rightLegIK != null && rightFootDiff.sqrMagnitude > legRootTargetDistThreshold)
-        {
-            bool hit = Physics.Raycast(_rightLegRoot.position, Vector3.down - rightFootDiff.normalized / 2f, out RaycastHit hitInfo, 10f, legsRaycastLayerMask, QueryTriggerInteraction.UseGlobal);
-            if (hit && (hitInfo.point - _leftLegIKTargetPos).sqrMagnitude > _character.CharacterMovement.Speed / 5f)
-            {
-                _rightLegIKTargetPos = hitInfo.point + Vector3.up * 0.95f;
-            }
+        Vector3 bodyPos = transform.position;
+        bodyPos.y = _bodyOffset;
+        transform.position = bodyPos;
+    }
 
+    #region Leg Operations
+    private void UpdateLegs()
+    {
+        // Interpolate Leg Position.
+        CalculateLegInterpolation(ref _leftLegOldPos, ref _leftLegCurrentPos, _leftLegTargetPos, ref _leftLegLerp, stepHeight);
+        CalculateLegInterpolation(ref _rightLegOldPos, ref _rightLegCurrentPos, _rightLegTargetPos, ref _rightLegLerp, stepHeight);
+
+        _leftLegIKTarget.position = _leftLegCurrentPos;
+        _rightLegIKTarget.position = _rightLegCurrentPos;
+
+        if (DebugManager.instance.debugProceduralAnims)
+        {
+            Debug.DrawLine(_leftLegOldPos, _leftLegCurrentPos, Color.green);
+            Debug.DrawLine(_leftLegCurrentPos, _leftLegTargetPos, Color.yellow);
+            Debug.DrawLine(leftLegRootIndicator.position, _leftLegTargetPos);
+
+            Debug.DrawLine(_rightLegOldPos, _rightLegCurrentPos, Color.green);
+            Debug.DrawLine(_rightLegCurrentPos, _rightLegTargetPos, Color.yellow);
+            Debug.DrawLine(rightLegRootIndicator.position, _rightLegTargetPos);
+        }
+
+        CalculateLegTargetPos(leftLegIK, leftLegRootIndicator, _rightLegOnGround, ref _leftLegLerp, ref _leftLegOldPos, ref _leftLegTargetPos);
+        CalculateLegTargetPos(rightLegIK, rightLegRootIndicator, _leftLegOnGround, ref _rightLegLerp, ref _rightLegOldPos, ref _rightLegTargetPos);
+
+        Vector3 footDiff = _leftLegTargetPos - leftLegRootIndicator.position;
+        if (footDiff.sqrMagnitude > legResetDistanceThresholdSqr)
+        {
+            ResetLeftLegIK();
+        }
+
+        footDiff = _rightLegTargetPos - rightLegRootIndicator.position;
+        if (footDiff.sqrMagnitude > legResetDistanceThresholdSqr)
+        {
+            ResetRightLegIK();
         }
     }
+
+    private void CalculateLegInterpolation(ref Vector3 legOldPos, ref Vector3 legCurrentPos, Vector3 legTargetPos, ref float legLerp, float stepHeight)
+    {
+        if (legLerp < 1)
+        {
+            legCurrentPos = Vector3.Lerp(legOldPos, legTargetPos, legLerp);
+            legCurrentPos.y += Mathf.Sin(legLerp * Mathf.PI) * stepHeight;
+            legLerp += Time.deltaTime * Mathf.Max(1f, _character.BaseStats.Speed * 0.45f);
+        }
+        else
+        {
+            legOldPos = legTargetPos;
+        }
+    }
+
+    private void CalculateLegTargetPos(TwoBoneIKConstraint legIK, Transform legRoot, bool otherLegOnGround, ref float legLerp, ref Vector3 legOldPos, ref Vector3 legTargetPos)
+    {
+        Vector3 footDiff = legTargetPos - legRoot.position;
+        if (legIK != null && footDiff.sqrMagnitude > legRootTargetDistThresholdSqr && otherLegOnGround && legLerp >= 1f)
+        {
+            // Shoots raycast always down. Should not look ok when moving on walls.
+            bool hit = Physics.Raycast(legRoot.position, Vector3.down, out RaycastHit hitInfo, 10f, legsRaycastLayerMask, QueryTriggerInteraction.UseGlobal);
+            if (hit)
+            {
+                legLerp = 0f;
+                Vector3 footOffset = Vector3.up * 0.9f;
+                Transform body = _character.transform;
+                int direction = body.InverseTransformPoint(hitInfo.point).z > body.InverseTransformPoint(legTargetPos).z ? 1 : -1;
+                float characterSpeed = _character.CharacterMovement.Speed;
+
+                // Can be unnecessary just in case.
+                if (characterSpeed < 0.2f)
+                {
+                    direction = 0;
+                }
+
+                legTargetPos = hitInfo.point + (body.forward * stepLength * direction * Mathf.Max(1f, characterSpeed / 7f)) + footOffset;
+                legTargetPos = legTargetPos + new Vector3(Random.value, 0f, Random.value) * 0.05f; // To create a minor randomness.
+                //legTargetNormal = hitInfo.normal;
+
+            }
+        }
+    }
+
+    private void ResetLeftLegIK()
+    {
+        _leftLegCurrentPos = _leftLegTargetPos;
+        _leftLegLerp = 1f;
+
+        // TODO: If normals going to be implemented move the both legs operations to their own classes.
+        //_leftLegCurrentNormal = _leftLegTargetNormal = _leftLegOldNormal = Vector3.up;
+    }
+
+    private void ResetRightLegIK()
+    {
+        _rightLegCurrentPos = _rightLegTargetPos;
+        _rightLegLerp = 1f;
+
+        //_rightLegCurrentNormal = _rightLegTargetNormal = _rightLegOldNormal = Vector3.up;
+    }
+
+    #endregion Leg Operations
 
     private LookAtOrder GetEmptyLookAt()
     {
