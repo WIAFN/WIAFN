@@ -838,7 +838,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1994605344670723622}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0.216, y: 0.492, z: 0.386}
   m_LocalScale: {x: 0.051813472, y: 0.051813472, z: 0.051813472}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -3192,9 +3192,9 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5689696244117005897}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 7.994192, y: 0, z: -8.126176}
-  m_LocalScale: {x: 0.051813472, y: 0.051813472, z: 0.051813472}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -0.186, y: 0.402, z: -0.213}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 8271314074566138328}
@@ -4013,10 +4013,15 @@ MonoBehaviour:
   rightArmIK: {fileID: 420639423}
   rightLegIK: {fileID: 3299582349506782501}
   leftLegIK: {fileID: 2670087228144807389}
-  legRootTargetDistThreshold: 4.2
+  leftLegRootIndicator: {fileID: 461465843109555199}
+  rightLegRootIndicator: {fileID: 7399738001173110035}
+  legRootTargetDistThresholdSqr: 4.2
+  legResetDistanceThresholdSqr: 9
   legsRaycastLayerMask:
     serializedVersion: 2
     m_Bits: 64
+  stepHeight: 1
+  stepLength: 1.5
 --- !u!1 &8267260870325431523
 GameObject:
   m_ObjectHideFlags: 0
