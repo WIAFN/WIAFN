@@ -62,7 +62,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10303, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: 2c8617feec5ff1d45ba9d43b4204cc4d, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -192,7 +192,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10303, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: 2c8617feec5ff1d45ba9d43b4204cc4d, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -357,6 +357,7 @@ MonoBehaviour:
   dashDuration: 0
   dashCooldown: 0
   dashCost: 0
+  shootingErrorRateMinMax: {x: 0, y: 0}
   speedCoefficient: 1
 --- !u!114 &3275076730903004488
 MonoBehaviour:
@@ -425,6 +426,7 @@ MonoBehaviour:
   eyeHeight: 2.01
   angularSpeed: 360
   rotateBodyTowardsMovement: 1
+  shootingErrorRateToDistance: 0
 --- !u!114 &1948059375
 MonoBehaviour:
   m_ObjectHideFlags: 0

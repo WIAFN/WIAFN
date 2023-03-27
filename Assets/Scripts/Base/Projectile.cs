@@ -9,6 +9,8 @@ public abstract class Projectile : MonoBehaviour
     public int PenetrationValue;
     public GameObject ImpactParticleSystem; //Impact
     public GameObject ImpactHole;
+
+    [HideInInspector]
     public Weapon Weapon;
 
     protected TrailRenderer TrailRenderer;  //Bullet trail?
