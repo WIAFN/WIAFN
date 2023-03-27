@@ -230,7 +230,7 @@ public class RangedEnemyAnimation : MonoBehaviour
                 float characterSpeed = _character.CharacterMovement.Speed;
 
                 // Can be unnecessary just in case.
-                if (characterSpeed < 0.2f)
+                if (characterSpeed < 0.5f)
                 {
                     direction = 0;
                 }
