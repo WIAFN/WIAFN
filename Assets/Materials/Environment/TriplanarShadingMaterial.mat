@@ -70,7 +70,7 @@ Material:
     m_Floats:
     - _Albedo_1_Tile_Num: 0.04
     - _Albedo_2_Tile_Num: 0.04
-    - _Ambient_Occlussion: 0.3
+    - _Ambient_Occlussion: 0.6
     - _BUILTIN_QueueControl: 0
     - _BUILTIN_QueueOffset: 0
     - _Metallic: 0.02

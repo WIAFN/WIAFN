@@ -4393,8 +4393,29 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: -90
       objectReference: {fileID: 0}
+    - target: {fileID: 8274436066494028970, guid: ca2e116dfb1d0c64aa3fe725af5cea27, type: 3}
+      propertyPath: Damage
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 8274436066494028970, guid: ca2e116dfb1d0c64aa3fe725af5cea27, type: 3}
+      propertyPath: GunTip
+      value: 
+      objectReference: {fileID: 415708579156017402}
+    - target: {fileID: 8274436066494028970, guid: ca2e116dfb1d0c64aa3fe725af5cea27, type: 3}
+      propertyPath: FireRate
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 8274436066494028970, guid: ca2e116dfb1d0c64aa3fe725af5cea27, type: 3}
+      propertyPath: MuzzleFlash
+      value: 
+      objectReference: {fileID: 7813738118887920440, guid: 9afa50d68c6ab79418141f5a31b4ae06, type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ca2e116dfb1d0c64aa3fe725af5cea27, type: 3}
+--- !u!4 &415708579156017402 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 974881028149895159, guid: ca2e116dfb1d0c64aa3fe725af5cea27, type: 3}
+  m_PrefabInstance: {fileID: 595493166703517453}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &1241101774296778646 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 1836020169048594587, guid: ca2e116dfb1d0c64aa3fe725af5cea27, type: 3}
