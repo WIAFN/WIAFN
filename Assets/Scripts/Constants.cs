@@ -14,5 +14,6 @@ namespace WIAFN.Constants
         public static string Attacked = "Attacked";
         public static string Speed = "Speed";
         public static string InFight = "InFight";
+        public static string Running = "Running";
     }
 }

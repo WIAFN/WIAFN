@@ -31,9 +31,6 @@ public class RangedEnemyAnimation : MonoBehaviour
 
     private Transform _rightArmIKTarget;
 
-    private int _bodyIdleMovementDirection;
-    private float _bodyOffset;
-
     #region Leg IK Variables
     [Header("LegIK")]
     public TwoBoneIKConstraint rightLegIK;
@@ -53,9 +50,9 @@ public class RangedEnemyAnimation : MonoBehaviour
     private Vector3 _leftLegCurrentPos, _rightLegCurrentPos;
     private Vector3 _leftLegTargetPos, _rightLegTargetPos;
 
-    private Vector3 _leftLegOldNormal, _rightLegOldNormal;
-    private Vector3 _leftLegCurrentNormal, _rightLegCurrentNormal;
-    private Vector3 _leftLegTargetNormal, _rightLegTargetNormal;
+    //private Vector3 _leftLegOldNormal, _rightLegOldNormal;
+    //private Vector3 _leftLegCurrentNormal, _rightLegCurrentNormal;
+    //private Vector3 _leftLegTargetNormal, _rightLegTargetNormal;
 
     private float _leftLegLerp, _rightLegLerp;
 
@@ -63,24 +60,26 @@ public class RangedEnemyAnimation : MonoBehaviour
     private bool _rightLegOnGround => _rightLegLerp >= 1f;
     #endregion Leg IK Variables
 
+    private float _bodyRigTargetValue, _aimRigTargetValue, _legsRigTargetValue;
+
 
     // Start is called before the first frame update
     void Start()
     {
         _character = GetComponentInParent<Character>();
         _npc = _character.GetComponent<NPCControllerBase>();
-        _animator = GetComponent<Animator>();
+        _animator = _character.GetComponent<Animator>();
 
-        //DisableAimConstraints();
+        _lastAttacking = false;
+
         SetLookAt(false);
         SetAim(false);
-
-        _bodyIdleMovementDirection = 1;
-        _bodyOffset = 0f;
+        SetLegs(true);
 
         _headAimObject = headConstraint.data.sourceObjects.GetTransform(0);
         _bodyAimObject = bodyConstraint.data.sourceObjects.GetTransform(0);
         InitializeLegIK();
+
     }
 
     private void InitializeLegIK()
@@ -138,44 +137,30 @@ public class RangedEnemyAnimation : MonoBehaviour
         }
 
         // For legs.
-        //float speed = _character.CharacterMovement.Speed;
-        //if (speed > 0f)
-        //{
-        //    if (speed < 1f)
-        //    {
+        if (_animator != null)
+        {
+            float speed = _character.CharacterMovement.Speed;
+            if (speed > 0f)
+            {
+                if (speed < 1f)
+                {
 
-        //        speed = 0f;
-        //    }
-        //    else if (speed < 6f)
-        //    {
-        //        speed = 6f;
-        //    }
-        //}
+                    speed = 0f;
+                }
+                else if (speed < 6f)
+                {
+                    speed = 6f;
+                }
+            }
 
-        //if (_animator != null)
-        //{
-        //    _animator.SetFloat(WIAFNAnimatorParams.Speed, speed);
-        //}
+            _animator.SetFloat(WIAFNAnimatorParams.Speed, speed);
+        }
     }
 
     private void Update()
     {
+        UpdateRigs();
         UpdateLegs();
-    }
-
-    private void UpdateGeneralBody()
-    {
-        // Should be called on LateUpdate.
-        // Doesn't work well with legs.
-        _bodyOffset += _bodyIdleMovementDirection * Time.deltaTime * 0.1f;
-        if (Mathf.Abs(_bodyOffset) > 0.05f && _bodyOffset * _bodyIdleMovementDirection > 0f)
-        {
-            _bodyIdleMovementDirection *= -1;
-        }
-
-        Vector3 bodyPos = transform.position;
-        bodyPos.y = _bodyOffset;
-        transform.position = bodyPos;
     }
 
     #region Leg Operations
@@ -250,6 +235,7 @@ public class RangedEnemyAnimation : MonoBehaviour
                     direction = 0;
                 }
 
+                legOldPos = legTargetPos;
                 legTargetPos = hitInfo.point + (body.forward * stepLength * direction * Mathf.Max(1f, characterSpeed / 7f)) + footOffset;
                 legTargetPos = legTargetPos + new Vector3(Random.value, 0f, Random.value) * 0.05f; // To create a minor randomness.
                 //legTargetNormal = hitInfo.normal;
@@ -277,27 +263,33 @@ public class RangedEnemyAnimation : MonoBehaviour
 
     #endregion Leg Operations
 
-    private LookAtOrder GetEmptyLookAt()
+
+    private void UpdateRigs()
     {
-        Vector3 bodyPos = bodyConstraint.data.constrainedObject.position;
-        return new LookAtOrder(bodyPos + _npc.transform.forward * 2f, _npc.eyeHeight - (bodyPos - _npc.transform.position).magnitude);
+        float speed = 8f * Time.deltaTime;
+        lookAtRig.weight = Mathf.Lerp(lookAtRig.weight, _bodyRigTargetValue, speed);
+        aimRig.weight = Mathf.Lerp(aimRig.weight, _aimRigTargetValue, speed);
+        legsRig.weight = Mathf.Lerp(legsRig.weight, _legsRigTargetValue, speed);
     }
 
     private void SetLookAt(bool toSet)
     {
-        lookAtRig.weight = toSet ? 1f: 0f;
+        //lookAtRig.weight = toSet ? 1f: 0f;
+        _bodyRigTargetValue = toSet ? 1f : 0f;
     }
-
 
     private void SetAim(bool toSet)
     {
-        aimRig.weight = toSet ? 1f: 0f;
+        //aimRig.weight = toSet ? 1f: 0f;
+        _aimRigTargetValue = toSet ? 1f : 0f;
     }
 
     private void SetLegs(bool toSet)
     {
-        legsRig.weight = toSet ? 1f: 0f;
+        //legsRig.weight = toSet ? 1f: 0f;
+        _legsRigTargetValue = toSet ? 1f : 0f;
     }
+
 
     private void UpdateGeneralBodyConstraints(LookAtOrder lookAtOrder)
     {
@@ -325,55 +317,9 @@ public class RangedEnemyAnimation : MonoBehaviour
         _rightArmIKTarget.LookAt(lookAtOrder.PositionRaw, Vector3.up);
     }
 
-    private void UpdateLookAt(Vector3 lookAtPosition, Transform toRotate, float angleLimit, float angularSpeed, Quaternion restQuat = default, bool useYAxis = true)
+    private LookAtOrder GetEmptyLookAt()
     {
-        if (toRotate == null) return;
-
-        Vector3 currentPosition = toRotate.position;
-
-        if (!useYAxis)
-        {
-            Plane xzPlane = new Plane(Vector3.up, 0f);
-            Vector3 lookAtLocal = toRotate.InverseTransformPoint(lookAtPosition);
-            Vector3 closestPoint = xzPlane.ClosestPointOnPlane(lookAtLocal);
-
-            lookAtPosition = toRotate.TransformPoint(closestPoint);
-        }
-
-        if (currentPosition == lookAtPosition)
-        {
-            return;
-        }
-
-        Vector3 parentForward = toRotate.parent.rotation * -Vector3.up; // Because of the skeleton of the mesh.
-        Vector3 targetDir = lookAtPosition - currentPosition;
-
-        //Quaternion changeQuaternion = Quaternion.FromToRotation(parentForward, targetDir);
-        //Debug.DrawRay(currentPosition, changeQuaternion * parentForward * 0.75f, Color.black);
-
-        //Quaternion newRotation = Quaternion.Euler(0f, 90f, -90f) * changeQuaternion * restQuat;
-        //Quaternion newRotation = changeQuaternion;
-        //Quaternion newRotation = changeQuaternion * Quaternion.Euler(0f, 90f, -90f);
-        //Quaternion newRotation = (Quaternion.Inverse(toRotate.parent.rotation) * changeQuaternion) * Quaternion.Euler(0f, 90f, -90f);
-        Quaternion newRotation = Quaternion.LookRotation(toRotate.parent.InverseTransformDirection(targetDir), toRotate.parent.InverseTransformDirection(Vector3.up)) * Quaternion.Euler(0f, 90f, -90f);
-
-
-        if (DebugManager.instance.generalDebug)
-        {
-            Debug.DrawRay(currentPosition, parentForward, Color.green);
-            Debug.DrawRay(currentPosition, (toRotate.parent.rotation * newRotation) * -Vector3.up * 1.5f, Color.blue);
-        }
-
-        //newRotation = Quaternion.RotateTowards(toRotate.localRotation, newRotation, Time.deltaTime * angularSpeed);
-
-        newRotation = Quaternion.RotateTowards(restQuat, newRotation, angleLimit);
-
-        if (DebugManager.instance.generalDebug)
-        {
-            Debug.DrawRay(currentPosition, (toRotate.parent.rotation * newRotation) * -Vector3.up, Color.red);
-        }
-
-        toRotate.localRotation = newRotation;
+        Vector3 bodyPos = bodyConstraint.data.constrainedObject.position;
+        return new LookAtOrder(bodyPos + _npc.transform.forward * 2f, _npc.eyeHeight - (bodyPos - _npc.transform.position).magnitude);
     }
-
 }
