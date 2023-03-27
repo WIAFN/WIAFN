@@ -1,0 +1,181 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!319 &31900000
+AvatarMask:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: CoolGuyGeneralMask
+  m_Mask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+  m_Elements:
+  - m_Path: 
+    m_Weight: 1
+  - m_Path: Armature
+    m_Weight: 1
+  - m_Path: Armature/leg1_l
+    m_Weight: 1
+  - m_Path: Armature/leg1_l/leg2_l
+    m_Weight: 1
+  - m_Path: Armature/leg1_l/leg2_l/leg3_l
+    m_Weight: 1
+  - m_Path: Armature/leg1_l/leg2_l/leg3_l/leg4_l
+    m_Weight: 1
+  - m_Path: Armature/leg1_l/leg2_l/leg3_l/leg4_l/foot1_l
+    m_Weight: 1
+  - m_Path: Armature/leg1_l/leg2_l/leg3_l/leg4_l/foot1_l/foot1_l_end
+    m_Weight: 1
+  - m_Path: Armature/leg1_l/leg2_l/leg3_l/leg4_l/foot1_l/foot1_l_end/foot1_l_end_end
+    m_Weight: 1
+  - m_Path: Armature/leg1_l/leg2_l/leg3_l/leg4_l/foot2_l
+    m_Weight: 1
+  - m_Path: Armature/leg1_l/leg2_l/leg3_l/leg4_l/foot2_l/foot2_l_end
+    m_Weight: 1
+  - m_Path: Armature/leg1_l/leg2_l/leg3_l/leg4_l/foot2_l/foot2_l_end/foot2_l_end_end
+    m_Weight: 1
+  - m_Path: Armature/leg1_l/torso2
+    m_Weight: 1
+  - m_Path: Armature/leg1_l/torso2/torso2_end
+    m_Weight: 1
+  - m_Path: Armature/leg1_l/torso2/torso2_end/torso2_end_end
+    m_Weight: 1
+  - m_Path: Armature/leg1_r
+    m_Weight: 1
+  - m_Path: Armature/leg1_r/leg2_r
+    m_Weight: 1
+  - m_Path: Armature/leg1_r/leg2_r/leg3_r
+    m_Weight: 1
+  - m_Path: Armature/leg1_r/leg2_r/leg3_r/leg4_r
+    m_Weight: 1
+  - m_Path: Armature/leg1_r/leg2_r/leg3_r/leg4_r/foot1_r
+    m_Weight: 1
+  - m_Path: Armature/leg1_r/leg2_r/leg3_r/leg4_r/foot1_r/foot1_r_end
+    m_Weight: 1
+  - m_Path: Armature/leg1_r/leg2_r/leg3_r/leg4_r/foot1_r/foot1_r_end/foot1_r_end_end
+    m_Weight: 1
+  - m_Path: Armature/leg1_r/leg2_r/leg3_r/leg4_r/foot2_r
+    m_Weight: 1
+  - m_Path: Armature/leg1_r/leg2_r/leg3_r/leg4_r/foot2_r/foot2_r_end
+    m_Weight: 1
+  - m_Path: Armature/leg1_r/leg2_r/leg3_r/leg4_r/foot2_r/foot2_r_end/foot2_r_end_end
+    m_Weight: 1
+  - m_Path: Armature/Torso1
+    m_Weight: 1
+  - m_Path: Armature/Torso1/arm1_l
+    m_Weight: 1
+  - m_Path: Armature/Torso1/arm1_l/arm2_l
+    m_Weight: 1
+  - m_Path: Armature/Torso1/arm1_l/arm2_l/arm3_l
+    m_Weight: 1
+  - m_Path: Armature/Torso1/arm1_l/arm2_l/arm3_l/arm4_l
+    m_Weight: 1
+  - m_Path: Armature/Torso1/arm1_l/arm2_l/arm3_l/arm4_l/hand_l
+    m_Weight: 1
+  - m_Path: Armature/Torso1/arm1_l/arm2_l/arm3_l/arm4_l/hand_l/f1_l
+    m_Weight: 1
+  - m_Path: Armature/Torso1/arm1_l/arm2_l/arm3_l/arm4_l/hand_l/f1_l/f2_l
+    m_Weight: 1
+  - m_Path: Armature/Torso1/arm1_l/arm2_l/arm3_l/arm4_l/hand_l/f1_l/f2_l/f3_l
+    m_Weight: 1
+  - m_Path: Armature/Torso1/arm1_l/arm2_l/arm3_l/arm4_l/hand_l/f1_l/f2_l/f3_l/f3_l_end
+    m_Weight: 1
+  - m_Path: Armature/Torso1/arm1_l/arm2_l/arm3_l/arm4_l/hand_l/f1_l/f2_l/f3_l/f3_l_end/f3_l_end_end
+    m_Weight: 1
+  - m_Path: Armature/Torso1/arm1_l/arm2_l/arm3_l/arm4_l/hand_l/f4_l
+    m_Weight: 1
+  - m_Path: Armature/Torso1/arm1_l/arm2_l/arm3_l/arm4_l/hand_l/f4_l/f5_l
+    m_Weight: 1
+  - m_Path: Armature/Torso1/arm1_l/arm2_l/arm3_l/arm4_l/hand_l/f4_l/f5_l/f6_l
+    m_Weight: 1
+  - m_Path: Armature/Torso1/arm1_l/arm2_l/arm3_l/arm4_l/hand_l/f4_l/f5_l/f6_l/f6_l_end
+    m_Weight: 1
+  - m_Path: Armature/Torso1/arm1_l/arm2_l/arm3_l/arm4_l/hand_l/f4_l/f5_l/f6_l/f6_l_end/f6_l_end_end
+    m_Weight: 1
+  - m_Path: Armature/Torso1/arm1_l/arm2_l/arm3_l/arm4_l/hand_l/f7_l
+    m_Weight: 1
+  - m_Path: Armature/Torso1/arm1_l/arm2_l/arm3_l/arm4_l/hand_l/f7_l/f8_l
+    m_Weight: 1
+  - m_Path: Armature/Torso1/arm1_l/arm2_l/arm3_l/arm4_l/hand_l/f7_l/f8_l/f9_l
+    m_Weight: 1
+  - m_Path: Armature/Torso1/arm1_l/arm2_l/arm3_l/arm4_l/hand_l/f7_l/f8_l/f9_l/f9_l_end
+    m_Weight: 1
+  - m_Path: Armature/Torso1/arm1_l/arm2_l/arm3_l/arm4_l/hand_l/f7_l/f8_l/f9_l/f9_l_end/f9_l_end_end
+    m_Weight: 1
+  - m_Path: Armature/Torso1/arm1_l/arm2_l/arm3_l/arm4_l/hand_l/f10_l
+    m_Weight: 1
+  - m_Path: Armature/Torso1/arm1_l/arm2_l/arm3_l/arm4_l/hand_l/f10_l/f11_l
+    m_Weight: 1
+  - m_Path: Armature/Torso1/arm1_l/arm2_l/arm3_l/arm4_l/hand_l/f10_l/f11_l/f12_l
+    m_Weight: 1
+  - m_Path: Armature/Torso1/arm1_l/arm2_l/arm3_l/arm4_l/hand_l/f10_l/f11_l/f12_l/f12_l_end
+    m_Weight: 1
+  - m_Path: Armature/Torso1/arm1_l/arm2_l/arm3_l/arm4_l/hand_l/f10_l/f11_l/f12_l/f12_l_end/f12_l_end_end
+    m_Weight: 1
+  - m_Path: Armature/Torso1/arm1_r
+    m_Weight: 0
+  - m_Path: Armature/Torso1/arm1_r/arm2_r
+    m_Weight: 0
+  - m_Path: Armature/Torso1/arm1_r/arm2_r/arm3_r
+    m_Weight: 0
+  - m_Path: Armature/Torso1/arm1_r/arm2_r/arm3_r/arm4_r
+    m_Weight: 0
+  - m_Path: Armature/Torso1/arm1_r/arm2_r/arm3_r/arm4_r/hand_r
+    m_Weight: 0
+  - m_Path: Armature/Torso1/arm1_r/arm2_r/arm3_r/arm4_r/hand_r/f1_r
+    m_Weight: 0
+  - m_Path: Armature/Torso1/arm1_r/arm2_r/arm3_r/arm4_r/hand_r/f1_r/f2_r
+    m_Weight: 0
+  - m_Path: Armature/Torso1/arm1_r/arm2_r/arm3_r/arm4_r/hand_r/f1_r/f2_r/f3_r
+    m_Weight: 0
+  - m_Path: Armature/Torso1/arm1_r/arm2_r/arm3_r/arm4_r/hand_r/f1_r/f2_r/f3_r/f3_r_end
+    m_Weight: 0
+  - m_Path: Armature/Torso1/arm1_r/arm2_r/arm3_r/arm4_r/hand_r/f1_r/f2_r/f3_r/f3_r_end/f3_r_end_end
+    m_Weight: 0
+  - m_Path: Armature/Torso1/arm1_r/arm2_r/arm3_r/arm4_r/hand_r/f4_r
+    m_Weight: 0
+  - m_Path: Armature/Torso1/arm1_r/arm2_r/arm3_r/arm4_r/hand_r/f4_r/f5_r
+    m_Weight: 0
+  - m_Path: Armature/Torso1/arm1_r/arm2_r/arm3_r/arm4_r/hand_r/f4_r/f5_r/f6_r
+    m_Weight: 0
+  - m_Path: Armature/Torso1/arm1_r/arm2_r/arm3_r/arm4_r/hand_r/f4_r/f5_r/f6_r/f6_r_end
+    m_Weight: 0
+  - m_Path: Armature/Torso1/arm1_r/arm2_r/arm3_r/arm4_r/hand_r/f4_r/f5_r/f6_r/f6_r_end/f6_r_end_end
+    m_Weight: 0
+  - m_Path: Armature/Torso1/arm1_r/arm2_r/arm3_r/arm4_r/hand_r/f7_r
+    m_Weight: 0
+  - m_Path: Armature/Torso1/arm1_r/arm2_r/arm3_r/arm4_r/hand_r/f7_r/f8_r
+    m_Weight: 0
+  - m_Path: Armature/Torso1/arm1_r/arm2_r/arm3_r/arm4_r/hand_r/f7_r/f8_r/f9_r
+    m_Weight: 0
+  - m_Path: Armature/Torso1/arm1_r/arm2_r/arm3_r/arm4_r/hand_r/f7_r/f8_r/f9_r/f9_r_end
+    m_Weight: 0
+  - m_Path: Armature/Torso1/arm1_r/arm2_r/arm3_r/arm4_r/hand_r/f7_r/f8_r/f9_r/f9_r_end/f9_r_end_end
+    m_Weight: 0
+  - m_Path: Armature/Torso1/arm1_r/arm2_r/arm3_r/arm4_r/hand_r/f10_r
+    m_Weight: 0
+  - m_Path: Armature/Torso1/arm1_r/arm2_r/arm3_r/arm4_r/hand_r/f10_r/f11_r
+    m_Weight: 0
+  - m_Path: Armature/Torso1/arm1_r/arm2_r/arm3_r/arm4_r/hand_r/f10_r/f11_r/f12_r
+    m_Weight: 0
+  - m_Path: Armature/Torso1/arm1_r/arm2_r/arm3_r/arm4_r/hand_r/f10_r/f11_r/f12_r/f12_r_end
+    m_Weight: 0
+  - m_Path: Armature/Torso1/arm1_r/arm2_r/arm3_r/arm4_r/hand_r/f10_r/f11_r/f12_r/f12_r_end/f12_r_end_end
+    m_Weight: 0
+  - m_Path: Armature/Torso1/neck
+    m_Weight: 1
+  - m_Path: Armature/Torso1/neck/neck1
+    m_Weight: 1
+  - m_Path: Armature/Torso1/neck/neck1/head
+    m_Weight: 1
+  - m_Path: Armature/Torso1/neck/neck1/head/head_end
+    m_Weight: 1
+  - m_Path: Armature/Torso1/neck/neck1/head/head_end/head_end_end
+    m_Weight: 1
+  - m_Path: arms
+    m_Weight: 1
+  - m_Path: head
+    m_Weight: 1
+  - m_Path: legs
+    m_Weight: 1
+  - m_Path: torso
+    m_Weight: 1

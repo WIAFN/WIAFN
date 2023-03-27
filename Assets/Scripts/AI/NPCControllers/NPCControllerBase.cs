@@ -10,10 +10,8 @@ public abstract class NPCControllerBase : MonoBehaviour
     [HideInInspector]
     public Character character;
 
-    public Transform head;
     public float eyeHeight;
     public float angularSpeed;
-    private const float headAngleLimit = 100f;
 
     protected Character followCharacter;
 
@@ -57,8 +55,6 @@ public abstract class NPCControllerBase : MonoBehaviour
         {
             _targetCharacterPositionUpdateDelta = 0f;
         }
-
-        UpdateLookAt();
     }
 
     public void RotateBodyTowardsPosition(Vector3 facePosition)
@@ -90,34 +86,6 @@ public abstract class NPCControllerBase : MonoBehaviour
 
         transform.localRotation = Quaternion.Lerp(transform.localRotation, Quaternion.FromToRotation(parentForward, closestPoint), Time.deltaTime * angularSpeed);
         //transform.forward = closestPoint;
-    }
-
-    private void UpdateLookAt()
-    {
-        if (head == null) return;
-        Transform toRotate = head;
-
-        Vector3 forward = toRotate.parent.forward;
-
-        if (!LookAtSpecified)
-        {
-            toRotate.forward = forward;
-            return;
-        }
-
-        Vector3 lookAtPosition = _lookAtOrder.Position;
-
-        if (toRotate.position == lookAtPosition)
-        {
-            return;
-        }
-
-        Quaternion newRotation = Quaternion.FromToRotation(forward, lookAtPosition - toRotate.position);
-
-        newRotation = Quaternion.RotateTowards(toRotate.localRotation, newRotation, Time.deltaTime * angularSpeed);
-        newRotation = Quaternion.RotateTowards(Quaternion.identity, newRotation, headAngleLimit);
-
-        toRotate.localRotation = newRotation;
     }
 
     public void LookAt(Vector3 lookAtPosition, bool addEyeHeight = false)
