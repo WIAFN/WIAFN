@@ -765,6 +765,34 @@ PrefabInstance:
       propertyPath: m_Name
       value: Cool Guy
       objectReference: {fileID: 0}
+    - target: {fileID: 6608476414019865576, guid: d100d285e283620499899784aff469f1, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.7535803
+      objectReference: {fileID: 0}
+    - target: {fileID: 6608476414019865576, guid: d100d285e283620499899784aff469f1, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0.65619004
+      objectReference: {fileID: 0}
+    - target: {fileID: 6608476414019865576, guid: d100d285e283620499899784aff469f1, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0.02569862
+      objectReference: {fileID: 0}
+    - target: {fileID: 6608476414019865576, guid: d100d285e283620499899784aff469f1, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0.029512744
+      objectReference: {fileID: 0}
+    - target: {fileID: 6608476414019865576, guid: d100d285e283620499899784aff469f1, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6608476414019865576, guid: d100d285e283620499899784aff469f1, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6608476414019865576, guid: d100d285e283620499899784aff469f1, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d100d285e283620499899784aff469f1, type: 3}
 --- !u!1 &705507993

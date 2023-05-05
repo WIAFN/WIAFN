@@ -1,11 +1,12 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using UnityEngine;
 
 [RequireComponent(typeof(MeshRenderer))]
 public class ChunkMeshControllerVoxel : ChunkMeshController
 {
-    public override void Generate(Grid grid)
+    public override void Generate(Grid grid, bool threaded = true, Task taskIfMultithreaded = null)
     {
         Vector3 gridCellSize = new Vector3(ChunkSizeInMeters.x / grid.Size.x, ChunkSizeInMeters.y / grid.Size.y, ChunkSizeInMeters.z / grid.Size.z);
         ClearData();

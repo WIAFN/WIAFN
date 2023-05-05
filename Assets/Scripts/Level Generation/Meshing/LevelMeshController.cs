@@ -1,11 +1,13 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using UnityEditor.UIElements;
 using UnityEngine;
 
 [RequireComponent(typeof(LevelGeneratorBase))]
 public class LevelMeshController : MonoBehaviour
 {
+    // Y is constrained to 1 for multithreaded generation.
     public Vector3Int levelSizeInChunks;
 
     public Material terrainMaterial;
@@ -31,7 +33,7 @@ public class LevelMeshController : MonoBehaviour
     {
         get
         {
-            return _levelGenerator.levelSizeInMeters * 4f / 3f;
+            return _levelGenerator.levelSizeInMeters/* * 4f / 3f*/;
         }
     }
 
@@ -53,7 +55,7 @@ public class LevelMeshController : MonoBehaviour
         Random.InitState(1);
     }
 
-    public void Generate(Grid grid)
+    public void Generate(Grid grid, bool multithreaded = true)
     {
         Clear();
 
@@ -71,10 +73,47 @@ public class LevelMeshController : MonoBehaviour
                     ChunkMeshController chunkController = InitiateChunk(chunkAddress);
 
                     Vector3Int minAddress = Vector3Int.Scale(ChunkSizeInVoxels, chunkAddress);
-                    
-                    Vector3Int maxAddress = Vector3Int.Scale(ChunkSizeInVoxels, chunkAddress + Vector3Int.one) - Vector3Int.one;
-                    chunkController.Generate(grid.GetSubGrid(minAddress, maxAddress));
+
+                    Vector3Int maxAddress = Vector3Int.Scale(ChunkSizeInVoxels, chunkAddress + Vector3Int.one)/* - Vector3Int.one*/;
+                    chunkController.Generate(grid.GetSubGrid(minAddress, maxAddress), multithreaded);
                 }
+            }
+        }
+    }
+
+    /// <param name="grids">Grids are ordered for x then z.</param>
+    /// <param name="size"></param>
+    public void GenerateAll(Grid[] grids, Vector3Int size, bool multithreaded = true, Task[] tasks = null)
+    {
+        if (tasks == null)
+        {
+            int len = size.x * size.z;
+            tasks = new Task[len];
+
+            for (int i = 0; i < len; i++)
+            {
+                tasks[i] = new Task(async () => { await Task.CompletedTask; });
+            }
+        }
+
+        Clear();
+
+        Debug.Assert(grids.Length > 0);
+        Vector3 meshSizeInMeters = MeshSizeInMeters;
+
+        ChunkSizeInVoxels = grids[0].Size;
+        VoxelSizeInMeters = new Vector3(meshSizeInMeters.x / size.x, meshSizeInMeters.y / size.y, meshSizeInMeters.z / size.z);
+
+        int index = 0;
+        for (int x = 0; x < levelSizeInChunks.x; x++)
+        {
+            for (int z = 0; z < levelSizeInChunks.z; z++)
+            {
+                Vector3Int chunkAddress = new Vector3Int(x, 0, z);
+                ChunkMeshController chunkController = InitiateChunk(chunkAddress);
+
+                chunkController.Generate(grids[index], multithreaded, tasks[index]);
+                index++;
             }
         }
     }

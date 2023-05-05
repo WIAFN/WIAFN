@@ -14,7 +14,7 @@ public class ThrowingLevelGenerator : LevelGeneratorBase
 
     private Transform _itemsParent;
 
-    private void Awake()
+    private new void Awake()
     {
         _weightSum = -1f;
         _terrainPerlin = new Perlin(31);
