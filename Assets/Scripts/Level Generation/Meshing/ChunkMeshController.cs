@@ -6,18 +6,19 @@ using UnityEngine;
 
 public abstract class ChunkMeshController : MonoBehaviour
 {
+    [HideInInspector]
     public LevelMeshController levelMeshController;
 
     public Vector3Int ChunkAddress { get; private set; }
     public Vector3 ChunkSizeInMeters { get; private set; }
 
-    public Material TerrainMaterial
-    {
-        get
-        {
-            return levelMeshController.terrainMaterial;
-        }
-    }
+    //public Material TerrainMaterial
+    //{
+    //    get
+    //    {
+    //        return levelMeshController.terrainMaterial;
+    //    }
+    //}
 
     protected Mesh mesh;
     protected MeshFilter meshFilter;
@@ -25,23 +26,36 @@ public abstract class ChunkMeshController : MonoBehaviour
 
     protected Task meshGenerateTask;
 
+    public Task MeshGenerationTask => meshGenerateTask;
+
+    private Vector3[] _verticesArr;
+    private int[] _trianglesArr;
+    private Vector3[] _normalsArr;
+    //private List<Vector2> uvs;
+
     protected List<Vector3> vertices;
     protected List<int> triangles;
     protected List<Vector3> normals;
-    //protected List<Vector2> uvs;
+    //protected List<Vector2> _tempUVs;
 
     private bool _meshUpdateRequested;
 
     private void Awake()
     {
         mesh = new Mesh();
-        meshFilter = gameObject.AddComponent<MeshFilter>();
+        //meshFilter = gameObject.AddComponent<MeshFilter>();
+        meshFilter = gameObject.GetComponent<MeshFilter>();
         //meshFilter.mesh = mesh;
         meshFilter.sharedMesh = mesh;
 
-        meshCollider = gameObject.AddComponent<MeshCollider>();
+        //meshCollider = gameObject.AddComponent<MeshCollider>();
+        meshCollider = gameObject.GetComponent<MeshCollider>();
         meshCollider.enabled = false;
         //meshCollider.sharedMesh = mesh;
+
+        _verticesArr = null;
+        _trianglesArr = null;
+        _normalsArr = null;
 
         vertices = new List<Vector3>();
         triangles = new List<int>();
@@ -56,18 +70,18 @@ public abstract class ChunkMeshController : MonoBehaviour
 
     private void Update()
     {
-        if (_meshUpdateRequested && CanUpdateMesh())
+        if (_meshUpdateRequested && IsReadyToUpdateMesh())
         {
-            mesh.Clear();
+            //mesh.Clear();
             _meshUpdateRequested = false;
 
-            mesh.vertices = vertices.ToArray();
-            mesh.triangles = triangles.ToArray();
-            mesh.normals = normals.ToArray();
+            mesh.vertices = _verticesArr;
+            mesh.triangles = _trianglesArr;
+            mesh.normals = _normalsArr;
             //mesh.RecalculateNormals();
             //mesh.uv = uvs.ToArray();
 
-            GetComponent<MeshRenderer>().material = TerrainMaterial;
+            //GetComponent<MeshRenderer>().material = TerrainMaterial;
 
             //Debug.Log(gameObject.name);
             Vector3 size = mesh.bounds.size;
@@ -82,6 +96,7 @@ public abstract class ChunkMeshController : MonoBehaviour
                 meshCollider.enabled = true;
             }
 
+            levelMeshController.OnChunkMeshUpdated(this);
             ClearData();
         }
     }
@@ -105,24 +120,49 @@ public abstract class ChunkMeshController : MonoBehaviour
 
     protected void ClearData()
     {
+        _verticesArr = null;
+        _trianglesArr = null;
+        _normalsArr = null;
+    }
+
+    public bool MarkMeshToUpdate()
+    {
+        bool result = ShouldUpdateMesh();
+        if (result)
+        {
+            _meshUpdateRequested = true;
+        }
+
+        return result;
+    }
+
+    public virtual bool ShouldUpdateMesh()
+    {
+        return true;
+    }
+
+    public virtual bool IsReadyToUpdateMesh()
+    {
+        //return true;
+        return (meshGenerateTask == null || meshGenerateTask.Status != TaskStatus.Running) && levelMeshController.CheckUpdateMesh(this);
+    }
+
+    protected void ValidateAndFlushMeshData()
+    {
+        _verticesArr = vertices.ToArray();
+        _trianglesArr = triangles.ToArray();
+        _normalsArr = normals.ToArray();
+        FlushMeshData();
+    }
+
+    protected void FlushMeshData()
+    {
         vertices.Clear();
         vertices.Capacity = 100;
         triangles.Clear();
         triangles.Capacity = 100;
         normals.Clear();
         normals.Capacity = 100;
-        //uvs.Clear();
-    }
-
-    public void UpdateMesh()
-    {
-        _meshUpdateRequested = true;
-    }
-
-    public virtual bool CanUpdateMesh()
-    {
-        //return true;
-        return (meshGenerateTask == null || meshGenerateTask.Status != TaskStatus.Running);
     }
 
     //public bool HasNeighbour(Vector3Int direction)

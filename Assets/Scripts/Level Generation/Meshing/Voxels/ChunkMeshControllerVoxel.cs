@@ -9,7 +9,7 @@ public class ChunkMeshControllerVoxel : ChunkMeshController
     public override void Generate(Grid grid, bool threaded = true, Task taskIfMultithreaded = null)
     {
         Vector3 gridCellSize = new Vector3(ChunkSizeInMeters.x / grid.Size.x, ChunkSizeInMeters.y / grid.Size.y, ChunkSizeInMeters.z / grid.Size.z);
-        ClearData();
+        FlushMeshData();
 
         int vertexIndex = 0;
         for (int x = 0; x < grid.Width; x++)
@@ -55,5 +55,7 @@ public class ChunkMeshControllerVoxel : ChunkMeshController
                 }
             }
         }
+
+        ValidateAndFlushMeshData();
     }
 }

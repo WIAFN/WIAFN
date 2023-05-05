@@ -24,7 +24,7 @@ public class ChunkedNavMeshGenerator : NavMeshGeneratorBase
         _distantChunksToUpdate = new List<ChunkNavMeshController>();
 
         _levelMeshController = GetComponent<LevelMeshController>();
-        Vector3Int levelSizeInChunks = _levelMeshController.levelSizeInChunks;
+        Vector3Int levelSizeInChunks = _levelMeshController.LevelSizeInChunks;
         _chunkNavMeshControllers = new ChunkNavMeshController[levelSizeInChunks.x, levelSizeInChunks.y, levelSizeInChunks.z];
 
         _levelMeshController.OnChunkCreated += OnChunkCreated;
@@ -72,7 +72,7 @@ public class ChunkedNavMeshGenerator : NavMeshGeneratorBase
     void Update()
     {
         Vector3Int playerChunk = _levelMeshController.GetGridAddressOfWorldPos(GameManager.instance.mainPlayer.transform.position);
-        Vector3Int levelSizeInChunks = _levelMeshController.levelSizeInChunks;
+        Vector3Int levelSizeInChunks = _levelMeshController.LevelSizeInChunks;
 
         // Update close chunks.
         if (Time.realtimeSinceStartup - _nextCloseChunksUpdate > navMeshUpdateInterval)

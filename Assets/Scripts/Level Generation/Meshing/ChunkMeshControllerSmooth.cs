@@ -53,23 +53,23 @@ public class ChunkMeshControllerSmooth : ChunkMeshController
         }
 
         Vector3 gridCellSize = new Vector3(ChunkSizeInMeters.x / grid.Size.x, ChunkSizeInMeters.y / grid.Size.y, ChunkSizeInMeters.z / grid.Size.z);
-        ClearData();
+        FlushMeshData();
         _worthDrawing = false;
 
         int xEnd = grid.Width - 1;
-        if (ChunkAddress.x == levelMeshController.levelSizeInChunks.x - 1)
+        if (ChunkAddress.x == levelMeshController.LevelSizeInChunks.x - 1)
         {
             xEnd += 1;
         }
 
         int yEnd = grid.Height - 1;
-        if (ChunkAddress.y == levelMeshController.levelSizeInChunks.y - 1)
+        if (ChunkAddress.y == levelMeshController.LevelSizeInChunks.y - 1)
         {
             yEnd += 1;
         }
 
         int zEnd = grid.Width - 1;
-        if (ChunkAddress.z == levelMeshController.levelSizeInChunks.z - 1)
+        if (ChunkAddress.z == levelMeshController.LevelSizeInChunks.z - 1)
         {
             zEnd += 1;
         }
@@ -85,6 +85,8 @@ public class ChunkMeshControllerSmooth : ChunkMeshController
                 }
             }
         }
+
+        ValidateAndFlushMeshData();
     }
 
     public void ProcessCube(Grid grid, Vector3Int address, Vector3 gridCellSize, ref bool worthDrawing)
@@ -200,10 +202,10 @@ public class ChunkMeshControllerSmooth : ChunkMeshController
         return Vector3.Normalize(normal);
     }
 
-    public override bool CanUpdateMesh()
+    public override bool ShouldUpdateMesh()
     {
         // Check if chunk is worth drawing.
-        bool worth = base.CanUpdateMesh();
+        bool worth = base.ShouldUpdateMesh();
         //if (worth)
         //{
         //    worth = false;

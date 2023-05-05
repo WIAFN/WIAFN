@@ -62,6 +62,7 @@ public class JunkyardLevelGenerator : LevelGeneratorBase
         _itemsParent.parent = transform.parent;
 
         _levelMeshController = GetComponent<LevelMeshController>();
+        _levelMeshController.OnLevelMeshGenerated += OnLevelMeshGenerated;
     }
 
     void Start()
@@ -83,19 +84,13 @@ public class JunkyardLevelGenerator : LevelGeneratorBase
             _currentGrid = gridGenerationOp.generator.grid;
 
             _levelMeshController.Generate(_currentGrid, true);
-            _levelMeshController.UpdateMeshes();
-
-            OnLevelMeshGenerated();
-
-            if (OnGenerationCompleted != null)
-            {
-                OnGenerationCompleted();
-            }
         }
+
     }
 
     private void OnDestroy()
     {
+        _levelMeshController.OnLevelMeshGenerated -= OnLevelMeshGenerated;
         _waitingForOperation?.cancellationTokenSource.Cancel();
 
         _itemPoolGenerator?.DestroyItems();
@@ -107,20 +102,20 @@ public class JunkyardLevelGenerator : LevelGeneratorBase
         //GenerateGrid();
         GenerateGridMultithreaded();
 
-        if (_waitingForOperation == null)
+        if (_waitingForOperation == null && OnGenerationCompleted != null)
         {
-            OnLevelMeshGenerated();
-
-            if (OnGenerationCompleted != null)
-            {
-                OnGenerationCompleted();
-            }
+            OnGenerationCompleted();
         }
     }
 
     private void OnLevelMeshGenerated()
     {
         StartCoroutine(MoveItemsOnItemPoolIsReady());
+
+        if (OnGenerationCompleted != null)
+        {
+            OnGenerationCompleted();
+        }
     }
 
     public void GenerateGrid()
