@@ -40,8 +40,6 @@ public class JunkyardLevelGenerator : LevelGeneratorBase
     public int itemCount;
     public List<LevelObjectData> levelObjects;
 
-    public event GenerationCompletion OnGenerationCompleted;
-
     private LevelMeshController _levelMeshController;
     private Grid _currentGrid;
 
@@ -102,9 +100,9 @@ public class JunkyardLevelGenerator : LevelGeneratorBase
         //GenerateGrid();
         GenerateGridMultithreaded();
 
-        if (_waitingForOperation == null && OnGenerationCompleted != null)
+        if (_waitingForOperation == null)
         {
-            OnGenerationCompleted();
+            CallOnGenerationCompleted();
         }
     }
 
@@ -112,10 +110,7 @@ public class JunkyardLevelGenerator : LevelGeneratorBase
     {
         StartCoroutine(MoveItemsOnItemPoolIsReady());
 
-        if (OnGenerationCompleted != null)
-        {
-            OnGenerationCompleted();
-        }
+        CallOnGenerationCompleted();
     }
 
     public void GenerateGrid()
@@ -210,8 +205,9 @@ public class JunkyardLevelGenerator : LevelGeneratorBase
 
     public Vector3 GenerateRandomPosition()
     {
-        float x = Random.Range(-HalfLevelSizeInMeters.x, HalfLevelSizeInMeters.x);
-        float z = Random.Range(-HalfLevelSizeInMeters.z, HalfLevelSizeInMeters.z);
+        Vector3 halfLevelSizeInMeters = HalfLevelSizeInMeters;
+        float x = Random.Range(-halfLevelSizeInMeters.x, halfLevelSizeInMeters.x);
+        float z = Random.Range(-halfLevelSizeInMeters.z, halfLevelSizeInMeters.z);
         float y = Random.Range(GetPileHeightAtWorldPos(x, z) + 5f, levelSizeInMeters.y);
         return new Vector3(x, y, z);
     }
@@ -248,6 +244,11 @@ public class JunkyardLevelGenerator : LevelGeneratorBase
     }
     #endregion // Item Generation
 
+    public override float GetLevelHeightAtWorldPos(float x, float z)
+    {
+        return GetPileHeightAtWorldPos(x, z);
+    }
+
     public float GetPileHeightAtWorldPos(float x, float z)
     {
         return GetNoiseValueFromWorldPos(x, z) * levelSizeInMeters.y;
@@ -260,13 +261,11 @@ public class JunkyardLevelGenerator : LevelGeneratorBase
 
     public float GetNoiseValueFromWorldPos(float x, float z)
     {
-        Vector3Int gridPos = _levelMeshController.GetGridAddressOfWorldPos(new Vector3(x, 0f, z) + HalfLevelSizeInMeters);
+        Vector3Int gridPos = _levelMeshController.GetGridAddressOfWorldPos(new Vector3(x, 0f, z));
         return GetNoiseValueAt(gridPos.x, gridPos.z);
     }
 
     //public Grid CurrentGrid => _currentGrid;
-
-    public delegate void GenerationCompletion();
 
     #region GUI
     // To name elements according to prefab names.

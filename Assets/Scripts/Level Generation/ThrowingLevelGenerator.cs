@@ -55,8 +55,9 @@ public class ThrowingLevelGenerator : LevelGeneratorBase
     private GameObject InstantiateItem(GameObject selectedItem, float x, float z)
     {
         Vector3 selectedPos = new Vector3(x, GetPerlinAtWorldPos(x, z) * levelSizeInMeters.y + selectedItem.transform.localScale.y, z);
-        selectedPos.x -= HalfLevelSizeInMeters.x;
-        selectedPos.z -= HalfLevelSizeInMeters.z;
+        Vector3 halfLevelSizeInMeters = HalfLevelSizeInMeters;
+        selectedPos.x -= halfLevelSizeInMeters.x;
+        selectedPos.z -= halfLevelSizeInMeters.z;
 
         while (Physics.CheckBox(selectedPos, selectedItem.transform.lossyScale / 2))
         {
@@ -65,11 +66,12 @@ public class ThrowingLevelGenerator : LevelGeneratorBase
         return Instantiate(selectedItem, selectedPos, GenerateRandomRotation(), _itemsParent);
     }
 
-    private Vector3 GenerateRandomPosition()
+    public Vector3 GenerateRandomPosition()
     {
-        float x = Random.Range(-HalfLevelSizeInMeters.x, HalfLevelSizeInMeters.x);
-        float z = Random.Range(-HalfLevelSizeInMeters.z, HalfLevelSizeInMeters.z);
-        float y = Random.Range(GetPerlinAtWorldPos(x, z), HalfLevelSizeInMeters.y);
+        Vector3 halfLevelSizeInMeters = HalfLevelSizeInMeters;
+        float x = Random.Range(-halfLevelSizeInMeters.x, halfLevelSizeInMeters.x);
+        float z = Random.Range(-halfLevelSizeInMeters.z, halfLevelSizeInMeters.z);
+        float y = Random.Range(GetLevelHeightAtWorldPos(new Vector3(x, 0f, z)) + 5f, levelSizeInMeters.y);
         return new Vector3(x, y, z);
     }
 
@@ -112,5 +114,10 @@ public class ThrowingLevelGenerator : LevelGeneratorBase
     public float GetPerlinAtWorldPos(float x, float z)
     {
         return _terrainPerlin.Noise2D(x, z, 0.155f, 0.9f, 3);
+    }
+
+    public override float GetLevelHeightAtWorldPos(float x, float z)
+    {
+        return GetPerlinAtWorldPos(x, z);
     }
 }

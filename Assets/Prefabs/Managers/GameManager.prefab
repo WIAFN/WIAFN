@@ -48,6 +48,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _forwardRenderer: {fileID: 11400000, guid: 4a4130d8d2e4335488046c5872bd0dff, type: 2}
   mainPlayer: {fileID: 0}
+  levelGenerator: {fileID: 0}
 --- !u!114 &39228896130775932
 MonoBehaviour:
   m_ObjectHideFlags: 0

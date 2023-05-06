@@ -629,9 +629,17 @@ PrefabInstance:
       value: GameManager
       objectReference: {fileID: 0}
     - target: {fileID: 7331057603790362891, guid: 2cabf0345c18ef8499c2db2fecaa3257, type: 3}
+      propertyPath: sceneUI
+      value: 
+      objectReference: {fileID: 1825553496}
+    - target: {fileID: 7331057603790362891, guid: 2cabf0345c18ef8499c2db2fecaa3257, type: 3}
       propertyPath: mainPlayer
       value: 
       objectReference: {fileID: 912988426}
+    - target: {fileID: 7331057603790362891, guid: 2cabf0345c18ef8499c2db2fecaa3257, type: 3}
+      propertyPath: levelGenerator
+      value: 
+      objectReference: {fileID: 157185657154573921}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 2cabf0345c18ef8499c2db2fecaa3257, type: 3}
 --- !u!4 &1238161193 stripped
@@ -966,6 +974,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3a2ec70bea7363746994e7627bc40222, type: 3}
+--- !u!223 &1825553496 stripped
+Canvas:
+  m_CorrespondingSourceObject: {fileID: 8367758596179137116, guid: 3a2ec70bea7363746994e7627bc40222, type: 3}
+  m_PrefabInstance: {fileID: 1825553495}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &2127147080
 GameObject:
   m_ObjectHideFlags: 0
@@ -1088,22 +1101,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 157185656571648470, guid: 88026c5f6b34abc4c9a7235dd7ed02d1, type: 3}
-      propertyPath: _levelSizeInChunks.x
-      value: 15
-      objectReference: {fileID: 0}
-    - target: {fileID: 157185656571648470, guid: 88026c5f6b34abc4c9a7235dd7ed02d1, type: 3}
-      propertyPath: _levelSizeInChunks.y
-      value: 4
-      objectReference: {fileID: 0}
-    - target: {fileID: 157185656571648470, guid: 88026c5f6b34abc4c9a7235dd7ed02d1, type: 3}
-      propertyPath: _levelSizeInChunks.z
-      value: 15
-      objectReference: {fileID: 0}
-    - target: {fileID: 157185656571648470, guid: 88026c5f6b34abc4c9a7235dd7ed02d1, type: 3}
-      propertyPath: frameSkipsBetweenMeshGenerations
-      value: 15
-      objectReference: {fileID: 0}
     - target: {fileID: 157185657184755021, guid: 88026c5f6b34abc4c9a7235dd7ed02d1, type: 3}
       propertyPath: m_Name
       value: Level 0
@@ -1154,3 +1151,14 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 88026c5f6b34abc4c9a7235dd7ed02d1, type: 3}
+--- !u!114 &157185657154573921 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 157185656571648469, guid: 88026c5f6b34abc4c9a7235dd7ed02d1, type: 3}
+  m_PrefabInstance: {fileID: 157185657154573920}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c5ee64ec341a0754a9af615e8e146b3d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

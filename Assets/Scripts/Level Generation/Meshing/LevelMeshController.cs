@@ -16,9 +16,10 @@ public class LevelMeshController : MonoBehaviour
 
     public GameObject chunkPrefab;
 
-    [Header("Parameters")]
+    [Header("Update Mesh Count Per Frame")]
     public int updateMeshCountPerFrame;
-    public int frameSkipsBetweenMeshGenerations;
+    public int fastFrameSkipsBetweenMeshGenerations;
+    public int slowFrameSkipsBetweenMeshGenerations;
 
     public event ChunkCreation OnChunkCreated;
     public event GenerationCompletion OnLevelMeshGenerated;
@@ -62,8 +63,9 @@ public class LevelMeshController : MonoBehaviour
 
     private Transform _generatedJunksParent;
 
-    private int _updatedMeshCountOnCurrentFrame;
+    private int _currentFrameSkipsBetweenMeshGenerations;
 
+    private int _updatedMeshCountOnCurrentFrame;
     private HashSet<ChunkMeshController> _updatingChunks;
 
     private void Awake()
@@ -83,14 +85,30 @@ public class LevelMeshController : MonoBehaviour
         _chunkCount = CalculateChunkCount();
     }
 
-    private int CalculateChunkCount()
+    private void Update()
     {
-        return LevelSizeInChunks.x * LevelSizeInChunks.y * LevelSizeInChunks.z;
+        switch (LevelGenerator.GenerationSpeed)
+        {
+            case LevelGenerationSpeed.Fast:
+                _currentFrameSkipsBetweenMeshGenerations = fastFrameSkipsBetweenMeshGenerations;
+                break;
+            case LevelGenerationSpeed.Slow:
+                _currentFrameSkipsBetweenMeshGenerations = slowFrameSkipsBetweenMeshGenerations;
+                break;
+            default:
+                Debug.LogAssertion("Invalid speed of level generation.");
+                break;
+        }
     }
 
     private void LateUpdate()
     {
         ResetUpdatedMeshOnFrame();
+    }
+
+    private int CalculateChunkCount()
+    {
+        return LevelSizeInChunks.x * LevelSizeInChunks.y * LevelSizeInChunks.z;
     }
 
     private void ResetUpdatedMeshOnFrame()
@@ -103,8 +121,7 @@ public class LevelMeshController : MonoBehaviour
         Clear();
 
         Vector3 meshSizeInMeters = MeshSizeInMeters;
-        Vector3 halfSize = meshSizeInMeters / 2f;
-        _generatedJunksParent.localPosition = new Vector3(-halfSize.x, 0f, -halfSize.z);
+        _generatedJunksParent.localPosition = -GetHalfHorizontalMeshSizeInMeters();
 
         ChunkSizeInVoxels = new Vector3Int(grid.Size.x / LevelSizeInChunks.x, grid.Size.y / LevelSizeInChunks.y, grid.Size.z / LevelSizeInChunks.z);
         VoxelSizeInMeters = new Vector3(meshSizeInMeters.x / grid.Size.x, meshSizeInMeters.y / grid.Size.y, meshSizeInMeters.z / grid.Size.z);
@@ -114,18 +131,21 @@ public class LevelMeshController : MonoBehaviour
     private IEnumerator GenerateChunks(Grid grid, bool multithreaded)
     {
         List<Task> tasks = new List<Task>();
-        List<ChunkMeshController> chunks = new List<ChunkMeshController>();
-
+        //List<ChunkMeshController> chunks = new List<ChunkMeshController>();
+        //float _currentFrameSkip = 0f;
         for (int x = 0; x < LevelSizeInChunks.x; x++)
         {
             for (int y = 0; y < LevelSizeInChunks.y; y++)
             {
                 for (int z = 0; z < LevelSizeInChunks.z; z++)
                 {
-                    for (int i = 0; i < frameSkipsBetweenMeshGenerations; i++)
-                    {
-                        yield return null;
-                    }
+                    //if (_currentFrameSkip >= 1f)
+                    //{
+                        for (int i = 0; i < _currentFrameSkipsBetweenMeshGenerations; i++)
+                        {
+                            yield return null;
+                        }
+                    //}
 
                     Vector3Int chunkAddress = new Vector3Int(x, y, z);
                     ChunkMeshController chunkController = InitiateChunk(chunkAddress);
@@ -140,6 +160,7 @@ public class LevelMeshController : MonoBehaviour
                     {
                         UpdateMesh(chunkController);
                     });
+                    //_currentFrameSkip += _currentFrameSkipsBetweenMeshGenerations;
                 }
             }
         }
@@ -161,13 +182,18 @@ public class LevelMeshController : MonoBehaviour
             yield return null;
         }
 
+        CallOnLevelMeshGenerated();
+
+        yield break;
+    }
+
+    private void CallOnLevelMeshGenerated()
+    {
         if (OnLevelMeshGenerated != null)
         {
             Debug.Log($"Generated the {this.transform.parent.name}.");
             OnLevelMeshGenerated();
         }
-
-        yield break;
     }
 
     /// <param name="grids">Grids are ordered for x then z.</param>
@@ -264,10 +290,7 @@ public class LevelMeshController : MonoBehaviour
             UpdateMesh(chunk);
         }
 
-        if (OnLevelMeshGenerated != null)
-        {
-            OnLevelMeshGenerated();
-        }
+        CallOnLevelMeshGenerated();
     }
 
     public void UpdateMesh(ChunkMeshController chunk)
@@ -298,10 +321,21 @@ public class LevelMeshController : MonoBehaviour
 
     public Vector3Int GetGridAddressOfWorldPos(Vector3 worldPos)
     {
-        int x = Mathf.FloorToInt(worldPos.x / VoxelSizeInMeters.x);
-        int y = Mathf.FloorToInt(worldPos.y / VoxelSizeInMeters.y);
-        int z = Mathf.FloorToInt(worldPos.z / VoxelSizeInMeters.z);
+        Vector3 realWorldPos = worldPos + GetHalfHorizontalMeshSizeInMeters();
+        int x = Mathf.FloorToInt(realWorldPos.x / VoxelSizeInMeters.x);
+        int y = Mathf.FloorToInt(realWorldPos.y / VoxelSizeInMeters.y);
+        int z = Mathf.FloorToInt(realWorldPos.z / VoxelSizeInMeters.z);
         return new Vector3Int(x, y, z);
+    }
+
+    /// <summary>
+    /// Calculates horizontal mesh size in meters. Returns 0 as y axis.
+    /// </summary>
+    /// <returns>Half of the mesh size.</returns>
+    private Vector3 GetHalfHorizontalMeshSizeInMeters()
+    {
+        Vector3 halfSize = MeshSizeInMeters / 2f;
+        return new Vector3(halfSize.x, 0f, halfSize.z);
     }
 
 
@@ -319,7 +353,10 @@ public class LevelMeshController : MonoBehaviour
                     {
                         for (int z = 0; z < LevelSizeInChunks.z; z++)
                         {
-                            chunks.Add(_chunkGrid[x, y, z]);
+                            if (_chunkGrid[x, y, z] != null)
+                            {
+                                chunks.Add(_chunkGrid[x, y, z]);
+                            }
                         }
                     }
                 }

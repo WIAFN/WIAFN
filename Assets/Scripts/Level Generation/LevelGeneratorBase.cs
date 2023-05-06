@@ -2,8 +2,29 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class LevelGeneratorBase : MonoBehaviour
+public enum LevelGenerationSpeed
 {
+    None,
+    Slow,
+    Fast
+}
+
+public abstract class LevelGeneratorBase : MonoBehaviour
+{
+    public event GenerationCompletion OnGenerationCompleted;
+
+    public LevelGenerationSpeed GenerationSpeed { 
+        get
+        {
+            return _generationSpeed;
+        }
+        set
+        {
+            Debug.Assert(value != LevelGenerationSpeed.None);
+            _generationSpeed = value;
+        }
+    }
+
     protected Perlin terrainPerlin;
 
     public Vector3 levelSizeInMeters;
@@ -16,9 +37,12 @@ public class LevelGeneratorBase : MonoBehaviour
         }
     }
 
+    private LevelGenerationSpeed _generationSpeed;
+
     protected void Awake()
     {
         terrainPerlin = new Perlin(31);
+        ResetGenerationSpeed();
     }
 
 
@@ -44,4 +68,29 @@ public class LevelGeneratorBase : MonoBehaviour
 
         return result;
     }
+
+    public float GetLevelHeightAtWorldPos(Vector3 worldPos)
+    {
+        return GetLevelHeightAtWorldPos(worldPos.x, worldPos.z);
+    }
+
+    public abstract float GetLevelHeightAtWorldPos(float x, float z);
+
+    protected void CallOnGenerationCompleted()
+    {
+        if (OnGenerationCompleted != null)
+        {
+            OnGenerationCompleted();
+
+        }
+
+        ResetGenerationSpeed();
+    }
+
+    private void ResetGenerationSpeed()
+    {
+        GenerationSpeed = LevelGenerationSpeed.Slow;
+    }
+
+    public delegate void GenerationCompletion();
 }

@@ -12,6 +12,9 @@ public class GameManager : MonoBehaviour
     public static GameManager instance;
 
     public Character mainPlayer;
+    public LevelGeneratorBase levelGenerator;
+
+    public Canvas sceneUI;
 
     public event CharacterDelegate OnCharacterDied;
 
@@ -25,12 +28,21 @@ public class GameManager : MonoBehaviour
         {
             Destroy(this.gameObject);
         }
+
+        if (levelGenerator != null)
+        {
+            levelGenerator.OnGenerationCompleted += LevelGenerator_OnGenerationCompleted;
+        }
     }
 
-    // Start is called before the first frame update
-    void Start()
+    public void OnDestroy()
     {
-        
+        if (levelGenerator != null)
+        {
+            levelGenerator.OnGenerationCompleted -= LevelGenerator_OnGenerationCompleted;
+        }
+
+        ClearBlits();
     }
 
     // Update is called once per frame
@@ -39,15 +51,11 @@ public class GameManager : MonoBehaviour
         
     }
 
+
     // TODO - Safa: We should track characters using their OnDied event.
     public void CharacterDied(Character character)
     {
         OnCharacterDied?.Invoke(character);
-    }
-
-    public void OnDestroy()
-    {
-        ClearBlits();
     }
 
     //Turn all fullscreen effects off when destroyed to prevent them from reoccuring next the game launches
@@ -66,5 +74,13 @@ public class GameManager : MonoBehaviour
             }
         }
     }
+
+    private void LevelGenerator_OnGenerationCompleted()
+    {
+        Vector3 playerPos = mainPlayer.transform.position;
+        playerPos.y = levelGenerator.GetLevelHeightAtWorldPos(mainPlayer.transform.position);
+        mainPlayer.transform.position = playerPos;
+    }
+
     public delegate void CharacterDelegate(Character character);
 }
