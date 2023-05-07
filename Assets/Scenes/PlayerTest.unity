@@ -322,6 +322,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3a2ec70bea7363746994e7627bc40222, type: 3}
+--- !u!223 &246174748 stripped
+Canvas:
+  m_CorrespondingSourceObject: {fileID: 8367758596179137116, guid: 3a2ec70bea7363746994e7627bc40222, type: 3}
+  m_PrefabInstance: {fileID: 246174747}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &421193680
 GameObject:
   m_ObjectHideFlags: 0
@@ -764,6 +769,34 @@ PrefabInstance:
     - target: {fileID: 2298386486432001737, guid: d100d285e283620499899784aff469f1, type: 3}
       propertyPath: m_Name
       value: Cool Guy
+      objectReference: {fileID: 0}
+    - target: {fileID: 6608476414019865576, guid: d100d285e283620499899784aff469f1, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.7535803
+      objectReference: {fileID: 0}
+    - target: {fileID: 6608476414019865576, guid: d100d285e283620499899784aff469f1, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0.65619004
+      objectReference: {fileID: 0}
+    - target: {fileID: 6608476414019865576, guid: d100d285e283620499899784aff469f1, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0.02569862
+      objectReference: {fileID: 0}
+    - target: {fileID: 6608476414019865576, guid: d100d285e283620499899784aff469f1, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0.029512744
+      objectReference: {fileID: 0}
+    - target: {fileID: 6608476414019865576, guid: d100d285e283620499899784aff469f1, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6608476414019865576, guid: d100d285e283620499899784aff469f1, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6608476414019865576, guid: d100d285e283620499899784aff469f1, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d100d285e283620499899784aff469f1, type: 3}
@@ -2528,6 +2561,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: GameManager
       objectReference: {fileID: 0}
+    - target: {fileID: 7331057603790362891, guid: 2cabf0345c18ef8499c2db2fecaa3257, type: 3}
+      propertyPath: sceneUI
+      value: 
+      objectReference: {fileID: 246174748}
     - target: {fileID: 7331057603790362891, guid: 2cabf0345c18ef8499c2db2fecaa3257, type: 3}
       propertyPath: mainPlayer
       value: 

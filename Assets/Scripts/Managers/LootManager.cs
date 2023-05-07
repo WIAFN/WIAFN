@@ -11,6 +11,8 @@ public class LootManager : MonoBehaviour
 
     public GameObject pfUpgrade;
 
+    private GameManager _gm;
+
     private void Awake()
     {
         if (instance == null)
@@ -25,12 +27,16 @@ public class LootManager : MonoBehaviour
 
     private void Start()
     {
-        GameManager.instance.OnCharacterDied += this.OnCharacterDied;
+        _gm = GameManager.instance;
+        _gm.OnCharacterDied += this.OnCharacterDied;
     }
 
     private void OnDestroy()
     {
-        GameManager.instance.OnCharacterDied -= this.OnCharacterDied;
+        if (_gm != null)
+        {
+            _gm.OnCharacterDied -= this.OnCharacterDied;
+        }
     }
 
     public void CreateLoot(Vector3 position)

@@ -55,6 +55,11 @@ public abstract class NPCControllerBase : MonoBehaviour
         {
             _targetCharacterPositionUpdateDelta = 0f;
         }
+
+        if (_lookAtOrder != null && !_lookAtOrder.IsValid())
+        {
+            ClearLookAt();
+        }
     }
 
     public void RotateBodyTowardsPosition(Vector3 facePosition)

@@ -7,11 +7,15 @@ using Cyan;
 
 public class GameManager : MonoBehaviour
 {
-    [SerializeField]
-    private UniversalRendererData _forwardRenderer;
     public static GameManager instance;
 
+    [SerializeField]
+    private UniversalRendererData _forwardRenderer;
+
     public Character mainPlayer;
+    public LevelGeneratorBase levelGenerator;
+
+    public Canvas sceneUI;
 
     public event CharacterDelegate OnCharacterDied;
 
@@ -25,12 +29,21 @@ public class GameManager : MonoBehaviour
         {
             Destroy(this.gameObject);
         }
+
+        if (levelGenerator != null)
+        {
+            levelGenerator.OnGenerationCompleted += LevelGenerator_OnGenerationCompleted;
+        }
     }
 
-    // Start is called before the first frame update
-    void Start()
+    public void OnDestroy()
     {
-        
+        if (levelGenerator != null)
+        {
+            levelGenerator.OnGenerationCompleted -= LevelGenerator_OnGenerationCompleted;
+        }
+
+        ClearBlits();
     }
 
     // Update is called once per frame
@@ -39,16 +52,11 @@ public class GameManager : MonoBehaviour
         
     }
 
+
     // TODO - Safa: We should track characters using their OnDied event.
     public void CharacterDied(Character character)
     {
         OnCharacterDied?.Invoke(character);
-    }
-
-    public void OnDestroy()
-    {
-        ClearBlits();
-        ClearBoosts();
     }
 
     //Turn all fullscreen effects off when destroyed to prevent them from reoccuring next the game launches
@@ -68,12 +76,13 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    private void ClearBoosts()
+    private void LevelGenerator_OnGenerationCompleted()
     {
-        if(mainPlayer.Effect != null)
-        {
-            mainPlayer.Effect.RemoveBoostImmediate();
-        }
+        Vector3 playerPos = mainPlayer.transform.position;
+        //playerPos.y = levelGenerator.GetLevelHeightAt(mainPlayer.transform.position) + mainPlayer.GetComponent<Collider>().bounds.size.y / 2f;
+        playerPos.y = levelGenerator.GetLevelHeightAt(mainPlayer.transform.position) + 15f;
+        mainPlayer.transform.position = playerPos;
     }
+
     public delegate void CharacterDelegate(Character character);
 }

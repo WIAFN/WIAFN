@@ -18,6 +18,9 @@ public class Grid
         this.originOnParentGrid = originOnParentGrid;
     }
 
+    /// <summary>
+    /// Initializes a grid with empty cells.
+    /// </summary>
     public Grid(int width, int height)
     {
         this.width = width;
@@ -31,7 +34,7 @@ public class Grid
             {
                 for (int z = 0; z < width; z++)
                 {
-                    gridMap[x, y, z] = new GridCell(x, y, z);
+                    gridMap[x, y, z] = new GridCell();
                 }
             }
         }
@@ -52,7 +55,7 @@ public class Grid
             }
             else
             {
-                GridCell newCell = new GridCell(x, y, z);
+                GridCell newCell = new GridCell();
                 return newCell;
             }
         }
@@ -111,7 +114,9 @@ public class Grid
     }
 
 
-    // Gets the subgrid within addresses (inclusive).
+    /// <summary>
+    /// Gets the subgrid within addresses (inclusive).
+    /// </summary>
     public Grid GetSubGrid(Vector3Int minAddress, Vector3Int maxAddress)
     {
         int width = Mathf.Max(maxAddress.x - minAddress.x, maxAddress.z - minAddress.z) + 1;

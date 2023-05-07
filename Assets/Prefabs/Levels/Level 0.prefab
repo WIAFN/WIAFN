@@ -242,9 +242,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8c7d98947f3fdc24cbb30a815cc7aea8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  levelSizeInChunks: {x: 20, y: 5, z: 20}
-  terrainMaterial: {fileID: 2100000, guid: 534f418d4241ad143b8b6ef70e3059e5, type: 2}
-  layerOfMeshes: 6
+  _levelSizeInChunks: {x: 15, y: 4, z: 15}
+  chunkPrefab: {fileID: 8858154486212053559, guid: 756ace3c814aa9043b9ead700abc7a70, type: 3}
+  updateMeshCountPerFrame: 5
+  fastFrameSkipsBetweenMeshGenerations: 1
+  slowFrameSkipsBetweenMeshGenerations: 15
 --- !u!114 &157185656571648469
 MonoBehaviour:
   m_ObjectHideFlags: 0

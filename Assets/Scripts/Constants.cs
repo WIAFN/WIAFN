@@ -4,6 +4,15 @@ using UnityEngine;
 
 namespace WIAFN.Constants
 {
+    public class WIAFNScenes
+    {
+        public static string MainMenu = "Start";
+        public static string TestScene = "PlayerTest";
+        public static string Loading = "Loading Screen";
+        public static int Level0 = 3;
+
+    }
+
     public class WIAFNTags
     {
         public static string Cross = "Cross";

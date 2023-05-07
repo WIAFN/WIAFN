@@ -67,5 +67,10 @@ namespace WIAFN.AI
             }
 
         }
+
+        public bool IsValid()
+        {
+            return _lookAtCharacter != null;
+        }
     }
 }

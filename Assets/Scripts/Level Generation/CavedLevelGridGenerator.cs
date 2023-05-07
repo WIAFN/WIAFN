@@ -19,6 +19,8 @@ public class CavedLevelGridGenerator : MonoBehaviour
     void GenerateGrid()
     {
         Grid grid = new Grid(width, height);
+        levelMeshController.Initialize(grid.Size);
+
         Perlin terrainPerlin = new Perlin(20);
         for (int x = 0; x < width; x++)
         {
@@ -69,6 +71,5 @@ public class CavedLevelGridGenerator : MonoBehaviour
         }
 
         levelMeshController.Generate(grid);
-        levelMeshController.UpdateMeshes();
     }
 }

@@ -1,35 +1,75 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
-using System.Drawing;
-using System.Linq;
-using System.Net;
 using UnityEngine;
-using UnityEngine.UIElements;
-using static UnityEditor.PlayerSettings;
+using System.Threading.Tasks;
 
 [RequireComponent(typeof(MeshRenderer))]
 public class ChunkMeshControllerSmooth : ChunkMeshController
 {
-    public override void Generate(Grid grid)
+    private object _threadLock = new object();
+    private Grid _generateFromGrid;
+    private bool _worthDrawing = false;
+
+    public override void Generate(Grid grid, bool multithreaded = true, Task taskIfMultithreaded = null)
     {
+        if (multithreaded && meshGenerateTask != null && meshGenerateTask.Status == TaskStatus.Running)
+        {
+            Debug.LogAssertion("Tried to generate mesh when a mesh is being generated already.");
+            return;
+        }
+
+        lock (_threadLock)
+        {
+            _generateFromGrid = grid;
+        }
+
+        if (multithreaded)
+        {
+            if (taskIfMultithreaded != null)
+            {
+                meshGenerateTask = taskIfMultithreaded;
+                taskIfMultithreaded.ContinueWith((Task task) => { GenerateMesh(); });
+            }
+            else
+            {
+                meshGenerateTask = Task.Factory.StartNew(GenerateMesh);
+            }
+
+        }
+        else
+        {
+            GenerateMesh();
+
+        }
+    }
+
+    private void GenerateMesh()
+    {
+        Grid grid;
+        lock (_threadLock)
+        {
+            grid = _generateFromGrid;
+            _generateFromGrid = null;
+        }
+
         Vector3 gridCellSize = new Vector3(ChunkSizeInMeters.x / grid.Size.x, ChunkSizeInMeters.y / grid.Size.y, ChunkSizeInMeters.z / grid.Size.z);
-        ClearData();
+        FlushMeshData();
+        _worthDrawing = false;
 
         int xEnd = grid.Width - 1;
-        if (ChunkAddress.x == levelMeshController.levelSizeInChunks.x - 1)
+        if (ChunkAddress.x == levelMeshController.LevelSizeInChunks.x - 1)
         {
             xEnd += 1;
         }
 
         int yEnd = grid.Height - 1;
-        if (ChunkAddress.y == levelMeshController.levelSizeInChunks.y - 1)
+        if (ChunkAddress.y == levelMeshController.LevelSizeInChunks.y - 1)
         {
             yEnd += 1;
         }
 
         int zEnd = grid.Width - 1;
-        if (ChunkAddress.z == levelMeshController.levelSizeInChunks.z - 1)
+        if (ChunkAddress.z == levelMeshController.LevelSizeInChunks.z - 1)
         {
             zEnd += 1;
         }
@@ -41,13 +81,15 @@ public class ChunkMeshControllerSmooth : ChunkMeshController
                 for (int z = -1; z < zEnd; z++)
                 {
                     Vector3Int address = new Vector3Int(x, y, z);
-                    ProcessCube(grid, address, gridCellSize);
+                    ProcessCube(grid, address, gridCellSize, ref _worthDrawing);
                 }
             }
         }
+
+        ValidateAndFlushMeshData();
     }
 
-    public void ProcessCube(Grid grid, Vector3Int address, Vector3 gridCellSize)
+    public void ProcessCube(Grid grid, Vector3Int address, Vector3 gridCellSize, ref bool worthDrawing)
     {
         // Calculate coordinates of each corner of the current cube
         Vector3Int[] cornerCoords = new Vector3Int[8];
@@ -101,9 +143,9 @@ public class ChunkMeshControllerSmooth : ChunkMeshController
             int vertexIndex = vertices.Count;
 
             // Calculate positions of each vertex.
-            CreateVertexData(grid, gridCellSize, cornerCoords[a0], cornerCoords[a1]);
-            CreateVertexData(grid, gridCellSize, cornerCoords[b0], cornerCoords[b1]);
-            CreateVertexData(grid, gridCellSize, cornerCoords[c0], cornerCoords[c1]);
+            CreateVertexData(grid, gridCellSize, cornerCoords[a0], cornerCoords[a1], ref worthDrawing);
+            CreateVertexData(grid, gridCellSize, cornerCoords[b0], cornerCoords[b1], ref worthDrawing);
+            CreateVertexData(grid, gridCellSize, cornerCoords[c0], cornerCoords[c1], ref worthDrawing);
 
 
             // Normal:
@@ -120,7 +162,7 @@ public class ChunkMeshControllerSmooth : ChunkMeshController
         }
     }
 
-    private void CreateVertexData(Grid grid, Vector3 gridCellSize, Vector3Int coordA, Vector3Int coordB)
+    private void CreateVertexData(Grid grid, Vector3 gridCellSize, Vector3Int coordA, Vector3Int coordB, ref bool worthDrawing)
     {
         // Interpolate between the two corner points based on the density
         Vector3 posA = new Vector3(coordA.x * gridCellSize.x, coordA.y * gridCellSize.y, coordA.z * gridCellSize.z);
@@ -141,9 +183,13 @@ public class ChunkMeshControllerSmooth : ChunkMeshController
 
         Vector3 position = posA + t * (posB - posA);
 
-        if (position.y <= 0f)
+        if (position.y <= 10e-3f)
         {
             position.y -= 1f;
+        }
+        else
+        {
+            worthDrawing = true;
         }
 
         vertices.Add(position);
@@ -159,17 +205,22 @@ public class ChunkMeshControllerSmooth : ChunkMeshController
     public override bool ShouldUpdateMesh()
     {
         // Check if chunk is worth drawing.
-        bool notWorth = true;
-        for (int i = 0; i < vertices.Count; i++)
-        {
-            Vector3 vertex = vertices[i];
-            if (vertex.y > 0.01f)
-            {
-                notWorth = false;
-                break;
-            }
-        }
+        bool worth = base.ShouldUpdateMesh();
+        //if (worth)
+        //{
+        //    worth = false;
+        //    for (int i = 0; i < vertices.Count; i++)
+        //    {
+        //        Vector3 vertex = vertices[i];
+        //        if (vertex.y > 0.01f)
+        //        {
+        //            worth = true;
+        //            break;
+        //        }
+        //    }
+        //}
+        worth = worth && _worthDrawing;
 
-        return !notWorth;
+        return worth;
     }
 }

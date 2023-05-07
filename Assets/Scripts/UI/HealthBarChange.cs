@@ -17,7 +17,10 @@ public class HealthBarChange : MonoBehaviour
 
     private void Update()
     {
-        CurrentHealth = _character.health;
-        HealthBar.fillAmount = CurrentHealth / _character.BaseStats.maxHealth;
+        if (_character.isActiveAndEnabled)
+        {
+            CurrentHealth = _character.health;
+            HealthBar.fillAmount = CurrentHealth / _character.BaseStats.maxHealth;
+        }
     }
 }
