@@ -45,7 +45,7 @@ public abstract class LevelGeneratorBase : MonoBehaviour
     {
         levelMeshController = GetComponent<LevelMeshController>();
 
-        terrainPerlin = new Perlin(31);
+        terrainPerlin = new Perlin(69);
         ResetGenerationSpeed();
     }
 
@@ -60,7 +60,7 @@ public abstract class LevelGeneratorBase : MonoBehaviour
     /// </summary>
     public float GetNoiseValueAt(float x, float z)
     {
-        float firstNoise = terrainPerlin.Noise2D(x, z, 0.11f, 0.9f, 2);
+        float firstNoise = terrainPerlin.Noise2D(x, z, 0.09f, 0.9f, 2);
         firstNoise -= 0.5f;
         firstNoise = Mathf.Clamp01(firstNoise);
         firstNoise *= 2f;

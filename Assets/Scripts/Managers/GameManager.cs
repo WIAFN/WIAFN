@@ -79,7 +79,8 @@ public class GameManager : MonoBehaviour
     private void LevelGenerator_OnGenerationCompleted()
     {
         Vector3 playerPos = mainPlayer.transform.position;
-        playerPos.y = levelGenerator.GetLevelHeightAt(mainPlayer.transform.position) + mainPlayer.GetComponent<Collider>().bounds.size.y / 2f;
+        //playerPos.y = levelGenerator.GetLevelHeightAt(mainPlayer.transform.position) + mainPlayer.GetComponent<Collider>().bounds.size.y / 2f;
+        playerPos.y = levelGenerator.GetLevelHeightAt(mainPlayer.transform.position) + 15f;
         mainPlayer.transform.position = playerPos;
     }
 
