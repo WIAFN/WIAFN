@@ -11,6 +11,8 @@ public enum LevelGenerationSpeed
 
 public abstract class LevelGeneratorBase : MonoBehaviour
 {
+    protected LevelMeshController levelMeshController;
+
     public event GenerationCompletion OnGenerationCompleted;
 
     public LevelGenerationSpeed GenerationSpeed { 
@@ -27,13 +29,13 @@ public abstract class LevelGeneratorBase : MonoBehaviour
 
     protected Perlin terrainPerlin;
 
-    public Vector3 levelSizeInMeters;
+    public Vector2Int levelSizeInMeters;
 
-    public Vector3 HalfLevelSizeInMeters
+    public Vector3 HalfLevelDimensionsInMeters
     {
         get
         {
-            return levelSizeInMeters / 2;
+            return (new Vector3(levelSizeInMeters.x, levelSizeInMeters.y, levelSizeInMeters.x)) / 2f;
         }
     }
 
@@ -41,17 +43,22 @@ public abstract class LevelGeneratorBase : MonoBehaviour
 
     protected void Awake()
     {
+        levelMeshController = GetComponent<LevelMeshController>();
+
         terrainPerlin = new Perlin(31);
         ResetGenerationSpeed();
     }
 
 
-    public float GetNoiseValueAt(Vector2Int point)
+    public float GetNoiseValueAt(Vector2 point)
     {
         return GetNoiseValueAt(point.x, point.y);
     }
 
-    public float GetNoiseValueAt(int x, int z)
+    /// <summary>
+    /// Use with global positions.
+    /// </summary>
+    public float GetNoiseValueAt(float x, float z)
     {
         float firstNoise = terrainPerlin.Noise2D(x, z, 0.11f, 0.9f, 2);
         firstNoise -= 0.5f;
@@ -69,12 +76,18 @@ public abstract class LevelGeneratorBase : MonoBehaviour
         return result;
     }
 
-    public float GetLevelHeightAtWorldPos(Vector3 worldPos)
+    public float GetLevelHeightAt(Vector3 worldPos)
     {
-        return GetLevelHeightAtWorldPos(worldPos.x, worldPos.z);
+        return GetLevelHeightAt(worldPos.x, worldPos.z);
     }
 
-    public abstract float GetLevelHeightAtWorldPos(float x, float z);
+    public abstract float GetLevelHeightAt(float x, float z);
+
+    public abstract Vector3 GenerateRandomPositionOnLevel();
+    public Quaternion GenerateRandomRotation()
+    {
+        return Quaternion.Euler(Random.Range(0.0f, 360.0f), Random.Range(0.0f, 360.0f), Random.Range(0.0f, 360.0f)); ;
+    }
 
     protected void CallOnGenerationCompleted()
     {

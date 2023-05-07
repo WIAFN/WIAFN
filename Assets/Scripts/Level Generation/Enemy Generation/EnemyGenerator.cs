@@ -4,20 +4,20 @@ using UnityEngine;
 using UnityEngine.AI;
 using WIAFN.LevelGeneration;
 
-[RequireComponent(typeof(JunkyardLevelGenerator))]
+[RequireComponent(typeof(LevelGeneratorBase))]
 public class EnemyGenerator : MonoBehaviour
 {
     public int enemyCount;
     public List<GameObject> enemies;
 
-    private JunkyardLevelGenerator _levelGenerator;
+    private LevelGeneratorBase _levelGenerator;
 
     private Transform _enemiesParent;
     private ItemPoolGenerator _itemPoolGenerator;
 
     private void Awake()
     {
-        _levelGenerator = GetComponent<JunkyardLevelGenerator>();
+        _levelGenerator = GetComponent<LevelGeneratorBase>();
 
         _enemiesParent = (new GameObject("Enemies")).transform;
         _enemiesParent.parent = transform.parent;
@@ -54,16 +54,20 @@ public class EnemyGenerator : MonoBehaviour
 
         foreach(GameObject item in _itemPoolGenerator.Pool)
         {
-            Vector3 worldPos = _levelGenerator.GenerateRandomPosition();
-            worldPos.y = _levelGenerator.GetPileHeightAtWorldPos(worldPos.x, worldPos.z) + (item.GetComponent<Collider>().bounds.size.y / 2f);
+            Vector3 worldPos = _levelGenerator.GenerateRandomPositionOnLevel();
+            worldPos.y = _levelGenerator.GetLevelHeightAt(worldPos.x, worldPos.z);
 
+            item.transform.position = worldPos;
+
+            item.SetActive(true);
+
+            worldPos.y += (item.GetComponent<Collider>().bounds.size.y / 2f);
             //if (NavMesh.SamplePosition(worldPos, out NavMeshHit hit, 100f, -1) && hit.position.y < worldPos.y + 10f)
             //{
             item.transform.position = worldPos/*hit.position*/;
             //}
-
-            item.SetActive(true);
         }
+
     }
 
     private GameObject GetRandomEnemy()

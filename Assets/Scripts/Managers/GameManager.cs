@@ -7,9 +7,10 @@ using Cyan;
 
 public class GameManager : MonoBehaviour
 {
+    public static GameManager instance;
+
     [SerializeField]
     private UniversalRendererData _forwardRenderer;
-    public static GameManager instance;
 
     public Character mainPlayer;
     public LevelGeneratorBase levelGenerator;
@@ -78,7 +79,7 @@ public class GameManager : MonoBehaviour
     private void LevelGenerator_OnGenerationCompleted()
     {
         Vector3 playerPos = mainPlayer.transform.position;
-        playerPos.y = levelGenerator.GetLevelHeightAtWorldPos(mainPlayer.transform.position);
+        playerPos.y = levelGenerator.GetLevelHeightAt(mainPlayer.transform.position) + mainPlayer.GetComponent<Collider>().bounds.size.y / 2f;
         mainPlayer.transform.position = playerPos;
     }
 

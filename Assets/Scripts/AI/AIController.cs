@@ -85,6 +85,8 @@ namespace WIAFN.AI
 
         public bool CanSeeCharacter(Character character)
         {
+            if (character == null) return false;
+
             Vector3 directionToTarget = character.transform.position - transform.position;
             float angle = Vector3.Angle(transform.forward, directionToTarget);
             float distance = directionToTarget.magnitude;

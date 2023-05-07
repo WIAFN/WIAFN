@@ -17,7 +17,10 @@ public class StaminaBarChange : MonoBehaviour
 
     private void Update()
     {
-        CurrentStamina = _character.stamina;
-        StaminaBar.fillAmount = CurrentStamina / _character.BaseStats.maxStamina;
+        if (_character.isActiveAndEnabled)
+        {
+            CurrentStamina = _character.stamina;
+            StaminaBar.fillAmount = CurrentStamina / _character.BaseStats.maxStamina;
+        }
     }
 }

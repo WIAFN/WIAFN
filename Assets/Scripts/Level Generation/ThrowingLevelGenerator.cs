@@ -37,7 +37,7 @@ public class ThrowingLevelGenerator : LevelGeneratorBase
 
         for (float x = 0; x < levelSizeInMeters.x; x += 5)
         {
-            for (float z = 0; z < levelSizeInMeters.z; z += 5)
+            for (float z = 0; z < levelSizeInMeters.x; z += 5)
             {
                 float noiseValue = GetPerlinAtWorldPos(x, z);
                 float spawnItemCount = noiseValue * itemCountPerRate;
@@ -55,7 +55,7 @@ public class ThrowingLevelGenerator : LevelGeneratorBase
     private GameObject InstantiateItem(GameObject selectedItem, float x, float z)
     {
         Vector3 selectedPos = new Vector3(x, GetPerlinAtWorldPos(x, z) * levelSizeInMeters.y + selectedItem.transform.localScale.y, z);
-        Vector3 halfLevelSizeInMeters = HalfLevelSizeInMeters;
+        Vector3 halfLevelSizeInMeters = HalfLevelDimensionsInMeters;
         selectedPos.x -= halfLevelSizeInMeters.x;
         selectedPos.z -= halfLevelSizeInMeters.z;
 
@@ -66,18 +66,13 @@ public class ThrowingLevelGenerator : LevelGeneratorBase
         return Instantiate(selectedItem, selectedPos, GenerateRandomRotation(), _itemsParent);
     }
 
-    public Vector3 GenerateRandomPosition()
+    public override Vector3 GenerateRandomPositionOnLevel()
     {
-        Vector3 halfLevelSizeInMeters = HalfLevelSizeInMeters;
+        Vector3 halfLevelSizeInMeters = HalfLevelDimensionsInMeters;
         float x = Random.Range(-halfLevelSizeInMeters.x, halfLevelSizeInMeters.x);
         float z = Random.Range(-halfLevelSizeInMeters.z, halfLevelSizeInMeters.z);
-        float y = Random.Range(GetLevelHeightAtWorldPos(new Vector3(x, 0f, z)) + 5f, levelSizeInMeters.y);
+        float y = Random.Range(GetLevelHeightAt(new Vector3(x, 0f, z)) + 5f, levelSizeInMeters.y);
         return new Vector3(x, y, z);
-    }
-
-    private Quaternion GenerateRandomRotation()
-    {
-        return Quaternion.Euler(Random.Range(0.0f, 360.0f), Random.Range(0.0f, 360.0f), Random.Range(0.0f, 360.0f)); ;
     }
 
 
@@ -116,7 +111,7 @@ public class ThrowingLevelGenerator : LevelGeneratorBase
         return _terrainPerlin.Noise2D(x, z, 0.155f, 0.9f, 3);
     }
 
-    public override float GetLevelHeightAtWorldPos(float x, float z)
+    public override float GetLevelHeightAt(float x, float z)
     {
         return GetPerlinAtWorldPos(x, z);
     }

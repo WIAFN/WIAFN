@@ -1,9 +1,9 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using UnityEditor.UIElements;
 using UnityEngine;
-using static UnityEngine.Networking.UnityWebRequest;
+using Random = UnityEngine.Random;
 
 [RequireComponent(typeof(LevelGeneratorBase))]
 public class LevelMeshController : MonoBehaviour
@@ -47,11 +47,11 @@ public class LevelMeshController : MonoBehaviour
 
     //public int layerOfMeshes;
 
-    public Vector3 MeshSizeInMeters
+    public Vector3 MeshDimensionsInMeters
     {
         get
         {
-            return _levelGenerator.levelSizeInMeters/* * 4f / 3f*/;
+            return new Vector3(_levelGenerator.levelSizeInMeters.x, _levelGenerator.levelSizeInMeters.y, _levelGenerator.levelSizeInMeters.x)/* * 4f / 3f*/;
         }
     }
 
@@ -116,15 +116,19 @@ public class LevelMeshController : MonoBehaviour
         _updatedMeshCountOnCurrentFrame = 0;
     }
 
-    public void Generate(Grid grid, bool multithreaded = true)
+    public void Initialize(Vector3Int gridResolution)
     {
         Clear();
 
-        Vector3 meshSizeInMeters = MeshSizeInMeters;
+        Vector3 meshSizeInMeters = MeshDimensionsInMeters;
         _generatedJunksParent.localPosition = -GetHalfHorizontalMeshSizeInMeters();
 
-        ChunkSizeInVoxels = new Vector3Int(grid.Size.x / LevelSizeInChunks.x, grid.Size.y / LevelSizeInChunks.y, grid.Size.z / LevelSizeInChunks.z);
-        VoxelSizeInMeters = new Vector3(meshSizeInMeters.x / grid.Size.x, meshSizeInMeters.y / grid.Size.y, meshSizeInMeters.z / grid.Size.z);
+        ChunkSizeInVoxels = new Vector3Int(gridResolution.x / LevelSizeInChunks.x, gridResolution.y / LevelSizeInChunks.y, gridResolution.z / LevelSizeInChunks.z);
+        VoxelSizeInMeters = new Vector3(meshSizeInMeters.x / gridResolution.x, meshSizeInMeters.y / gridResolution.y, meshSizeInMeters.z / gridResolution.z);
+    }
+
+    public void Generate(Grid grid, bool multithreaded = true)
+    {
         StartCoroutine(GenerateChunks(grid, multithreaded));
     }
 
@@ -151,24 +155,40 @@ public class LevelMeshController : MonoBehaviour
                     ChunkMeshController chunkController = InitiateChunk(chunkAddress);
 
                     Vector3Int minAddress = Vector3Int.Scale(ChunkSizeInVoxels, chunkAddress);
+                    Vector3Int maxAddress = Vector3Int.Scale(ChunkSizeInVoxels, chunkAddress + Vector3Int.one) - Vector3Int.one;
 
-                    Vector3Int maxAddress = Vector3Int.Scale(ChunkSizeInVoxels, chunkAddress + Vector3Int.one)/* - Vector3Int.one*/;
                     chunkController.Generate(grid.GetSubGrid(minAddress, maxAddress), multithreaded);
                     //chunks.Add(chunkController);
-                    tasks.Add(chunkController.MeshGenerationTask);
-                    chunkController.MeshGenerationTask.ContinueWith((previousTask) =>
+                    if (multithreaded)
+                    {
+                        tasks.Add(chunkController.MeshGenerationTask);
+                        chunkController.MeshGenerationTask.ContinueWith((previousTask) =>
+                        {
+                            UpdateMesh(chunkController);
+                        });
+                    } else
                     {
                         UpdateMesh(chunkController);
-                    });
+                    }
                     //_currentFrameSkip += _currentFrameSkipsBetweenMeshGenerations;
                 }
             }
         }
 
-        Task allWaitTask = Task.WhenAll(tasks);
-        Task anyWaitTask = Task.WhenAny(tasks);
+        Func<bool> whileCheckFunc;
+        try
+        {
+            Task allWaitTask = Task.WhenAll(tasks);
+            //Task anyWaitTask = Task.WhenAny(tasks);
+            whileCheckFunc = () => { return !allWaitTask.IsCompleted; };
 
-        while (!allWaitTask.IsCompleted || HasUpdatingChunks)
+        } 
+        catch (ArgumentException)
+        {
+            whileCheckFunc = () => { return false; };
+        }
+
+        while (whileCheckFunc() || HasUpdatingChunks)
         {
             //Task finishedTask = Task.WhenAny(tasks);
             //int indexOfFinishedTask = tasks.IndexOf(finishedTask);
@@ -214,7 +234,7 @@ public class LevelMeshController : MonoBehaviour
         Clear();
 
         Debug.Assert(grids.Length > 0);
-        Vector3 meshSizeInMeters = MeshSizeInMeters;
+        Vector3 meshSizeInMeters = MeshDimensionsInMeters;
 
         ChunkSizeInVoxels = grids[0].Size;
         VoxelSizeInMeters = new Vector3(meshSizeInMeters.x / size.x, meshSizeInMeters.y / size.y, meshSizeInMeters.z / size.z);
@@ -280,7 +300,9 @@ public class LevelMeshController : MonoBehaviour
         InitiateChunkGrid();
     }
 
-
+    /// <summary>
+    /// Updates all meshes on the main thread in single frame. Dangerous, creates a huge spike.
+    /// </summary>
     public void UpdateMeshes()
     {
         ChunkMeshController[] chunks = Chunks;
@@ -321,7 +343,7 @@ public class LevelMeshController : MonoBehaviour
 
     public Vector3Int GetGridAddressOfWorldPos(Vector3 worldPos)
     {
-        Vector3 realWorldPos = worldPos + GetHalfHorizontalMeshSizeInMeters();
+        Vector3 realWorldPos = worldPos/* + GetHalfHorizontalMeshSizeInMeters()*/;
         int x = Mathf.FloorToInt(realWorldPos.x / VoxelSizeInMeters.x);
         int y = Mathf.FloorToInt(realWorldPos.y / VoxelSizeInMeters.y);
         int z = Mathf.FloorToInt(realWorldPos.z / VoxelSizeInMeters.z);
@@ -334,7 +356,7 @@ public class LevelMeshController : MonoBehaviour
     /// <returns>Half of the mesh size.</returns>
     private Vector3 GetHalfHorizontalMeshSizeInMeters()
     {
-        Vector3 halfSize = MeshSizeInMeters / 2f;
+        Vector3 halfSize = MeshDimensionsInMeters / 2f;
         return new Vector3(halfSize.x, 0f, halfSize.z);
     }
 
@@ -370,7 +392,7 @@ public class LevelMeshController : MonoBehaviour
     {
         get
         {
-            Vector3 meshSizeInMeters = MeshSizeInMeters;
+            Vector3 meshSizeInMeters = MeshDimensionsInMeters;
             return new Vector3(meshSizeInMeters.x / LevelSizeInChunks.x, meshSizeInMeters.y / LevelSizeInChunks.y, meshSizeInMeters.z / LevelSizeInChunks.z);
         }
     }

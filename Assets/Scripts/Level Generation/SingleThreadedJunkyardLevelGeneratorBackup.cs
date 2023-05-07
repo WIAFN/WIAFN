@@ -14,7 +14,6 @@ namespace WIAFN.LevelGeneration
         public int itemCount;
         public List<LevelObjectData> levelObjects;
 
-        private LevelMeshController _levelMeshController;
         private Grid _currentGrid;
         private Perlin _terrainPerlin;
 
@@ -24,13 +23,13 @@ namespace WIAFN.LevelGeneration
 
         private new void Awake()
         {
+            base.Awake();
+
             _weightSum = -1f;
             _terrainPerlin = new Perlin(31);
 
             _itemsParent = (new GameObject("Items")).transform;
             _itemsParent.parent = transform.parent;
-
-            _levelMeshController = GetComponent<LevelMeshController>();
         }
 
         void Start()
@@ -51,6 +50,7 @@ namespace WIAFN.LevelGeneration
             int width = resolution.x;
             int height = resolution.y;
             Grid grid = new Grid(width, height);
+            levelMeshController.Initialize(grid.Size);
             for (int x = 0; x < width; x++)
             {
                 for (int z = 0; z < width; z++)
@@ -75,8 +75,7 @@ namespace WIAFN.LevelGeneration
             }
 
             _currentGrid = grid;
-            _levelMeshController.Generate(_currentGrid);
-            _levelMeshController.UpdateMeshes();
+            levelMeshController.Generate(_currentGrid);
         }
 
         public void GenerateItems()
@@ -90,25 +89,20 @@ namespace WIAFN.LevelGeneration
             {
                 GameObject selectedItem = ChooseRandomItem();
                 Debug.Assert(selectedItem != null);
-                GameObject newItem = Instantiate(selectedItem, GenerateRandomPosition(), GenerateRandomRotation(), _itemsParent);
+                GameObject newItem = Instantiate(selectedItem, GenerateRandomPositionOnLevel(), GenerateRandomRotation(), _itemsParent);
 
             }
 
 
         }
 
-        public Vector3 GenerateRandomPosition()
+        public override Vector3 GenerateRandomPositionOnLevel()
         {
-            Vector3 halfLevelSizeInMeters = HalfLevelSizeInMeters;
+            Vector3 halfLevelSizeInMeters = HalfLevelDimensionsInMeters;
             float x = Random.Range(-halfLevelSizeInMeters.x, halfLevelSizeInMeters.x);
             float z = Random.Range(-halfLevelSizeInMeters.z, halfLevelSizeInMeters.z);
             float y = Random.Range(GetPileHeightAtWorldPos(x, z) + 5f, levelSizeInMeters.y);
             return new Vector3(x, y, z);
-        }
-
-        public Quaternion GenerateRandomRotation()
-        {
-            return Quaternion.Euler(Random.Range(0.0f, 360.0f), Random.Range(0.0f, 360.0f), Random.Range(0.0f, 360.0f)); ;
         }
 
 
@@ -149,7 +143,7 @@ namespace WIAFN.LevelGeneration
 
         public float GetNoiseValueFromWorldPos(float x, float z)
         {
-            Vector3Int gridPos = _levelMeshController.GetGridAddressOfWorldPos(new Vector3(x, 0f, z));
+            Vector3Int gridPos = levelMeshController.GetGridAddressOfWorldPos(new Vector3(x, 0f, z));
             return GetNoiseValueAt(gridPos.x, gridPos.z);
         }
 
@@ -176,7 +170,7 @@ namespace WIAFN.LevelGeneration
             return result;
         }
 
-        public override float GetLevelHeightAtWorldPos(float x, float z)
+        public override float GetLevelHeightAt(float x, float z)
         {
             return GetNoiseValueFromWorldPos(x, z);
         }
