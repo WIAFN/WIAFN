@@ -162,6 +162,32 @@ public class Effect : ScriptableObject
         }
     }
 
+    public void RemoveBoostImmediate()
+    {
+        foreach (Upgrade boost in Boosts)
+        {
+            int statId;
+            float currentValue;
+            float calculatedValue;
+            foreach (CharacterStatChange statChange in boost.CharacterStatChanges)
+            {
+                statId = (int)statChange.StatEnum;
+                currentValue = _owner.GetCharacterStat(statId);
+                calculatedValue = currentValue - statChange.Value;
+                _owner.ChangeCharacterStat(statId, calculatedValue);
+            }
+
+            foreach (WeaponStatChange statChange in boost.WeaponStatChanges)
+            {
+                statId = (int)statChange.StatEnum;
+                currentValue = _owner.GetWeaponStat(statId);
+                calculatedValue = currentValue - statChange.Value;
+                _owner.ChangeWeaponStat(statId, calculatedValue);
+            }
+        }
+        Enabled = false;
+    }
+
     private void StartScreenFX(Blit screenFX)
     {
         Debug.Log("StartScreenFX");

@@ -14,12 +14,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Upgrades:
   - {fileID: 11400000, guid: 4c2f36fc4afd0e840ae517a70b0f65c8, type: 2}
-  TempUpgrades:
+  Boosts:
   - {fileID: 11400000, guid: 6807426f73114fd48b7ba5e4d7fbcbaa, type: 2}
   ScreenEffect: {fileID: 7053655301277151119, guid: 4a4130d8d2e4335488046c5872bd0dff, type: 2}
   InAnimation: 0
   Enabled: 0
+  AnimationDuration: 0
   EffectDuration: 0
   EffectCooldown: 0
   IsUsedOnce: 0
-  UseCount: 1
+  UseCount: 6
+  animationEaseIn: 0
+  animationEaseOut: 0

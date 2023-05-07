@@ -13,8 +13,6 @@ MonoBehaviour:
   m_Name: TempRegenUpgrade
   m_EditorClassIdentifier: 
   CharacterStatChanges:
-  - StatEnum: 3
-    Value: 100
   - StatEnum: 2
     Value: 100
   WeaponStatChanges: []

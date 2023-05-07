@@ -48,6 +48,7 @@ public class GameManager : MonoBehaviour
     public void OnDestroy()
     {
         ClearBlits();
+        ClearBoosts();
     }
 
     //Turn all fullscreen effects off when destroyed to prevent them from reoccuring next the game launches
@@ -64,6 +65,14 @@ public class GameManager : MonoBehaviour
                 blit.settings.blitMaterial.SetFloat("_Intensity", 0);
                 blit.SetActive(false);
             }
+        }
+    }
+
+    private void ClearBoosts()
+    {
+        if(mainPlayer.Effect != null)
+        {
+            mainPlayer.Effect.RemoveBoostImmediate();
         }
     }
     public delegate void CharacterDelegate(Character character);
