@@ -31,8 +31,13 @@ namespace WIAFN.AI
             _rotationDirectionMultiplier = 0f;
             _cantSeeForSecondsStartTime = 0f;
 
+
             ai.SetInCombat(true);
             npc.LookAt(target, true);
+
+            var _baseStats = ai.GetComponent<CharacterBaseStats>();
+            _baseStats.speedCoefficient = 7000f;
+
         }
 
         public void UpdateState(AIController ai)
@@ -40,6 +45,13 @@ namespace WIAFN.AI
             if (RunState.CheckCondition(ai))
             {
                 ai.ChangeState(new RunState(target));
+                return;
+            }
+
+            if (ai.NPCController.isStuck)
+            {
+                Debug.Log("NPC is stuck!");
+                ai.ChangeState(new SearchState(target.transform.position, target));
                 return;
             }
 
@@ -69,10 +81,15 @@ namespace WIAFN.AI
         public void UpdateNPCBehaviour(AIController ai)
         {
             NPCControllerBase npc = ai.NPCController;
-            npc.TryAttack(target);
+            float distanceToTarget = Vector3.Distance(npc.transform.position, target.transform.position);
+
+            if (distanceToTarget < 20f) //buraya bir de health condition yazmak istiyurum
+            {
+                npc.TryAttack(target);
+
+            }
 
             _updateTargetPositionTimer += Time.deltaTime;
-            float distanceToTarget = Vector3.Distance(npc.transform.position, target.transform.position);
             if (ai.IsStopped || 
                 (_updateTargetPositionTimer >= updateTargetPositionDeltaTime && 
                     (distanceToTarget < ai.viewRange * 0.4f || distanceToTarget > ai.viewRange * 0.8f)))

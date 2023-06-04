@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.TextCore.Text;
 
 namespace WIAFN.AI
 {
@@ -15,9 +16,18 @@ namespace WIAFN.AI
         private const float runDirectionRandomize = 40f;
         private const float runTargetPosUpdateMaxDeltaTime = 0.6f;
 
+        public AudioManager audioManager;
+
         public RunState(Character fromCharacter)
         {
             this.fromCharacter = fromCharacter;
+        }
+
+        private void Awake()
+        {
+            //audioManager = Object.FindObjectOfType<AudioManager>();
+            audioManager = GameObject.Find("AudioManager").GetComponent<AudioManager>();
+
         }
 
         public void OnEnter(AIController ai)
@@ -26,6 +36,12 @@ namespace WIAFN.AI
             SetRunTargetPos(ai);
             _runTargetPosUpdateTimer = 0f;
             _runTargetPosUpdateCurrentDeltaTime = Random.Range(runTargetPosUpdateMaxDeltaTime / 10f, runTargetPosUpdateMaxDeltaTime);
+
+            var _baseStats = ai.GetComponent<CharacterBaseStats>();
+            _baseStats.speedCoefficient = 7000f;
+
+            AudioManager.instance.PlayEnemyRun(ai.transform);
+
         }
 
         public void UpdateState(AIController ai)
@@ -77,5 +93,7 @@ namespace WIAFN.AI
         {
             return Random.Range(-runDirectionRandomize, runDirectionRandomize);
         }
+
+
     }
 }

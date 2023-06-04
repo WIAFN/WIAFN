@@ -9,11 +9,11 @@ using UnityEngine.TextCore.Text;
 public class NavMeshNPCController : NPCControllerBase
 {
     private NavMeshAgent _agent;
+   
+//private bool _isOnOffMeshLink;
+//private Object _onMeshLinkOfObject;
 
-    //private bool _isOnOffMeshLink;
-    //private Object _onMeshLinkOfObject;
-
-    public override void Awake()
+public override void Awake()
     {
         _agent = GetComponent<NavMeshAgent>();
     }

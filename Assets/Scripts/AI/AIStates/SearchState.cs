@@ -18,6 +18,18 @@ namespace WIAFN.AI
         private float _canSeeCheckTime;
 
         private const float canSeeCheckDeltaTime = 0.5f;
+
+        public float speedMultiplier = 0.7f;
+
+        public AudioManager audioManager;
+
+        private void Awake()
+        {
+            //   audioManager = Object.FindObjectOfType<AudioManager>();
+            audioManager = GameObject.Find("AudioManager").GetComponent<AudioManager>();
+        }
+
+
         public SearchState(Vector3 lastSeenPosition, Character searchTarget)
         {
             this.lastSeenPosition = lastSeenPosition;
@@ -32,6 +44,12 @@ namespace WIAFN.AI
             _searchStartTime = Time.realtimeSinceStartup;
 
             _canSeeCheckTime = 0f;
+
+            var _baseStats = ai.GetComponent<CharacterBaseStats>();
+            _baseStats.speedCoefficient = 7000f;
+
+            AudioManager.instance.PlayEnemyRandom(ai.transform);
+
         }
 
         public void UpdateState(AIController ai)
@@ -47,6 +65,7 @@ namespace WIAFN.AI
             {
                 ai.ChangeState(new IdleState());
             }
+
         }
 
         public void UpdateNPCBehaviour(AIController ai)

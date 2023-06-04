@@ -9,6 +9,7 @@ public class CharacterMovement : MonoBehaviour
     private CharacterController _controller;
     private Character _character;
     private CharacterBaseStats _baseStats;
+    //public AudioClip walkingSound;
 
     //Relations
     // Ground check info if needed.
@@ -16,13 +17,13 @@ public class CharacterMovement : MonoBehaviour
     public Transform feet;
     public LayerMask groundMask;
     public float groundDistance = 0.4f;
-
+    [HideInInspector]
+    public float gravityMultiplier;
+    public bool hasGravity;
     //Jumping
     [Header("Jumping")]
     private float _remainingJump;
-    [HideInInspector]
-    public float gravityMultiplier;
-
+    
     //Walking
     [Header("Speed")]
     private float _targetSpeed = 12f;
@@ -64,12 +65,14 @@ public class CharacterMovement : MonoBehaviour
         IsMoving = IsGrounded = IsDashing = IsSprinting = false;
 
         gravityMultiplier = 1f;
+
     }
 
     // Update is called once per frame
     void Update()
     {
         _speed = _controller.velocity.magnitude;
+      
         _controller.Move(_velocity);
         _velocity = Vector3.zero;
 
@@ -117,9 +120,12 @@ public class CharacterMovement : MonoBehaviour
 
     private void ApplyGravity()
     {
-        _verticalVelocity.y += AppliedGravity.y * Time.deltaTime;
-        _velocity += _verticalVelocity * Time.deltaTime;
-        //_controller.Move(_verticalVelocity * Time.deltaTime);
+        if (hasGravity)
+        {
+            _verticalVelocity.y += AppliedGravity.y * Time.deltaTime;
+            _velocity += _verticalVelocity * Time.deltaTime;
+            //_controller.Move(_verticalVelocity * Time.deltaTime);
+        }
     }
 
     private void CharacterActions()
@@ -163,7 +169,11 @@ public class CharacterMovement : MonoBehaviour
     {
         IsMoving = weightedDirection.x != 0f || weightedDirection.y != 0f || weightedDirection.z != 0f;
         _velocity += _targetSpeed * weightedDirection * Time.deltaTime;
-        //_controller.Move(_speed * Time.deltaTime * weightedDirection);
+        //_controller.Move(_speed * Time.deltaTime * weightedDirection);,
+
+        //AudioSource audioSource = GetComponent<AudioSource>();
+        //audioSource.clip = walkingSound;
+        //audioSource.Play();
         return IsMoving;
     }
 
@@ -216,6 +226,10 @@ public class CharacterMovement : MonoBehaviour
 
     private void GravityCheck()
     {
+        if (!hasGravity)
+        {
+            return;
+        }
         if (feet != null)
         {
             IsGrounded = Physics.CheckSphere(feet.position, groundDistance, groundMask);

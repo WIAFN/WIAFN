@@ -28,7 +28,6 @@ public class CharacterBaseStats : MonoBehaviour
     public Vector2 shootingErrorRateMinMax;
 
     [Header("Runtime Variables")]
-    [HideInInspector]
     public float speedCoefficient = 1f;
 
     public float Speed

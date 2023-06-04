@@ -7,7 +7,6 @@ namespace WIAFN.AI
 
         public void UpdateState(AIController ai);
         public void UpdateNPCBehaviour(AIController ai);
-
         public void OnExit(AIController ai);
     }
 

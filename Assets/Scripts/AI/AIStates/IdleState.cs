@@ -12,6 +12,16 @@ namespace WIAFN.AI
         private float _canSeeCheckTime;
 
         private const float canSeeCheckDeltaTime = 0.1f;
+
+        public AudioManager audioManager;
+
+        private void Awake()
+        {
+            //audioManager = Object.FindObjectOfType<AudioManager>();
+            audioManager = GameObject.Find("AudioManager").GetComponent<AudioManager>();
+
+        }
+
         public void OnEnter(AIController ai)
         {
             NPCControllerBase npc = ai.NPCController;
@@ -19,6 +29,11 @@ namespace WIAFN.AI
             _passedTime = 0f;
             _canSeeCheckTime = 0f;
             _chosenIdleTime = Random.Range(0f, ai.maxIdleTime);
+
+            var _baseStats = ai.GetComponent<CharacterBaseStats>();
+            _baseStats.speedCoefficient = 7000f;
+
+            AudioManager.instance.PlayEnemyRandom(ai.transform);
         }
 
         public void UpdateState(AIController ai)
@@ -39,6 +54,7 @@ namespace WIAFN.AI
             {
                 ai.ChangeState(new PatrolState());
             }
+
         }
 
         public void UpdateNPCBehaviour(AIController ai)

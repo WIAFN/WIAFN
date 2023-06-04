@@ -27,6 +27,12 @@ public abstract class NPCControllerBase : MonoBehaviour
     // TODO - Safa: Maybe we should move all constants to a single file.
     protected const float reachCheckSqr = 7f;
 
+
+    //stuck control
+    protected const float stuckThreshold = 1f; // The time in seconds the NPC has to be stuck to be considered stuck.
+    private float timeStuck = 0f;
+    public bool isStuck = false;
+
     public virtual void Awake()
     {
         
@@ -59,6 +65,22 @@ public abstract class NPCControllerBase : MonoBehaviour
         }
 
         UpdateLookAt();
+
+        // Check if NPC is stuck
+        if (IsStopped())
+        {
+            timeStuck += Time.deltaTime;
+            if (timeStuck > stuckThreshold && !isStuck)
+            {
+                isStuck = true;
+                Debug.Log("NPC is stuck!");
+            }
+        }
+        else
+        {
+            timeStuck = 0f;
+            isStuck = false;
+        }
     }
 
     public void RotateBodyTowardsPosition(Vector3 facePosition)
