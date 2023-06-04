@@ -62,7 +62,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10303, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: 2c8617feec5ff1d45ba9d43b4204cc4d, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -192,7 +192,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10303, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: 2c8617feec5ff1d45ba9d43b4204cc4d, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -638,6 +638,26 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7447357728767742493, guid: 176afd004d6c7664387e71def8559718, type: 3}
+      propertyPath: Damage
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 7447357728767742493, guid: 176afd004d6c7664387e71def8559718, type: 3}
+      propertyPath: GunTip
+      value: 
+      objectReference: {fileID: 3170812397131420090}
+    - target: {fileID: 7447357728767742493, guid: 176afd004d6c7664387e71def8559718, type: 3}
+      propertyPath: FireRate
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 7447357728767742493, guid: 176afd004d6c7664387e71def8559718, type: 3}
+      propertyPath: MuzzleFlash
+      value: 
+      objectReference: {fileID: 7813738118887920440, guid: 9afa50d68c6ab79418141f5a31b4ae06, type: 3}
+    - target: {fileID: 7447357728767742493, guid: 176afd004d6c7664387e71def8559718, type: 3}
+      propertyPath: CharacterMove
+      value: 
+      objectReference: {fileID: 56262782640741871}
+    - target: {fileID: 7447357728767742493, guid: 176afd004d6c7664387e71def8559718, type: 3}
       propertyPath: characterMove
       value: 
       objectReference: {fileID: 56262782640741871}
@@ -647,6 +667,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 176afd004d6c7664387e71def8559718, type: 3}
+--- !u!4 &3170812397131420090 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 122854274341654795, guid: 176afd004d6c7664387e71def8559718, type: 3}
+  m_PrefabInstance: {fileID: 3293409357691715761}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &5528601767317462159 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 6993246206220852286, guid: 176afd004d6c7664387e71def8559718, type: 3}

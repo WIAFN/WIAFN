@@ -1,0 +1,28 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5e47e66b6c4697f42bf4e0d72ffc9ccd, type: 3}
+  m_Name: Effect 2
+  m_EditorClassIdentifier: 
+  Upgrades:
+  - {fileID: 11400000, guid: 4c2f36fc4afd0e840ae517a70b0f65c8, type: 2}
+  Boosts:
+  - {fileID: 11400000, guid: 6807426f73114fd48b7ba5e4d7fbcbaa, type: 2}
+  ScreenEffect: {fileID: 7053655301277151119, guid: 4a4130d8d2e4335488046c5872bd0dff, type: 2}
+  InAnimation: 0
+  Enabled: 0
+  AnimationDuration: 0
+  EffectDuration: 0
+  EffectCooldown: 0
+  IsUsedOnce: 0
+  UseCount: 6
+  animationEaseIn: 0
+  animationEaseOut: 0

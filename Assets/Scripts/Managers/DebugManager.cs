@@ -8,6 +8,7 @@ public class DebugManager : MonoBehaviour
 
     public bool generalDebug;
     public bool debugAi;
+    public bool debugProceduralAnims;
 
     private void Awake()
     {

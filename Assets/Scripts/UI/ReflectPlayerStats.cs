@@ -21,7 +21,7 @@ public class ReflectPlayerStats : MonoBehaviour
     {
         HPBar.value = Mathf.InverseLerp(0, _character.BaseStats.maxHealth, _character.health);
         STMBar.value = Mathf.InverseLerp(0, _character.BaseStats.maxStamina, _character.stamina);
-        FireRate.value = Mathf.InverseLerp(0, playerWeapon.fireRate, playerWeapon.Delay);
+        FireRate.value = Mathf.InverseLerp(0, playerWeapon.FireRate, playerWeapon.Delay);
 
     }
 }

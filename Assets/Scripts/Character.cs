@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using static UnityEngine.Rendering.DebugUI;
 
 [RequireComponent(typeof(CharacterBaseStats))]
 public class Character : MonoBehaviour
@@ -8,9 +9,11 @@ public class Character : MonoBehaviour
     private CharacterMovement _characterMove;
     private CharacterBaseStats _baseStats;
     private Weapon _weapon;
+    private Effect _effect;
 
     //Getter
     public Weapon Weapon => _weapon;
+    public Effect Effect => _effect;
 
     // Runtime Stats
     [HideInInspector]
@@ -117,32 +120,83 @@ public class Character : MonoBehaviour
         }
     }
 
-    public void GetUpgrade(string attributeName, float value)
+    public float GetCharacterStat(int attributeEnum)
     {
-        switch (attributeName)
+        switch (attributeEnum)
         {
-            case "maxHealth":
+            case 0:
+                return BaseStats.maxHealth;
+            case 1:
+                return BaseStats.maxStamina;
+            case 2:
+                return BaseStats.staminaRegen;
+            case 3:
+                return BaseStats.healthRegen;
+            case 4:
+                return BaseStats.speedCoefficient;
+            default:
+                return BaseStats.maxHealth;
+        }
+    }
+    public void ChangeCharacterStat(int attributeEnum, float value)
+    {
+        switch (attributeEnum)
+        {
+            case 0:
                 BaseStats.maxHealth += value;
                 break;
-            case "maxStamina":
+            case 1:
                 BaseStats.maxStamina += value;
                 break;
-            case "healthRegen":
+            case 2:
                 BaseStats.healthRegen += value;
                 break;
-            case "staminaRegen":
+            case 3:
                 BaseStats.staminaRegen += value;
                 break;
-            case "speedCoefficient":
+            case 4:
                 BaseStats.speedCoefficient += value;
                 break;
-            case "Damage":
-                Weapon.damage += value;
+        }
+    }
+
+    public void ChangeWeaponStat(int attributeEnum, float value)
+    {
+        switch (attributeEnum)
+        {
+            case 0:
+                Weapon.Damage = value;
                 break;
-            case "FireRate":
-                Weapon.fireRate += value;
+            case 1:
+                Weapon.FireRate = value;
                 break;
         }
+    }
+
+    public float GetWeaponStat(int attributeEnum)
+    {
+        switch (attributeEnum)
+        {
+            case 0:
+                return Weapon.Damage;
+            case 1:
+                return Weapon.FireRate;
+        }
+        return 0;
+    }
+
+    public void ChangeEffect(Effect effect)
+    {
+        if (HasEffect())
+        {
+            _effect.OnEffectDrop();
+        }
+        _effect = effect;
+    }
+
+    public bool HasEffect()
+    {
+        return _effect != null;
     }
 
     public CharacterMovement CharacterMovement => _characterMove;

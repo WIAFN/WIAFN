@@ -46,7 +46,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6eefa5cb7a428894db97bf5ea468051f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _forwardRenderer: {fileID: 11400000, guid: 4a4130d8d2e4335488046c5872bd0dff, type: 2}
   mainPlayer: {fileID: 0}
+  levelGenerator: {fileID: 0}
 --- !u!114 &39228896130775932
 MonoBehaviour:
   m_ObjectHideFlags: 0

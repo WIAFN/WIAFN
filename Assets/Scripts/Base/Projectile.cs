@@ -4,18 +4,21 @@ using UnityEngine;
 
 public abstract class Projectile : MonoBehaviour
 {
-    public float speed;                     //Unit per second?
-    public float timeToLive;                //Time to live (second)
-    public int penetrationValue;
-    public GameObject impactParticleSystem; //Impact
-    public GameObject impactHole;
+    public float Speed;                     //Unit per second?
+    public float TimeToLive;                //Time to live (second)
+    public int PenetrationValue;
+    public GameObject ImpactParticleSystem; //Impact
+    public GameObject ImpactHole;
+
+    [HideInInspector]
+    public Weapon Weapon;
 
     protected TrailRenderer TrailRenderer;  //Bullet trail?
 
     private Vector3 _oldPos;
     private Vector3 _parentVelocity;        //Parent velocity
     private MeshRenderer _meshRenderer;     //Get mesh renderer from child
-    private float damage;                   //Moved from projectile, might do terraria logic for bullet + weapon damage combo
+    private float _damage;                   //Moved from projectile, might do terraria logic for bullet + weapon damage combo
 
     private void Awake()
     {
@@ -51,13 +54,13 @@ public abstract class Projectile : MonoBehaviour
         var hitList = Physics.RaycastAll(_oldPos, (transform.position - _oldPos).normalized, Vector3.Distance(transform.position,_oldPos));
         foreach(var hit in hitList)
         {
-            if (penetrationValue < 0) break;
+            if (PenetrationValue < 0) break;
 
             HitObject(hit);
         }
 
         //Check if bullet will hit anything in front of it
-        if (penetrationValue >= 0 && speed < 400f)
+        if (PenetrationValue >= 0 && Speed < 400f)
         {
             Physics.Raycast(transform.position, transform.forward, out RaycastHit forwardHit, transform.localScale.x / 3);
             if (forwardHit.transform != null)
@@ -69,38 +72,50 @@ public abstract class Projectile : MonoBehaviour
 
     private void HitObject(RaycastHit hit)
     {
+        //Get hit information
+        GameObject hitObject = hit.transform.gameObject;
+        Character hitCharacter = hitObject.GetComponent<Character>();
+
+        if(hitCharacter == Weapon.Character)
+        {
+            Debug.Log("Hitting self");
+            return;
+        }
+
         //Remove one pen value, might change it depending on character armor values, etc.
-        penetrationValue--;
+        PenetrationValue--;
 
         //Get normal of the impact surface
         Vector3 reflect = Vector3.Reflect(transform.forward, hit.normal);
 
         //On hit particle System
         GameObject ps = Instantiate(
-            impactParticleSystem,
+            ImpactParticleSystem,
             hit.point + (hit.normal * .01f),
             Quaternion.LookRotation(reflect, Vector3.up));
         Destroy(ps, 0.3f);
 
         //Impact point
-        GameObject ip = Instantiate(
-            impactHole, 
-            hit.point + (hit.normal * .01f), 
-            Quaternion.LookRotation(hit.normal)
-            );
-        ip.transform.parent = hit.transform;
-        
-        Destroy(ip, 10f);
+        if(hitCharacter != GameManager.instance.mainPlayer)
+        {
+            GameObject ip = Instantiate(
+                ImpactHole,
+                hit.point + (hit.normal * .01f),
+                Quaternion.LookRotation(hit.normal)
+                );
+            ip.transform.parent = hit.transform;
 
-        GameObject hitObject = hit.transform.gameObject;
-        Character hitCharacter = hitObject.GetComponent<Character>();
+            Destroy(ip, 10f);
+        }
+
+
         if (hitCharacter != null)
         {
-            hitCharacter.RemoveHealth(damage);
+            hitCharacter.RemoveHealth(_damage);
         }
 
         //Destroy self if cannot penetrate anymore
-        if (penetrationValue < 0)
+        if (PenetrationValue < 0)
         {
             Destroy(gameObject);
         }
@@ -114,16 +129,16 @@ public abstract class Projectile : MonoBehaviour
         //Keep the initial momentum
         transform.position += _parentVelocity * Time.deltaTime;
         //Forward thrust
-        transform.position += transform.forward * speed * Time.deltaTime;
+        transform.position += Speed * Time.deltaTime * transform.forward;
     }
 
     private void ProjectileTTL()
     {
-        if (timeToLive < 0)
+        if (TimeToLive < 0)
         {
             Destroy(gameObject);
         }
-        timeToLive -= Time.deltaTime;
+        TimeToLive -= Time.deltaTime;
     }
 
     public void SetInitialVelocity(Vector3 parentVelocity)
@@ -132,8 +147,9 @@ public abstract class Projectile : MonoBehaviour
         _parentVelocity = parentVelocity;
     }
 
-    public void SetDamage(float damage)
+    public void SetWeapon(Weapon weapon)
     {
-        this.damage = damage;
+        this.Weapon = weapon;
+        this._damage = weapon.Damage;
     }
 }
