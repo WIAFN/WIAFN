@@ -13,6 +13,25 @@ public class LevelElevator : MonoBehaviour
             Debug.Log("Starting level load");
             StartCoroutine(StartLoadAsync());
         }
+
+        if (Input.GetKeyDown(KeyCode.L))
+        {
+            LevelGeneratorBase levelGenerator = GameManager.instance.levelGenerator;
+            switch (levelGenerator.GenerationSpeed)
+            {
+                case LevelGenerationSpeed.Slow:
+                    levelGenerator.GenerationSpeed = LevelGenerationSpeed.Fast;
+                    Debug.Log("Set the level generation to fast.");
+                    break;
+                case LevelGenerationSpeed.Fast:
+                    levelGenerator.GenerationSpeed = LevelGenerationSpeed.Slow;
+                    Debug.Log("Set the level generation to slow.");
+                    break;
+                default:
+                    Debug.LogAssertion("Level generation speed is invalid.");
+                    break;
+            }
+        }
     }
     IEnumerator StartLoadAsync()
     {
@@ -28,7 +47,7 @@ public class LevelElevator : MonoBehaviour
         }
         Debug.Log("Load done");
         GameManager.instance.levelGenerator.OnGenerationCompleted += LevelGenerationComplete;
-        //GameManager.instance.levelGenerator.GenerationSpeed = LevelGenerationSpeed.Fast;
+        GameManager.instance.levelGenerator.GenerationSpeed = LevelGenerationSpeed.Slow;
     }
 
     private void LevelGenerationComplete()

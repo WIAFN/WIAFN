@@ -18,7 +18,7 @@ public class LevelMeshController : MonoBehaviour
 
     [Header("Update Mesh Count Per Frame")]
     public int updateMeshCountPerFrame;
-    public int fastFrameSkipsBetweenMeshGenerations;
+    public int fastMeshGenerationsPerFrame;
     public int slowFrameSkipsBetweenMeshGenerations;
 
     public event ChunkCreation OnChunkCreated;
@@ -64,6 +64,7 @@ public class LevelMeshController : MonoBehaviour
     private Transform _generatedJunksParent;
 
     private int _currentFrameSkipsBetweenMeshGenerations;
+    private int _currentMeshGenerationsPerFrame;
 
     private int _updatedMeshCountOnCurrentFrame;
     private HashSet<ChunkMeshController> _updatingChunks;
@@ -91,10 +92,12 @@ public class LevelMeshController : MonoBehaviour
         switch (LevelGenerator.GenerationSpeed)
         {
             case LevelGenerationSpeed.Fast:
-                _currentFrameSkipsBetweenMeshGenerations = fastFrameSkipsBetweenMeshGenerations;
+                _currentFrameSkipsBetweenMeshGenerations = 1;
+                _currentMeshGenerationsPerFrame = fastMeshGenerationsPerFrame;
                 break;
             case LevelGenerationSpeed.Slow:
                 _currentFrameSkipsBetweenMeshGenerations = slowFrameSkipsBetweenMeshGenerations;
+                _currentMeshGenerationsPerFrame = 1;
                 break;
             default:
                 Debug.LogAssertion("Invalid speed of level generation.");
@@ -144,34 +147,33 @@ public class LevelMeshController : MonoBehaviour
             {
                 for (int z = 0; z < LevelSizeInChunks.z; z++)
                 {
-                    //if (_currentFrameSkip >= 1f)
-                    //{
-                        for (int i = 0; i < _currentFrameSkipsBetweenMeshGenerations; i++)
-                        {
-                            yield return null;
-                        }
-                    //}
-
-                    Vector3Int chunkAddress = new Vector3Int(x, y, z);
-                    ChunkMeshController chunkController = InitiateChunk(chunkAddress);
-
-                    Vector3Int minAddress = Vector3Int.Scale(ChunkSizeInVoxels, chunkAddress);
-                    Vector3Int maxAddress = Vector3Int.Scale(ChunkSizeInVoxels, chunkAddress + Vector3Int.one) - Vector3Int.one;
-
-                    chunkController.Generate(grid.GetSubGrid(minAddress, maxAddress), multithreaded);
-                    //chunks.Add(chunkController);
-                    if (multithreaded)
+                    for (int i = 0; i < _currentFrameSkipsBetweenMeshGenerations; i++)
                     {
-                        tasks.Add(chunkController.MeshGenerationTask);
-                        chunkController.MeshGenerationTask.ContinueWith((previousTask) =>
+                        yield return null;
+                    }
+
+                    for (int i = 0; i < _currentMeshGenerationsPerFrame; i++)
+                    {
+                        Vector3Int chunkAddress = new Vector3Int(x, y, z);
+                        ChunkMeshController chunkController = InitiateChunk(chunkAddress);
+
+                        Vector3Int minAddress = Vector3Int.Scale(ChunkSizeInVoxels, chunkAddress);
+                        Vector3Int maxAddress = Vector3Int.Scale(ChunkSizeInVoxels, chunkAddress + Vector3Int.one) - Vector3Int.one;
+
+                        chunkController.Generate(grid.GetSubGrid(minAddress, maxAddress), multithreaded);
+                        //chunks.Add(chunkController);
+                        if (multithreaded)
+                        {
+                            tasks.Add(chunkController.MeshGenerationTask);
+                            chunkController.MeshGenerationTask.ContinueWith((previousTask) =>
+                            {
+                                UpdateMesh(chunkController);
+                            });
+                        } else
                         {
                             UpdateMesh(chunkController);
-                        });
-                    } else
-                    {
-                        UpdateMesh(chunkController);
+                        }
                     }
-                    //_currentFrameSkip += _currentFrameSkipsBetweenMeshGenerations;
                 }
             }
         }
