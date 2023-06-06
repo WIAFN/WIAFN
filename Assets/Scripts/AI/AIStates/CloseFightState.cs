@@ -35,9 +35,6 @@ namespace WIAFN.AI
             ai.SetInCombat(true);
             npc.LookAt(target, true);
 
-            var _baseStats = ai.GetComponent<CharacterBaseStats>();
-            _baseStats.speedCoefficient = 7000f;
-
         }
 
         public void UpdateState(AIController ai)

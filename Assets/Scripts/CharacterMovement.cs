@@ -26,11 +26,13 @@ public class CharacterMovement : MonoBehaviour
     
     //Walking
     [Header("Speed")]
-    private float _targetSpeed = 12f;
+    private float _targetSpeed;
 
     private Vector3 _velocity;
     private float _speed;
     private Vector3 _verticalVelocity;
+
+    private float _lastSpeedCoefficient;
 
     //Sprinting
     public float sprintMaxSpeedTime = 0.5f;
@@ -64,8 +66,9 @@ public class CharacterMovement : MonoBehaviour
 
         IsMoving = IsGrounded = IsDashing = IsSprinting = false;
 
-        gravityMultiplier = 1f;
+        _lastSpeedCoefficient = -1f;
 
+        gravityMultiplier = 1f;
     }
 
     // Update is called once per frame
@@ -75,6 +78,12 @@ public class CharacterMovement : MonoBehaviour
       
         _controller.Move(_velocity);
         _velocity = Vector3.zero;
+
+        if (_lastSpeedCoefficient != _baseStats.speedCoefficient)
+        {
+            _targetSpeed = _baseStats.Speed;
+            _lastSpeedCoefficient = _baseStats.speedCoefficient;
+        }
 
         GravityCheck();
 
@@ -169,7 +178,6 @@ public class CharacterMovement : MonoBehaviour
     {
         IsMoving = weightedDirection.x != 0f || weightedDirection.y != 0f || weightedDirection.z != 0f;
         _velocity += _targetSpeed * weightedDirection * Time.deltaTime;
-        //_controller.Move(_speed * Time.deltaTime * weightedDirection);,
 
         //AudioSource audioSource = GetComponent<AudioSource>();
         //audioSource.clip = walkingSound;
@@ -272,7 +280,7 @@ public class CharacterMovement : MonoBehaviour
         if(_character.stamina > sprintStamina)
         {
             float percentage = Mathf.InverseLerp(0, sprintMaxSpeedTime, sprintDuration);
-            _targetSpeed = Mathf.SmoothStep(_targetSpeed,_baseStats.defaultSprintSpeed, percentage);
+            _targetSpeed = Mathf.SmoothStep(_baseStats.Speed, _baseStats.SprintSpeed, percentage);
             _character.RemoveStamina(sprintStamina * Time.deltaTime);
             sprintDuration += Time.deltaTime;
         }
@@ -280,10 +288,10 @@ public class CharacterMovement : MonoBehaviour
 
     private void SlowDown()
     {
-        if (_targetSpeed > _baseStats.defaultSpeed)
+        if (_targetSpeed > _baseStats.Speed)
         {
             float percentage = Mathf.InverseLerp(0, sprintMaxSpeedTime, slowDownDuration);
-            _targetSpeed = Mathf.SmoothStep(_baseStats.defaultSprintSpeed, _baseStats.defaultSpeed, percentage);
+            _targetSpeed = Mathf.SmoothStep(_baseStats.SprintSpeed, _baseStats.Speed, percentage);
             slowDownDuration += Time.deltaTime;
             slowDownDuration = Mathf.Clamp(slowDownDuration, 0, sprintMaxSpeedTime);
         }

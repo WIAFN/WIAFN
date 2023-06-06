@@ -36,7 +36,7 @@ namespace WIAFN.AI
             npc.LookAt(target, true);
 
             var _baseStats = ai.GetComponent<CharacterBaseStats>();
-            _baseStats.speedCoefficient = 7000f;
+            _baseStats.speedCoefficient = 1.1f;
 
         }
 
@@ -109,6 +109,9 @@ namespace WIAFN.AI
             NPCControllerBase npc = ai.NPCController;
             npc.ClearFollow();
             npc.ClearLookAt();
+
+            var _baseStats = ai.GetComponent<CharacterBaseStats>();
+            _baseStats.speedCoefficient = 1f;
         }
 
         private void UpdateMovementTargetPosition(AIController ai)

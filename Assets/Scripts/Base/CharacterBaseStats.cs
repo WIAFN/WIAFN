@@ -58,7 +58,7 @@ public class CharacterBaseStats : MonoBehaviour
     {
         get
         {
-            return Math.Max(defaultSpeed, defaultSprintSpeed);
+            return Math.Max(Speed, SprintSpeed);
         }
     }
 }

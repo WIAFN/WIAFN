@@ -24,9 +24,6 @@ namespace WIAFN.AI
             ai.NPCController.MoveToRelative(Random.insideUnitSphere * ai.maxPatrolDistance);
             _canSeeCheckTime = 0f;
 
-            var _baseStats = ai.GetComponent<CharacterBaseStats>();
-            _baseStats.speedCoefficient = 7000f;
-
             //AudioManager.instance.PlayEnemyWalk(ai.transform);
 
         }

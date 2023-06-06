@@ -45,9 +45,6 @@ namespace WIAFN.AI
 
             _canSeeCheckTime = 0f;
 
-            var _baseStats = ai.GetComponent<CharacterBaseStats>();
-            _baseStats.speedCoefficient = 7000f;
-
             AudioManager.instance.PlayEnemyRandom(ai.transform);
 
         }

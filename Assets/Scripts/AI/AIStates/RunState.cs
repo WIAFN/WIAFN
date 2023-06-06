@@ -37,9 +37,6 @@ namespace WIAFN.AI
             _runTargetPosUpdateTimer = 0f;
             _runTargetPosUpdateCurrentDeltaTime = Random.Range(runTargetPosUpdateMaxDeltaTime / 10f, runTargetPosUpdateMaxDeltaTime);
 
-            var _baseStats = ai.GetComponent<CharacterBaseStats>();
-            _baseStats.speedCoefficient = 7000f;
-
             AudioManager.instance.PlayEnemyRun(ai.transform);
 
         }

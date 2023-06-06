@@ -1228,7 +1228,6 @@ MonoBehaviour:
   character: {fileID: 0}
   eyeHeight: 2.01
   angularSpeed: 240
-  isStuck: 0
   rotateBodyTowardsMovement: 1
   shootingErrorRateToDistance: 0.08
 --- !u!114 &1379486340659204872
@@ -4023,7 +4022,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 64
   stepHeight: 1
-  stepLength: 1.5
+  stepLength: 2.55
 --- !u!1 &8267260870325431523
 GameObject:
   m_ObjectHideFlags: 0
