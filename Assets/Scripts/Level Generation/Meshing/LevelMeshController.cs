@@ -74,6 +74,7 @@ public class LevelMeshController : MonoBehaviour
 
         _generatedJunksParent = (new GameObject("Junks")).transform;
         _generatedJunksParent.parent = transform.parent;
+        _generatedJunksParent.transform.localPosition = Vector3.zero;
 
         _updatingChunks = new HashSet<ChunkMeshController>();
     }

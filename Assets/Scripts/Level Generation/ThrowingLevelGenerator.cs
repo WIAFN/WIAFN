@@ -21,6 +21,7 @@ public class ThrowingLevelGenerator : LevelGeneratorBase
 
         _itemsParent = (new GameObject("Items")).transform;
         _itemsParent.parent = transform.parent;
+        _itemsParent.transform.localPosition = Vector3.zero;
     }
 
     void Start()
@@ -66,15 +67,6 @@ public class ThrowingLevelGenerator : LevelGeneratorBase
         return Instantiate(selectedItem, selectedPos, GenerateRandomRotation(), _itemsParent);
     }
 
-    public override Vector3 GenerateRandomPositionOnLevel()
-    {
-        Vector3 halfLevelSizeInMeters = HalfLevelDimensionsInMeters;
-        float x = Random.Range(-halfLevelSizeInMeters.x, halfLevelSizeInMeters.x);
-        float z = Random.Range(-halfLevelSizeInMeters.z, halfLevelSizeInMeters.z);
-        float y = Random.Range(GetLevelHeightAt(new Vector3(x, 0f, z)) + 5f, levelSizeInMeters.y);
-        return new Vector3(x, y, z);
-    }
-
 
     private void CalculateWeights()
     {
@@ -113,6 +105,6 @@ public class ThrowingLevelGenerator : LevelGeneratorBase
 
     public override float GetLevelHeightAt(float x, float z)
     {
-        return GetPerlinAtWorldPos(x, z);
+        return transform.parent.position.y + GetPerlinAtWorldPos(x, z);
     }
 }

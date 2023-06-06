@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using WIAFN.Constants;
 
 public class LevelElevator : MonoBehaviour
 {
@@ -15,7 +16,7 @@ public class LevelElevator : MonoBehaviour
     }
     IEnumerator StartLoadAsync()
     {
-        AsyncOperation asyncLoad = SceneManager.LoadSceneAsync("Level Generation", LoadSceneMode.Additive);
+        AsyncOperation asyncLoad = SceneManager.LoadSceneAsync(WIAFNScenes.Level0, LoadSceneMode.Additive);
 
         //asyncLoad.allowSceneActivation = false;
 
@@ -26,15 +27,14 @@ public class LevelElevator : MonoBehaviour
             yield return null;
         }
         Debug.Log("Load done");
-        LevelGeneratorBase levelGenerator = GameObject.Find("Generators").GetComponent<JunkyardLevelGenerator>();
-        levelGenerator.OnGenerationCompleted += LevelGenerationComplete;
+        GameManager.instance.levelGenerator.OnGenerationCompleted += LevelGenerationComplete;
+        //GameManager.instance.levelGenerator.GenerationSpeed = LevelGenerationSpeed.Fast;
     }
 
     private void LevelGenerationComplete()
     {
-        GameObject startingPoint = GameObject.Find("ElevatorIn");
-        GameManager.instance.mainPlayer.transform.position = startingPoint.transform.position;
-        startingPoint.name = "ElevatorOut";
+        Vector3 startingPoint = GameManager.instance.levelGenerator.GenerateRandomPositionOnGround(towardsMiddle: true) + Vector3.up * 3f;
+        GameManager.instance.mainPlayer.transform.position = startingPoint;
         Debug.Log("Generation Complete");
     }
 

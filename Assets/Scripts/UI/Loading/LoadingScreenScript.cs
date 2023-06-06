@@ -120,6 +120,7 @@ public class LoadingScreenScript : MonoBehaviour
 
     private void OnLevelGenerationCompleted()
     {
+        GameManager.instance.mainPlayer.transform.position = GameManager.instance.levelGenerator.GenerateRandomPositionOnGround(towardsMiddle: true) + Vector3.up * 3f;
         SceneManager.UnloadSceneAsync(SceneManager.GetActiveScene().name);
     }
 }

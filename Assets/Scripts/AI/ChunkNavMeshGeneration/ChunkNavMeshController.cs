@@ -90,6 +90,7 @@ public class ChunkNavMeshController : MonoBehaviour
 
             GameObject offMeshLinksObject = new GameObject($"OffMeshLinks ({neighbourDirection})");
             offMeshLinksObject.transform.parent = transform;
+            offMeshLinksObject.transform.localPosition = Vector3.zero;
             Quaternion toRotate = Quaternion.FromToRotation(neighbourDirection, transform.forward);
             Vector3 rotatedChunkSize = toRotate * chunkSize;
 

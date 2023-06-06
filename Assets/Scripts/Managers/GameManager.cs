@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.Rendering.Universal;
 using UnityEngine.Rendering;
 using Cyan;
+using System;
 
 public class GameManager : MonoBehaviour
 {
@@ -19,6 +20,8 @@ public class GameManager : MonoBehaviour
 
     public event CharacterDelegate OnCharacterDied;
 
+    private LevelGeneratorBase _oldLevelGenerator;
+
     private void Awake()
     {
         if (instance == null)
@@ -27,13 +30,19 @@ public class GameManager : MonoBehaviour
         }
         else
         {
+            mainPlayer.gameObject.SetActive(false);
+            sceneUI.gameObject.SetActive(false);
+            instance.SetLevelGenerator(levelGenerator);
             Destroy(this.gameObject);
         }
+
+        _oldLevelGenerator = null;
 
         if (levelGenerator != null)
         {
             levelGenerator.OnGenerationCompleted += LevelGenerator_OnGenerationCompleted;
         }
+
     }
 
     public void OnDestroy()
@@ -82,6 +91,15 @@ public class GameManager : MonoBehaviour
         //playerPos.y = levelGenerator.GetLevelHeightAt(mainPlayer.transform.position) + mainPlayer.GetComponent<Collider>().bounds.size.y / 2f;
         playerPos.y = levelGenerator.GetLevelHeightAt(mainPlayer.transform.position) + 15f;
         mainPlayer.transform.position = playerPos;
+    }
+
+    private void SetLevelGenerator(LevelGeneratorBase levelGenerator)
+    {
+        _oldLevelGenerator = this.levelGenerator;
+        this.levelGenerator = levelGenerator;
+
+        var oldPos = _oldLevelGenerator ? _oldLevelGenerator.transform.parent.position : Vector3.zero;
+        levelGenerator.transform.parent.position = oldPos + new Vector3(1000f, 0f, 0f);
     }
 
     public delegate void CharacterDelegate(Character character);

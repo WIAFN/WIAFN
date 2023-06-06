@@ -30,6 +30,7 @@ namespace WIAFN.LevelGeneration
 
             _itemsParent = (new GameObject("Items")).transform;
             _itemsParent.parent = transform.parent;
+            _itemsParent.transform.localPosition = Vector3.zero;
         }
 
         void Start()
@@ -89,22 +90,12 @@ namespace WIAFN.LevelGeneration
             {
                 GameObject selectedItem = ChooseRandomItem();
                 Debug.Assert(selectedItem != null);
-                GameObject newItem = Instantiate(selectedItem, GenerateRandomPositionOnLevel(), GenerateRandomRotation(), _itemsParent);
+                GameObject newItem = Instantiate(selectedItem, GenerateRandomPositionOnLevel(yRandom: true), GenerateRandomRotation(), _itemsParent);
 
             }
 
 
         }
-
-        public override Vector3 GenerateRandomPositionOnLevel()
-        {
-            Vector3 halfLevelSizeInMeters = HalfLevelDimensionsInMeters;
-            float x = Random.Range(-halfLevelSizeInMeters.x, halfLevelSizeInMeters.x);
-            float z = Random.Range(-halfLevelSizeInMeters.z, halfLevelSizeInMeters.z);
-            float y = Random.Range(GetPileHeightAtWorldPos(x, z) + 5f, levelSizeInMeters.y);
-            return new Vector3(x, y, z);
-        }
-
 
         private void CalculateWeights()
         {
@@ -172,7 +163,7 @@ namespace WIAFN.LevelGeneration
 
         public override float GetLevelHeightAt(float x, float z)
         {
-            return GetNoiseValueFromWorldPos(x, z);
+            return transform.parent.position.y + GetNoiseValueFromWorldPos(x, z);
         }
 
         public Grid CurrentGrid => _currentGrid;

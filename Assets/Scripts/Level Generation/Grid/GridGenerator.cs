@@ -45,7 +45,7 @@ namespace WIAFN.LevelGeneration
                 for (int z = 0; z < width; z++)
                 {
                     float zPos = z * unitWidth;
-                    float noiseValue = _levelGeneratorBase.GetNoiseValueAt(startPos.x + xPos, startPos.z + zPos);
+                    float noiseValue = _levelGeneratorBase.GetNoiseValueAt(startPos.x + xPos, startPos.z + zPos, realWorldPos: false);
 
                     int terrainHeight = Mathf.FloorToInt(noiseValue * height);
                     for (int y = 0; y < terrainHeight; y++)

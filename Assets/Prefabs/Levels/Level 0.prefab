@@ -259,7 +259,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c5ee64ec341a0754a9af615e8e146b3d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  levelSizeInMeters: {x: 600, y: 200, z: 600}
+  levelSizeInMeters: {x: 600, y: 200}
   resolution: {x: 400, y: 300}
   itemCount: 1500
   levelObjects:
@@ -760,7 +760,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7f93c83140662be42bd5cb93d6180d72, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  levelSizeInMeters: {x: 600, y: 300, z: 600}
+  levelSizeInMeters: {x: 600, y: 300}
   itemCountPerRate: 10
   levelObjects:
   - name: 

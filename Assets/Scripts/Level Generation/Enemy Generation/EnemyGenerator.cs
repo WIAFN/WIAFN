@@ -21,6 +21,7 @@ public class EnemyGenerator : MonoBehaviour
 
         _enemiesParent = (new GameObject("Enemies")).transform;
         _enemiesParent.parent = transform.parent;
+        _enemiesParent.transform.localPosition = Vector3.zero;
 
         _levelGenerator.OnGenerationCompleted += OnGenerationCompleted;
     }
@@ -55,7 +56,6 @@ public class EnemyGenerator : MonoBehaviour
         foreach(GameObject item in _itemPoolGenerator.Pool)
         {
             Vector3 worldPos = _levelGenerator.GenerateRandomPositionOnLevel();
-            worldPos.y = _levelGenerator.GetLevelHeightAt(worldPos.x, worldPos.z);
 
             item.transform.position = worldPos;
 

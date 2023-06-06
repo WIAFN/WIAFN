@@ -9,8 +9,8 @@ namespace WIAFN.Constants
         public static string MainMenu = "Start";
         public static string TestScene = "PlayerTest";
         public static string Loading = "Loading Screen";
-        public static int Level0 = 3;
-
+        public static int Entrance = 3;
+        public static int Level0 = 4;
     }
 
     public class WIAFNTags

@@ -57,6 +57,7 @@ public class JunkyardLevelGenerator : LevelGeneratorBase
 
         _itemsParent = (new GameObject("Items")).transform;
         _itemsParent.parent = transform.parent;
+        _itemsParent.transform.localPosition = Vector3.zero;
 
         levelMeshController.OnLevelMeshGenerated += OnLevelMeshGenerated;
     }
@@ -125,48 +126,6 @@ public class JunkyardLevelGenerator : LevelGeneratorBase
 
     public void GenerateGridMultithreaded()
     {
-        //_levelMeshController.levelSizeInChunks.y = 1;// Remark: Level size in chunks y counterpart is constrained for multithreaded.
-        //int width = resolution.x;
-        //int height = resolution.y;
-
-        //Vector3Int levelSizeInChunks = _levelMeshController.levelSizeInChunks;
-        //Vector3Int chunkSizeInVoxels = new Vector3Int(width / levelSizeInChunks.x, height / levelSizeInChunks.y, width / levelSizeInChunks.z);
-
-        //int arraySize = levelSizeInChunks.x * levelSizeInChunks.z;
-        //Task[] tasks = new Task[arraySize];
-        //GridGenerator[] generators = new GridGenerator[arraySize];
-
-        //Vector3Int currentPos = Vector3Int.zero;
-        //int index = 0;
-        //for (int x = 0; x < levelSizeInChunks.x; x++)
-        //{
-        //    for (int z = 0; z < levelSizeInChunks.z; z++)
-        //    {
-        //        Vector3Int passPos = new Vector3Int(currentPos.x, currentPos.y, currentPos.z);
-        //        GridGenerator gridGenerator = new GridGenerator(this, chunkSizeInVoxels.x, chunkSizeInVoxels.y, passPos);
-        //        Task chunkTask = Task.Factory.StartNew(gridGenerator.GenerateGrid);
-        //        generators[index] = gridGenerator;
-        //        tasks[index] = chunkTask;
-        //        index++;
-
-        //        currentPos.z += chunkSizeInVoxels.z;
-        //    }
-
-        //    currentPos.x += chunkSizeInVoxels.x;
-        //}
-
-        //Task.WaitAll(tasks);
-
-        //Grid[] grids = new Grid[levelSizeInChunks.x * levelSizeInChunks.z];
-        //for (int i = 0; i < generators.Length; i++)
-        //{
-        //    grids[i] = generators[i].grid;
-        //}
-
-        ////_currentGrid = grid;
-        //_levelMeshController.GenerateAllGrids(grids, new Vector3Int(width, height, width), true, tasks);
-        //_levelMeshController.UpdateMeshes();
-
         Vector3 halfLevelSize = HalfLevelDimensionsInMeters;
         GridGenerator gridGenerator = new GridGenerator(this, levelSizeInMeters.x, levelSizeInMeters.y, resolution, new Vector3(-halfLevelSize.x, 0f, -halfLevelSize.z));
         levelMeshController.Initialize(new Vector3Int(resolution.x, resolution.y, resolution.x));
@@ -196,19 +155,10 @@ public class JunkyardLevelGenerator : LevelGeneratorBase
 
         foreach (GameObject item in _itemPoolGenerator.Pool)
         {
-            item.transform.position = GenerateRandomPositionOnLevel();
+            item.transform.position = GenerateRandomPositionOnLevel(yRandom: true);
             item.transform.rotation = GenerateRandomRotation();
             item.SetActive(true);
         }
-    }
-
-    public override Vector3 GenerateRandomPositionOnLevel()
-    {
-        Vector3 halfLevelSizeInMeters = HalfLevelDimensionsInMeters;
-        float x = Random.Range(-halfLevelSizeInMeters.x, halfLevelSizeInMeters.x);
-        float z = Random.Range(-halfLevelSizeInMeters.z, halfLevelSizeInMeters.z);
-        float y = Random.Range(GetLevelHeightAt(x, z) + 5f, levelSizeInMeters.y);
-        return new Vector3(x, y, z);
     }
 
 
@@ -240,7 +190,7 @@ public class JunkyardLevelGenerator : LevelGeneratorBase
 
     public override float GetLevelHeightAt(float x, float z)
     {
-        return Mathf.Max(0f, GetNoiseValueAt(x, z) * levelSizeInMeters.y);
+        return transform.parent.position.y + Mathf.Max(0f, GetNoiseValueAt(x, z) * levelSizeInMeters.y);
     }
 
     //public Grid CurrentGrid => _currentGrid;
