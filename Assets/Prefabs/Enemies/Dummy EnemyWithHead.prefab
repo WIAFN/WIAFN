@@ -411,6 +411,7 @@ GameObject:
   - component: {fileID: 56262782640741872}
   - component: {fileID: 56262782640741870}
   - component: {fileID: 56262782640741871}
+  - component: {fileID: 1651771983425463979}
   m_Layer: 10
   m_Name: Dummy EnemyWithHead
   m_TagString: Untagged
@@ -468,14 +469,14 @@ MonoBehaviour:
   jumpHeight: 4
   multiJumps: 1
   defaultSpeed: 12
-  defaultSprintSpeed: 0
+  defaultSprintSpeed: 20
   defaultDashSpeed: 0
   multiDashes: 0
   dashDuration: 0
   dashCooldown: 0
   dashCost: 0
   shootingErrorRateMinMax: {x: 0.05, y: 0.13}
-  speedCoefficient: 1
+  speedCoefficient: 7
 --- !u!114 &3293409358827904584
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -539,9 +540,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   character: {fileID: 0}
-  head: {fileID: 3293409357711387355}
   eyeHeight: 2.01
   angularSpeed: 240
+  isStuck: 0
   rotateBodyTowardsMovement: 1
   shootingErrorRateToDistance: 0.08
 --- !u!114 &56262782640741871
@@ -562,6 +563,7 @@ MonoBehaviour:
     m_Bits: 1856
   groundDistance: 0.4
   gravityMultiplier: 1
+  hasGravity: 1
   sprintMaxSpeedTime: 0.5
   sprintStamina: 10
   dashCurve:
@@ -570,6 +572,19 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &1651771983425463979
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3293409358827904580}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3f437dc423028b44aa5cf39fb20aa620, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _isCaught: 0
 --- !u!1001 &3293409357691715761
 PrefabInstance:
   m_ObjectHideFlags: 0

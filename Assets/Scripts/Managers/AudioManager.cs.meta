@@ -1,0 +1,26 @@
+fileFormatVersion: 2
+guid: d7706104f8b10f14d840d58db6c1e751
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences:
+  - char_gunshot: {fileID: 8300000, guid: 344f86ec4b2f9e5468dda74313972fec, type: 3}
+  - enemy_gunshot: {fileID: 8300000, guid: da0eeda5ae3ad124c9bafb4f13a77dca, type: 3}
+  - melee_sound: {fileID: 8300000, guid: b8a235b95e157334fa0bfbe9f7e055f5, type: 3}
+  - metalic_sound: {fileID: 8300000, guid: b25b4daf3ac87e342be2369548355751, type: 3}
+  - char_slow_walk: {fileID: 8300000, guid: 64c6d7debd963d247a3f0a75ebf10b1d, type: 3}
+  - char_run: {fileID: 8300000, guid: 988b27f7e8d604c488abf86e497852b4, type: 3}
+  - char_slide: {fileID: 8300000, guid: 762e4c9034bd1744b9050b525990aefc, type: 3}
+  - char_jump: {fileID: 8300000, guid: 796eb211b6513eb4dac26138d908f224, type: 3}
+  - enemy_walk: {fileID: 8300000, guid: 6e75e8c9e0990f940af93669266aa946, type: 3}
+  - enemy_run: {fileID: 8300000, guid: de038110831b0dd44b52a0b5fd92dd90, type: 3}
+  - enemy_random: {fileID: 8300000, guid: 239bf0f647b637240aa1907e78f52d07, type: 3}
+  - enemy_death: {fileID: 8300000, guid: 63714de16c0876a4390d2a167492605a, type: 3}
+  - char_death: {fileID: 8300000, guid: 799f81ca75d8965488f9663440e64d37, type: 3}
+  - background_game: {fileID: 8300000, guid: a2c9017ce719c414b8c157adedb8ebd6, type: 3}
+  - background_ui: {fileID: 8300000, guid: dedefcb7b08fc994b92a16aa750de57b, type: 3}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

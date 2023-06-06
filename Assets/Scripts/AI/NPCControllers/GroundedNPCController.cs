@@ -93,6 +93,7 @@ public class GroundedNPCController : NPCControllerBase
             shot |= weapon.TryShoot(character.transform.position);
         }
         return shot;
+        //cagirildiginda bized dogru hucum edecek
     }
 
     public override bool StopMoving()
@@ -109,6 +110,7 @@ public class GroundedNPCController : NPCControllerBase
     private void MoveCharacterTowardsPosition(Vector3 position)
     {
         bool moved = _cm.GroundedMoveTowards(position);
+        //grounded yerine movetow
 
         if (!moved)
         {
@@ -119,6 +121,8 @@ public class GroundedNPCController : NPCControllerBase
     public override bool CheckIfReached(Vector3 targetPosition)
     {
         return new Vector3(transform.position.x - targetPosition.x, 0f, transform.position.z - targetPosition.z).sqrMagnitude <= reachCheckSqr;
+        //burdaki y deðerini kaldýrsak bu sorun çözülmez mi drone için
+        //0f yerine ysini hesaplat
     }
 
     public CharacterMovement CharacterMovement => _cm;

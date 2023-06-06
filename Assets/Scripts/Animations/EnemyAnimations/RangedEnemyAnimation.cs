@@ -229,14 +229,14 @@ public class RangedEnemyAnimation : MonoBehaviour
                 int direction = body.InverseTransformPoint(hitInfo.point).z > body.InverseTransformPoint(legTargetPos).z ? 1 : -1;
                 float characterSpeed = _character.CharacterMovement.Speed;
 
-                // Can be unnecessary just in case.
+                // Can be unnecessary, just in case.
                 if (characterSpeed < 0.5f)
                 {
                     direction = 0;
                 }
 
                 legOldPos = legTargetPos;
-                legTargetPos = hitInfo.point + (body.forward * stepLength * direction * Mathf.Max(1f, characterSpeed / 7f)) + footOffset;
+                legTargetPos = hitInfo.point + (body.forward * stepLength * direction/* * Mathf.Max(1f, characterSpeed / 16f)*/) + footOffset;
                 legTargetPos = legTargetPos + new Vector3(Random.value, 0f, Random.value) * 0.05f; // To create a minor randomness.
                 //legTargetNormal = hitInfo.normal;
 

@@ -119,6 +119,8 @@ public abstract class Projectile : MonoBehaviour
         {
             Destroy(gameObject);
         }
+
+        AudioManager.instance?.PlayMetalicSound(transform);
     }
 
     private void MoveProjectile()

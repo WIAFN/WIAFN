@@ -138,29 +138,6 @@ namespace WIAFN.LevelGeneration
             return GetNoiseValueAt(gridPos.x, gridPos.z);
         }
 
-        public new float GetNoiseValueAt(Vector2Int point)
-        {
-            return GetNoiseValueAt(point.x, point.y);
-        }
-
-        public new float GetNoiseValueAt(int x, int z)
-        {
-            float firstNoise = _terrainPerlin.Noise2D(x, z, 0.11f, 0.9f, 2);
-            firstNoise -= 0.5f;
-            firstNoise = Mathf.Clamp01(firstNoise);
-            firstNoise *= 2f;
-
-            //firstNoise = Mathf.Sin(RangeUtilities.map(firstNoise, 0f, 1f, 0f, Mathf.PI / 2f));
-            firstNoise = Mathf.Sin(firstNoise * Mathf.PI / 2f);
-
-            //float result = Mathf.Clamp(firstNoise, 0f, 1f);
-            float secondNoise = _terrainPerlin.Noise2D(x, z, 0.1f, 0.8f, 1);
-            secondNoise = Mathf.Max(secondNoise - 0.3f, 0f); ;
-            float result = Mathf.Clamp01(firstNoise + 0.1f * secondNoise);
-
-            return result;
-        }
-
         public override float GetLevelHeightAt(float x, float z)
         {
             return transform.parent.position.y + GetNoiseValueFromWorldPos(x, z);

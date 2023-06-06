@@ -22,6 +22,9 @@ public class Character : MonoBehaviour
     [HideInInspector]
     public float stamina { get; private set; }
 
+    public string state { get; set; }
+
+
     public event DamageTakeHandler OnDamageTaken;
     public event VoidHandler OnDied;
 

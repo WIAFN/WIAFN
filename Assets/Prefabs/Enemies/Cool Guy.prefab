@@ -1165,6 +1165,7 @@ MonoBehaviour:
     m_Bits: 0
   groundDistance: 0.4
   gravityMultiplier: 0
+  hasGravity: 1
   sprintMaxSpeedTime: 1
   sprintStamina: 10
   dashCurve:
@@ -4021,7 +4022,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 64
   stepHeight: 1
-  stepLength: 1.5
+  stepLength: 2.55
 --- !u!1 &8267260870325431523
 GameObject:
   m_ObjectHideFlags: 0

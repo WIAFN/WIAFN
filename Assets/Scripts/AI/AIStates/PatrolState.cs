@@ -9,10 +9,23 @@ namespace WIAFN.AI
         private float _canSeeCheckTime;
 
         private const float canSeeCheckDeltaTime = 0.1f;
+
+        public AudioManager audioManager;
+
+        private void Awake()
+        {
+            // audioManager = Object.FindObjectOfType<AudioManager>();
+            //audioManager = GameObject.Find("AudioManager").GetComponent<AudioManager>();
+
+        }
+
         public void OnEnter(AIController ai)
         {
             ai.NPCController.MoveToRelative(Random.insideUnitSphere * ai.maxPatrolDistance);
             _canSeeCheckTime = 0f;
+
+            //AudioManager.instance.PlayEnemyWalk(ai.transform);
+
         }
 
         public void UpdateState(AIController ai)

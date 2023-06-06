@@ -16,6 +16,7 @@ namespace WIAFN.Constants
     public class WIAFNTags
     {
         public static string Cross = "Cross";
+        public static string Obstacle = "Obstacle";
     }
 
     public class WIAFNAnimatorParams

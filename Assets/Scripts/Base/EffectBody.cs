@@ -118,4 +118,6 @@ public class EffectBody : MonoBehaviour
         _cubeZ.material.SetColor("_EmissionColor", Color);
         _pointLight.color = Color;
     }
+
+    public bool PickedUp => _pickedUp;
 }

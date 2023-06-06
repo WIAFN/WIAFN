@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: -5430617557674584420}
   m_Layer: 6
   m_Name: DP_TNR_TireOld_1
-  m_TagString: Untagged
+  m_TagString: Obstacle
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

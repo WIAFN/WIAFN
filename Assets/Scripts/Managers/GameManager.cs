@@ -20,10 +20,15 @@ public class GameManager : MonoBehaviour
 
     public event CharacterDelegate OnCharacterDied;
 
+    private AudioManager audioManager;
+
     private LevelGeneratorBase _oldLevelGenerator;
 
     private void Awake()
     {
+
+        audioManager = FindObjectOfType<AudioManager>();
+
         if (instance == null)
         {
             instance = this;
@@ -45,7 +50,8 @@ public class GameManager : MonoBehaviour
 
     }
 
-    public void OnDestroy()
+    // Start is called before the first frame update
+    void Start()
     {
         if (levelGenerator != null)
         {
@@ -53,6 +59,7 @@ public class GameManager : MonoBehaviour
         }
 
         ClearBlits();
+        AudioManager.instance?.PlayBackgroundGame(transform);
     }
 
     // Update is called once per frame
@@ -65,7 +72,10 @@ public class GameManager : MonoBehaviour
     // TODO - Safa: We should track characters using their OnDied event.
     public void CharacterDied(Character character)
     {
+        AudioManager.instance?.PlayCharDeath(transform);
+
         OnCharacterDied?.Invoke(character);
+
     }
 
     //Turn all fullscreen effects off when destroyed to prevent them from reoccuring next the game launches

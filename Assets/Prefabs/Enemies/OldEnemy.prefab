@@ -993,7 +993,7 @@ GameObject:
   - component: {fileID: 4373805100766307916}
   - component: {fileID: 2060685997935798245}
   m_Layer: 0
-  m_Name: Armature
+  m_Name: Armaturea
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1047,12 +1047,24 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2cf76622467d2d949bbd8b39c4534582, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  head: {fileID: 4427135722570187411}
-  headAngleLimit: 60
-  headAngularSpeed: 180
-  body: {fileID: 6756591798058780326}
-  bodyAngleLimit: 30
-  bodyAngularSpeed: 180
+  rightArmClavicle: {fileID: 0}
+  aimRig: {fileID: 0}
+  lookAtRig: {fileID: 0}
+  legsRig: {fileID: 0}
+  headConstraint: {fileID: 0}
+  bodyConstraint: {fileID: 0}
+  rightArmIK: {fileID: 0}
+  rightLegIK: {fileID: 0}
+  leftLegIK: {fileID: 0}
+  leftLegRootIndicator: {fileID: 0}
+  rightLegRootIndicator: {fileID: 0}
+  legRootTargetDistThresholdSqr: 0
+  legResetDistanceThresholdSqr: 0
+  legsRaycastLayerMask:
+    serializedVersion: 2
+    m_Bits: 0
+  stepHeight: 0
+  stepLength: 0
 --- !u!1 &3192631665348057252
 GameObject:
   m_ObjectHideFlags: 0
@@ -1455,7 +1467,7 @@ GameObject:
   - component: {fileID: 2749155036366342353}
   - component: {fileID: 7312861393815789007}
   m_Layer: 0
-  m_Name: YepyeniEnemy
+  m_Name: OldEnemy
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1528,6 +1540,7 @@ MonoBehaviour:
     m_Bits: 0
   groundDistance: 0.4
   gravityMultiplier: 0
+  hasGravity: 0
   sprintMaxSpeedTime: 1
   sprintStamina: 10
   dashCurve:
@@ -1549,7 +1562,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   character: {fileID: 0}
-  head: {fileID: 254647419791563824}
   eyeHeight: 2.01
   angularSpeed: 240
   rotateBodyTowardsMovement: 1
