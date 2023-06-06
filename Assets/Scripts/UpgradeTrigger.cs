@@ -26,7 +26,7 @@ public class UpgradeTrigger : MonoBehaviour
         if (other.CompareTag("Player"))
         {
             Character player = other.gameObject.GetComponent<Character>();
-            Debug.Log(player.tag + " " + player.gameObject.name);
+            //Debug.Log(player.tag + " " + player.gameObject.name);
             ResetTimer();
             _upgradeScript.PlayerEnteredRange(player);
         }

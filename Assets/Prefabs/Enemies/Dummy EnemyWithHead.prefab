@@ -540,9 +540,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   character: {fileID: 0}
-  head: {fileID: 3293409357711387355}
   eyeHeight: 2.01
   angularSpeed: 240
+  isStuck: 0
   rotateBodyTowardsMovement: 1
   shootingErrorRateToDistance: 0.08
 --- !u!114 &56262782640741871
@@ -563,7 +563,7 @@ MonoBehaviour:
     m_Bits: 1856
   groundDistance: 0.4
   gravityMultiplier: 1
-  hasGravity: 0
+  hasGravity: 1
   sprintMaxSpeedTime: 0.5
   sprintStamina: 10
   dashCurve:
@@ -585,7 +585,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _isCaught: 0
-  _isObstacle: 
 --- !u!1001 &3293409357691715761
 PrefabInstance:
   m_ObjectHideFlags: 0

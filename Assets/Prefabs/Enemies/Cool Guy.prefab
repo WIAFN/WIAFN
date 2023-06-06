@@ -1165,6 +1165,7 @@ MonoBehaviour:
     m_Bits: 0
   groundDistance: 0.4
   gravityMultiplier: 0
+  hasGravity: 1
   sprintMaxSpeedTime: 1
   sprintStamina: 10
   dashCurve:
@@ -1227,6 +1228,7 @@ MonoBehaviour:
   character: {fileID: 0}
   eyeHeight: 2.01
   angularSpeed: 240
+  isStuck: 0
   rotateBodyTowardsMovement: 1
   shootingErrorRateToDistance: 0.08
 --- !u!114 &1379486340659204872

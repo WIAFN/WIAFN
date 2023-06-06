@@ -25,11 +25,10 @@ public abstract class NPCControllerBase : MonoBehaviour
     // TODO - Safa: Maybe we should move all constants to a single file.
     protected const float reachCheckSqr = 7f;
 
-
     //stuck control
     protected const float stuckThreshold = 1f; // The time in seconds the NPC has to be stuck to be considered stuck.
-    private float timeStuck = 0f;
-    public bool isStuck = false;
+    private float _timeStuck = 0f;
+    private bool _isStuck = false;
 
     public virtual void Awake()
     {
@@ -62,24 +61,21 @@ public abstract class NPCControllerBase : MonoBehaviour
             _targetCharacterPositionUpdateDelta = 0f;
         }
 
-        UpdateLookAt();
-
         // Check if NPC is stuck
         if (IsStopped())
         {
-            timeStuck += Time.deltaTime;
-            if (timeStuck > stuckThreshold && !isStuck)
+            _timeStuck += Time.deltaTime;
+            if (_timeStuck > stuckThreshold && !_isStuck)
             {
-                isStuck = true;
-                Debug.Log("NPC is stuck!");
+                _isStuck = true;
             }
         }
         else
         {
-            timeStuck = 0f;
-            isStuck = false;
+            _timeStuck = 0f;
+            _isStuck = false;
         }
-    }
+
         if (_lookAtOrder != null && !_lookAtOrder.IsValid())
         {
             ClearLookAt();
@@ -185,6 +181,8 @@ public abstract class NPCControllerBase : MonoBehaviour
     }
 
     public bool IsFollowing => followCharacter != null;
+
+    public bool IsStuck => _isStuck;
 
     public bool LookAtSpecified => _lookAtOrder != null;
     public LookAtOrder LookAtOrder => _lookAtOrder;

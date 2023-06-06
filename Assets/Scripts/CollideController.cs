@@ -1,15 +1,15 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using WIAFN.Constants;
 
 public class CollideController : MonoBehaviour
 {
     public bool _isCaught = false;
-    public string _isObstacle = "Obstacle";
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag(_isObstacle) && other.tag != null && !other.CompareTag(""))
+        if (other.CompareTag(WIAFNTags.Obstacle))
         {
             _isCaught = true;
             other.GetComponent<Collider>().enabled = false;

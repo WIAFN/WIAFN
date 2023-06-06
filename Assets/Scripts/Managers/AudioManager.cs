@@ -39,11 +39,13 @@ public class AudioManager : MonoBehaviour
         {
             Destroy(this.gameObject);
         }
+
+        audioDict = new Dictionary<Transform, AudioSource>();
     }
 
     public void Start()
     {
-        audioDict = new Dictionary<Transform, AudioSource>();
+        audioDict.Clear();
     }
 
     public AudioSource getSource(Transform t)
@@ -65,13 +67,13 @@ public class AudioManager : MonoBehaviour
     public void PlayCharGunshot(Transform t)
     {
         var audioSource = getSource(t);
-        audioSource.PlayOneShot(char_gunshot);
+        audioSource.PlayOneShot(enemy_gunshot);
     }
 
     public void PlayEnemyGunshot(Transform t)
     {
         var audioSource = getSource(t);
-        audioSource.PlayOneShot(enemy_gunshot);
+        audioSource.PlayOneShot(char_gunshot);
     }
 
     public void PlayMeleeSound(Transform t)

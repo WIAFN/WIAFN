@@ -14,7 +14,7 @@ public abstract class Weapon : MonoBehaviour
 
     public GameObject projectilePrefab;
 
-    private float _firePeriod { get { return (1f / FireRate); } }
+    protected float FirePeriod { get { return (1f / FireRate); } }
 
     public event ShotHandler OnShot;
     private AudioManager audioManager;
@@ -28,28 +28,24 @@ public abstract class Weapon : MonoBehaviour
             Character = GetComponentInParent<Character>();
         }
 
-        _characterMove = character.GetComponent<CharacterMovement>();
         audioManager = FindObjectOfType<AudioManager>();
     }
 
     private void Update()
     {
-        if(Delay < _firePeriod)
+        if(Delay < FirePeriod)
         {
             Delay += Time.deltaTime;        
         }
-        Delay = Mathf.Clamp(Delay, 0, _firePeriod);
+        Delay = Mathf.Clamp(Delay, 0, FirePeriod);
     }
 
     public virtual bool TryShoot(Vector3 shootAt)
     {
-        if (Delay < _firePeriod)
+        if (Delay < FirePeriod)
         {
             return false;
         }
-
-        AudioManager.instance.PlayCharGunshot(transform);
-
 
         float shootingError = 0f;
         if (Character != null)
@@ -64,9 +60,12 @@ public abstract class Weapon : MonoBehaviour
 
         projectile.SetWeapon(this);
 
+        // View effects
         //Gun Flare
         MuzzleFlash.Play();
         Delay = 0;
+
+        AudioManager.instance.PlayCharGunshot(transform);
 
         OnShot?.Invoke(projectile);
 

@@ -20,7 +20,7 @@ public class MeleeWeapon : Weapon
         if (distanceToTarget <= meleeRange && angleToTarget <= meleeAngle)
         {
             Debug.Log("melee attack");
-            Delay = _firePeriod;
+            Delay = FirePeriod;
             AudioManager.instance?.PlayMeleeSound(transform);
 
             return true;
@@ -30,7 +30,7 @@ public class MeleeWeapon : Weapon
             // If target is out of range or angle call base TryShoot method
             if (base.TryShoot(shootAt))
             {
-                Delay = _firePeriod;
+                Delay = FirePeriod;
                 AudioManager.instance?.PlayMeleeSound(transform);
                 return true;
             }

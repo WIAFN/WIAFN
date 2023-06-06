@@ -48,7 +48,7 @@ namespace WIAFN.AI
                 return;
             }
 
-            if (ai.NPCController.isStuck)
+            if (ai.NPCController.IsStuck)
             {
                 Debug.Log("NPC is stuck!");
                 ai.ChangeState(new SearchState(target.transform.position, target));

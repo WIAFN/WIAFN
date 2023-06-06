@@ -422,9 +422,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   character: {fileID: 0}
-  head: {fileID: 0}
   eyeHeight: 2.01
   angularSpeed: 360
+  isStuck: 0
   rotateBodyTowardsMovement: 1
   shootingErrorRateToDistance: 0
 --- !u!114 &1948059375
@@ -445,6 +445,7 @@ MonoBehaviour:
     m_Bits: 1856
   groundDistance: 0.4
   gravityMultiplier: 1
+  hasGravity: 1
   sprintMaxSpeedTime: 0.5
   sprintStamina: 10
   dashCurve:

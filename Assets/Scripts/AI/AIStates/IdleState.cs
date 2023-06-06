@@ -13,12 +13,8 @@ namespace WIAFN.AI
 
         private const float canSeeCheckDeltaTime = 0.1f;
 
-        public AudioManager audioManager;
-
         private void Awake()
         {
-            //audioManager = Object.FindObjectOfType<AudioManager>();
-            audioManager = GameObject.Find("AudioManager").GetComponent<AudioManager>();
 
         }
 
@@ -33,7 +29,7 @@ namespace WIAFN.AI
             var _baseStats = ai.GetComponent<CharacterBaseStats>();
             _baseStats.speedCoefficient = 7000f;
 
-            AudioManager.instance.PlayEnemyRandom(ai.transform);
+            AudioManager.instance?.PlayEnemyRandom(ai.transform);
         }
 
         public void UpdateState(AIController ai)
