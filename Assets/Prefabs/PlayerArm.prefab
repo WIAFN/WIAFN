@@ -337,6 +337,7 @@ MonoBehaviour:
     m_Bits: 1856
   groundDistance: 0.4
   gravityMultiplier: 0
+  hasGravity: 1
   sprintMaxSpeedTime: 0.5
   sprintStamina: 10
   dashCurve:
