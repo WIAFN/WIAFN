@@ -8,11 +8,11 @@ public class LevelElevator : MonoBehaviour
 {
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.N))
-        {
-            Debug.Log("Starting level load");
-            StartCoroutine(StartLoadAsync());
-        }
+        //if (Input.GetKeyDown(KeyCode.N))
+        //{
+        //    Debug.Log("Starting level load");
+        //    StartCoroutine(StartLoadAsync());
+        //}
 
         if (Input.GetKeyDown(KeyCode.L))
         {
