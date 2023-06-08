@@ -2,9 +2,20 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Rendering.Universal;
-using UnityEngine.Rendering;
 using Cyan;
 using System;
+using System.Linq;
+
+[Serializable]
+public struct LevelInfo
+{
+    public int Level;
+    public GameObject LevelObject;
+    public LevelGeneratorBase Generator;
+
+    public GameObject ElevatorOut;
+    public GameObject ElevatorIn;
+}
 
 public class GameManager : MonoBehaviour
 {
@@ -14,16 +25,25 @@ public class GameManager : MonoBehaviour
     private UniversalRendererData _forwardRenderer;
 
     public Character mainPlayer;
-    public LevelGeneratorBase levelGenerator;
-    public int Floor;
+    public List<LevelInfo> levelInfos;
+
+    [Header("Prefabs")]
+    public GameObject pfLevel;
+    public GameObject pfElevatorOut;
+    public GameObject pfElevatorIn;
 
     public Canvas sceneUI;
 
+    public LevelInfo CurrentLevelInfo { get { return levelInfos.Last(); } }
+    public LevelGeneratorBase CurrentLevelGenerator { get { return CurrentLevelInfo.Generator; } }
+
     public event CharacterDelegate OnCharacterDied;
+    public event LevelChangeDelegate OnLevelChanged;
 
     private AudioManager audioManager;
 
-    private LevelGeneratorBase _oldLevelGenerator;
+    private readonly int LEVEL_DESTROY_TIMER = 7;
+    private readonly float LEVEL_GEN_DISTANCE = 1000f;
 
     private void Awake()
     {
@@ -38,15 +58,7 @@ public class GameManager : MonoBehaviour
         {
             mainPlayer.gameObject.SetActive(false);
             sceneUI.gameObject.SetActive(false);
-            instance.SetLevelGenerator(levelGenerator);
             Destroy(this.gameObject);
-        }
-
-        _oldLevelGenerator = null;
-
-        if (levelGenerator != null)
-        {
-            levelGenerator.OnGenerationCompleted += LevelGenerator_OnGenerationCompleted;
         }
 
     }
@@ -54,13 +66,16 @@ public class GameManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        if (levelGenerator != null)
-        {
-            levelGenerator.OnGenerationCompleted -= LevelGenerator_OnGenerationCompleted;
-        }
-        Floor = 0;
         ClearBlits();
         AudioManager.instance?.PlayBackgroundGame(transform);
+
+        Debug.Assert(levelInfos.Count > 0);
+        var levelInfo = CurrentLevelInfo;
+        if (levelInfo.ElevatorIn == null)
+        {
+            var elevatorInPos = levelInfo.Generator ? levelInfo.Generator.GenerateRandomPositionOnGround(true) : levelInfo.LevelObject.transform.position;
+            levelInfo.ElevatorIn = CreateElevatorIn(levelInfo.LevelObject.transform, elevatorInPos);
+        }
     }
 
     // Update is called once per frame
@@ -96,22 +111,56 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    private void LevelGenerator_OnGenerationCompleted()
+    internal LevelInfo CreateNewLevel(bool startGeneration = false)
     {
-        Vector3 playerPos = mainPlayer.transform.position;
-        //playerPos.y = levelGenerator.GetLevelHeightAt(mainPlayer.transform.position) + mainPlayer.GetComponent<Collider>().bounds.size.y / 2f;
-        playerPos.y = levelGenerator.GetLevelHeightAt(mainPlayer.transform.position) + 15f;
-        mainPlayer.transform.position = playerPos;
+        var lastLevelInfo = CurrentLevelInfo;
+        var newLevelInfo = new LevelInfo();
+        newLevelInfo.Level = lastLevelInfo.Level + 1;
+        var newLevel = Instantiate(pfLevel, lastLevelInfo.LevelObject.transform.position + Vector3.right * LEVEL_GEN_DISTANCE, Quaternion.identity);
+        newLevel.name = "Level " + newLevelInfo.Level;
+        newLevel.SetActive(startGeneration);
+        newLevelInfo.LevelObject = newLevel;
+        newLevelInfo.Generator = newLevel.GetComponentInChildren<LevelGeneratorBase>();
+
+        // Creating next level object
+        Vector3 elevatorOutPos = newLevelInfo.Generator.GenerateRandomPositionOnGround(towardsMiddle: true) + Vector3.up * 3f;
+        Vector3 elevatorInPos = newLevelInfo.Generator.GenerateRandomPositionOnGround(towardsMiddle: true) + Vector3.up * 3f;
+
+        // Creating elevator out object
+        newLevelInfo.ElevatorOut = Instantiate(pfElevatorOut, elevatorOutPos, Quaternion.identity, newLevelInfo.LevelObject.transform);
+
+        // Creating elevator in object
+        newLevelInfo.ElevatorIn = CreateElevatorIn(newLevelInfo.LevelObject.transform, elevatorInPos);
+
+        // Setting next elevator level
+        var inController = newLevelInfo.ElevatorIn.GetComponent<ElevatorController>();
+        inController.CurrentLevel = newLevelInfo.LevelObject;
+
+        return newLevelInfo;
     }
 
-    private void SetLevelGenerator(LevelGeneratorBase levelGenerator)
+    internal void SetLevel(LevelInfo levelInfo)
     {
-        _oldLevelGenerator = this.levelGenerator;
-        this.levelGenerator = levelGenerator;
+        var oldLevel = CurrentLevelInfo;
+        this.levelInfos.Add(levelInfo);
 
-        var oldPos = _oldLevelGenerator ? _oldLevelGenerator.transform.parent.position : Vector3.zero;
-        levelGenerator.transform.parent.position = oldPos + new Vector3(1000f, 0f, 0f);
+        if (OnLevelChanged != null)
+        {
+            OnLevelChanged(oldLevel, levelInfo);
+        }
+    }
+
+    internal void DestroyOldLevel(GameObject levelObject)
+    {
+        Destroy(levelObject, LEVEL_DESTROY_TIMER);
+    }
+
+
+    private GameObject CreateElevatorIn(Transform parent, Vector3 elevatorInPos)
+    {
+        return Instantiate(pfElevatorIn, elevatorInPos, Quaternion.identity, parent);
     }
 
     public delegate void CharacterDelegate(Character character);
+    public delegate void LevelChangeDelegate(LevelInfo oldLevel, LevelInfo currentLevel);
 }

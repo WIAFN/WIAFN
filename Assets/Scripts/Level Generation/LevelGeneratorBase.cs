@@ -13,6 +13,8 @@ public abstract class LevelGeneratorBase : MonoBehaviour
 {
     protected LevelMeshController levelMeshController;
 
+    public bool GenerationComplete { get; protected set; }
+
     public event GenerationCompletion OnGenerationCompleted;
 
     public LevelGenerationSpeed GenerationSpeed { 
@@ -47,6 +49,8 @@ public abstract class LevelGeneratorBase : MonoBehaviour
 
         terrainPerlin = new Perlin();
         ResetGenerationSpeed();
+
+        GenerationComplete = false;
     }
 
     public float GetNoiseValueAt(Vector2 point, bool realWorldPos = true)

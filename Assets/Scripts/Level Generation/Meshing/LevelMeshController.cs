@@ -139,41 +139,44 @@ public class LevelMeshController : MonoBehaviour
     private IEnumerator GenerateChunks(Grid grid, bool multithreaded)
     {
         List<Task> tasks = new List<Task>();
-        //List<ChunkMeshController> chunks = new List<ChunkMeshController>();
-        //float _currentFrameSkip = 0f;
+        int _currentFrameSkip = 0;
         for (int x = 0; x < LevelSizeInChunks.x; x++)
         {
             for (int y = 0; y < LevelSizeInChunks.y; y++)
             {
                 for (int z = 0; z < LevelSizeInChunks.z; z++)
                 {
-                    for (int i = 0; i < _currentFrameSkipsBetweenMeshGenerations; i++)
+                    if (_currentFrameSkip > _currentMeshGenerationsPerFrame)
                     {
-                        yield return null;
+                        for (int i = 0; i < _currentFrameSkipsBetweenMeshGenerations; i++)
+                        {
+                            yield return null;
+                        }
+
+                        _currentFrameSkip = 0;
                     }
 
-                    for (int i = 0; i < _currentMeshGenerationsPerFrame; i++)
+                    Vector3Int chunkAddress = new Vector3Int(x, y, z);
+                    ChunkMeshController chunkController = InitiateChunk(chunkAddress);
+
+                    Vector3Int minAddress = Vector3Int.Scale(ChunkSizeInVoxels, chunkAddress);
+                    Vector3Int maxAddress = Vector3Int.Scale(ChunkSizeInVoxels, chunkAddress + Vector3Int.one) - Vector3Int.one;
+
+                    chunkController.Generate(grid.GetSubGrid(minAddress, maxAddress), multithreaded);
+                    if (multithreaded)
                     {
-                        Vector3Int chunkAddress = new Vector3Int(x, y, z);
-                        ChunkMeshController chunkController = InitiateChunk(chunkAddress);
-
-                        Vector3Int minAddress = Vector3Int.Scale(ChunkSizeInVoxels, chunkAddress);
-                        Vector3Int maxAddress = Vector3Int.Scale(ChunkSizeInVoxels, chunkAddress + Vector3Int.one) - Vector3Int.one;
-
-                        chunkController.Generate(grid.GetSubGrid(minAddress, maxAddress), multithreaded);
-                        //chunks.Add(chunkController);
-                        if (multithreaded)
-                        {
-                            tasks.Add(chunkController.MeshGenerationTask);
-                            chunkController.MeshGenerationTask.ContinueWith((previousTask) =>
-                            {
-                                UpdateMesh(chunkController);
-                            });
-                        } else
+                        tasks.Add(chunkController.MeshGenerationTask);
+                        chunkController.MeshGenerationTask.ContinueWith((previousTask) =>
                         {
                             UpdateMesh(chunkController);
-                        }
+                        });
                     }
+                    else
+                    {
+                        UpdateMesh(chunkController);
+                    }
+
+                    _currentFrameSkip += 1;
                 }
             }
         }
@@ -182,7 +185,6 @@ public class LevelMeshController : MonoBehaviour
         try
         {
             Task allWaitTask = Task.WhenAll(tasks);
-            //Task anyWaitTask = Task.WhenAny(tasks);
             whileCheckFunc = () => { return !allWaitTask.IsCompleted; };
 
         } 
@@ -193,15 +195,6 @@ public class LevelMeshController : MonoBehaviour
 
         while (whileCheckFunc() || HasUpdatingChunks)
         {
-            //Task finishedTask = Task.WhenAny(tasks);
-            //int indexOfFinishedTask = tasks.IndexOf(finishedTask);
-            //ChunkMeshController chunkController = chunks[indexOfFinishedTask];
-            //chunks.RemoveAt(indexOfFinishedTask);
-            //tasks.RemoveAt(indexOfFinishedTask);
-
-            //UpdateMesh(chunkController);
-            //Debug.Log($"Bitti: {allWaitTask.IsCompleted} - Chunk Var: {HasUpdatingChunks}");
-            //Debug.Log($"Chunk Sayýsý: {_updatingChunks.Count}");
             yield return null;
         }
 

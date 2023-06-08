@@ -7,49 +7,73 @@ public class ElevatorController : MonoBehaviour
 {
     [Header("Movement")]
     public float AscendSpeed;
-    public bool isMoving;
-    public bool GenerationComplete;
     [Header("Children")]
     public GameObject Cabin;
     public GameObject Console;
     public Transform DarkEntrance;
     public Transform DarkLeave;
-    [Header("Prefabs")]
-    public GameObject pfLevel;
-    public GameObject pfElevatorOut;
-    public GameObject pfElevatorIn;
     [Header("Animators")]
     public Animator CabinDoorAnimator;
     [Header("Vectors - Should be private")]
     public GameObject CurrentLevel;
-    public GameObject NextLevel;
     public Vector3 outFloorPos;
 
-    private readonly int LEVEL_DESTROY_TIMER = 7;
-    private readonly float LEVEL_GEN_DISTANCE = 1000f;
+    private bool _active;
+    private bool _isMoving;
+
+    private GameManager _gm;
+    private LevelInfo _nextLevelInfo;
+
     private readonly float LEVEL_SKIP_TIMER = 2f;
     private float _playerInTimer;
-    private bool _playerInCollider;
 
-    // CAREFUL NOT TO CHANGE HIERARCHY, MIGHT MESS STUFF UP
+    private bool _teleportedToNextLevel;
+
     void Start()
     {
         // No idea why they change after instantiate alas no time to find out
-        isMoving = false;
-        GenerationComplete = false;
+        _active = false;
+        _isMoving = false;
+
+        _teleportedToNextLevel = false;
+
         Cabin.transform.localPosition = new Vector3(0,-0.1f,0);
+
+        _gm = GameManager.instance;
+
         _playerInTimer = 0;
-        _playerInCollider = false;
-        //Cabin = transform.GetChild(0).gameObject;
-        //Console = transform.GetChild(1).gameObject;
-        //DarkEntrance = transform.GetChild(2);
-        //DarkLeave = transform.GetChild(3);
+
+        if (_gm.CurrentLevelInfo.LevelObject == CurrentLevel)
+        {
+            ActivateElevator();
+        }
+        else
+        {
+            _gm.OnLevelChanged += OnLevelChanged;
+        }
+    }
+
+    private void OnDestroy()
+    {
+        if (_gm != null)
+        {
+            _gm.OnLevelChanged -= OnLevelChanged;
+        }
+    }
+
+    private void OnLevelChanged(LevelInfo oldLevel, LevelInfo currentLevel)
+    {
+        if (currentLevel.LevelObject == CurrentLevel)
+        {
+            ActivateElevator();
+            _gm.OnLevelChanged -= OnLevelChanged;
+        }
     }
 
 
     private void OnTriggerStay(Collider other)
     {
-        if (isMoving) return;
+        if (_isMoving) return;
         if (other.CompareTag("Player"))
         {
             _playerInTimer += Time.deltaTime;
@@ -70,41 +94,30 @@ public class ElevatorController : MonoBehaviour
 
     private void Update()
     {
-        PlayerInElevator();
-
-        if (Input.GetKeyDown(KeyCode.N))
+        if (_active)
         {
-            StartAscend();
-        }
-        if (Input.GetKeyDown(KeyCode.L))
-        {
-            LevelGeneratorBase levelGenerator = GameManager.instance.levelGenerator;
-            switch (levelGenerator.GenerationSpeed)
+            if (Input.GetKeyDown(KeyCode.N))
             {
-                case LevelGenerationSpeed.Slow:
-                    levelGenerator.GenerationSpeed = LevelGenerationSpeed.Fast;
-                    Debug.Log("Set the level generation to fast.");
-                    break;
-                case LevelGenerationSpeed.Fast:
-                    levelGenerator.GenerationSpeed = LevelGenerationSpeed.Slow;
-                    Debug.Log("Set the level generation to slow.");
-                    break;
-                default:
-                    Debug.LogAssertion("Level generation speed is invalid.");
-                    break;
-            }
-        }
-    }
-
-    private void PlayerInElevator()
-    {
-        if (_playerInCollider)
-        {
-            _playerInTimer += Time.deltaTime;
-            if (_playerInTimer > LEVEL_SKIP_TIMER)
-            {
-                CabinDoorAnimator.SetTrigger("DoorClose");
                 StartAscend();
+            }
+
+            if (Input.GetKeyDown(KeyCode.L))
+            {
+                LevelGeneratorBase levelGenerator = _nextLevelInfo.Generator;
+                switch (levelGenerator.GenerationSpeed)
+                {
+                    case LevelGenerationSpeed.Slow:
+                        levelGenerator.GenerationSpeed = LevelGenerationSpeed.Fast;
+                        Debug.Log("Set the level generation to fast.");
+                        break;
+                    case LevelGenerationSpeed.Fast:
+                        levelGenerator.GenerationSpeed = LevelGenerationSpeed.Slow;
+                        Debug.Log("Set the level generation to slow.");
+                        break;
+                    default:
+                        Debug.LogAssertion("Level generation speed is invalid.");
+                        break;
+                }
             }
         }
     }
@@ -112,82 +125,74 @@ public class ElevatorController : MonoBehaviour
     // Update is called once per frame
     void FixedUpdate()
     {
-        if (isMoving)
+        if (_isMoving)
         {
             Move();
         }
     }
 
+    private void ActivateElevator()
+    {
+        _active = true;
+        _nextLevelInfo = _gm.CreateNewLevel(startGeneration: true);
+    }
+
     public void StartAscend()
     {
-        isMoving = true;
+        _isMoving = true;
 
-        // Creating next level object
-        if (NextLevel == null)
-        {
-            NextLevel = Instantiate(pfLevel, CurrentLevel.transform.position + Vector3.right * LEVEL_GEN_DISTANCE, Quaternion.identity);
-            NextLevel.name = "Level " + GameManager.instance.Floor++;
-            GameManager.instance.levelGenerator = NextLevel.GetComponentInChildren<LevelGeneratorBase>();
-        }
-        else
-        {
-            NextLevel.SetActive(true);
-        }
-
-        StartCoroutine(StartGenerationAsync());
+        StartCoroutine(WaitForLevelGenerationToCompleteToChangeLevel());
     }
 
-    IEnumerator StartGenerationAsync()
+    IEnumerator WaitForLevelGenerationToCompleteToChangeLevel()
     {
-        GameManager.instance.levelGenerator.OnGenerationCompleted += LevelGenerationComplete;
-        while (!GenerationComplete)
-        {
-            yield return null;
-        }
-    }
-    private void LevelGenerationComplete()
-    {
-        GenerationComplete = true;
-        Vector3 elevatorOutPos = GameManager.instance.levelGenerator.GenerateRandomPositionOnGround(towardsMiddle: true) + Vector3.up * 3f;
-        Vector3 elevatorInPos = GameManager.instance.levelGenerator.GenerateRandomPositionOnGround(towardsMiddle: true) + Vector3.up * 3f;
+        yield return new WaitUntil(() => _nextLevelInfo.Generator.GenerationComplete);
 
-        // Creating elevator in object
-        GameObject elevatorIn = Instantiate(pfElevatorIn, elevatorInPos, Quaternion.identity, NextLevel.transform);
+        Cabin.transform.parent = _nextLevelInfo.ElevatorOut.transform;
+        outFloorPos = _nextLevelInfo.ElevatorOut.transform.GetChild(1).position;
+        // Last Operations.
+        Vector3 entrancePos = _nextLevelInfo.ElevatorOut.transform.GetChild(0).position; // Entrance
 
-        // Setting next elevator level
-        elevatorIn.GetComponent<ElevatorController>().CurrentLevel = NextLevel;
-        elevatorIn.GetComponent<ElevatorController>().NextLevel = null;
-
-        // Creating elevator out object
-        GameObject elevatorOut = Instantiate(pfElevatorOut, elevatorOutPos, Quaternion.identity, NextLevel.transform);
-        Cabin.transform.parent = elevatorOut.transform;
-        Vector3 entrancePos = elevatorOut.transform.GetChild(0).position; // Entrance
-        outFloorPos = elevatorOut.transform.GetChild(1).position;
+        _gm.SetLevel(_nextLevelInfo);
         TeleportToNextLevel(entrancePos);
-        Debug.Log("Generation Complete");
     }
+
     public void Move()
     {
         Cabin.transform.position += new Vector3(0, AscendSpeed, 0) * Time.deltaTime;
 
         //MADE IT TO OTHER LEVEL
-        if(Cabin.transform.position.y > outFloorPos.y && GenerationComplete)
+        if (Cabin.transform.position.y > outFloorPos.y && _teleportedToNextLevel)
         {
-            isMoving = false;
+            _isMoving = false;
             CabinDoorAnimator.SetTrigger("DoorOpen");
-            Destroy(CurrentLevel,LEVEL_DESTROY_TIMER);
+            _gm.DestroyOldLevel(CurrentLevel);
         }
-        if(Cabin.transform.position.y > DarkLeave.position.y) 
+
+        // Teleports player back if they fall down from elevator due to any physics bug.
+        if (Cabin.transform.position.y > _gm.mainPlayer.transform.position.y)
+        {
+            _gm.mainPlayer.transform.position = Cabin.transform.position + Vector3.up * 3f;
+        }
+
+        if (Cabin.transform.position.y > DarkEntrance.position.y)
+        {
+            _nextLevelInfo.Generator.GenerationSpeed = LevelGenerationSpeed.Fast;
+        }
+
+        if(!_teleportedToNextLevel && Cabin.transform.position.y > DarkLeave.position.y) 
         {
             Vector3 difference = new Vector3(0,DarkLeave.position.y - DarkEntrance.position.y,0);
             Cabin.transform.position -= difference;
-            GameManager.instance.mainPlayer.transform.position = Cabin.transform.position + Vector3.up * 3f;
+            _gm.mainPlayer.transform.position = Cabin.transform.position + Vector3.up * 3f;
         }
     }
 
     public void TeleportToNextLevel(Vector3 entrancePos)
     {
         Cabin.transform.position = entrancePos;
-        GameManager.instance.mainPlayer.transform.position = entrancePos + new Vector3(0,5,0);
+        _gm.mainPlayer.transform.position = entrancePos + new Vector3(0f, 5f, 0f);
+
+        _teleportedToNextLevel = true;
     }
 }

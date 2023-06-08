@@ -46,3 +46,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   generalDebug: 0
   debugAi: 0
+  debugProceduralAnims: 0

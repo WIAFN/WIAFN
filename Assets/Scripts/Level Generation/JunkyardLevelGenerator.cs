@@ -104,7 +104,12 @@ public class JunkyardLevelGenerator : LevelGeneratorBase
     private void OnLevelMeshGenerated()
     {
         StartCoroutine(MoveItemsOnItemPoolIsReady());
+        CompleteGeneration();
+    }
 
+    private void CompleteGeneration()
+    {
+        GenerationComplete = true;
         CallOnGenerationCompleted();
     }
 
@@ -131,7 +136,7 @@ public class JunkyardLevelGenerator : LevelGeneratorBase
         levelMeshController.Initialize(new Vector3Int(resolution.x, resolution.y, resolution.x));
 
         var ctSource = new CancellationTokenSource();
-        Task chunkTask = Task.Factory.StartNew(gridGenerator.GenerateGrid, ctSource.Token);
+        Task chunkTask = Task.Run(gridGenerator.GenerateGrid, ctSource.Token);
         _waitingForOperation = new GridGenerationOperation(chunkTask, gridGenerator, ctSource);
     }
 

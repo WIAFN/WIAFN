@@ -692,8 +692,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3806614445465415400}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 10, y: 1, z: 10}
+  m_LocalPosition: {x: 0, y: -14.8554, z: 0}
+  m_LocalScale: {x: 10, y: 30.711184, z: 10}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 4969270695907585159}
@@ -1224,19 +1224,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 69b8dd148a3b94d4f82f75be70f90b03, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  AscendSpeed: 5
-  isMoving: 0
-  GenerationComplete: 0
+  AscendSpeed: 10
   Cabin: {fileID: 6961701399894960225}
   Console: {fileID: 1375015160256589739}
   DarkEntrance: {fileID: 3083700744596800313}
   DarkLeave: {fileID: 5993295961175329285}
-  pfLevel: {fileID: 157185657184755021, guid: 88026c5f6b34abc4c9a7235dd7ed02d1, type: 3}
-  pfElevatorOut: {fileID: 5396935699496874472, guid: 93c6f677368312c4a9f58edb9005fa5a, type: 3}
-  pfElevatorIn: {fileID: 7312668267832843587}
   CabinDoorAnimator: {fileID: 4655388126244956046}
   CurrentLevel: {fileID: 0}
-  NextLevel: {fileID: 0}
   outFloorPos: {x: 0, y: 0, z: 0}
 --- !u!65 &5200934342462512857
 BoxCollider:

@@ -43,6 +43,12 @@ namespace WIAFN.LevelGeneration
             GenerateGrid();
             GenerateItems();
 
+            CompleteGeneration();
+        }
+
+        private void CompleteGeneration()
+        {
+            GenerationComplete = true;
             CallOnGenerationCompleted();
         }
 

@@ -61,9 +61,9 @@ public class LoadingScreenScript : MonoBehaviour
                 _newLevelGameManager.sceneUI.enabled = true;
             }
 
-            if (_newLevelGameManager.levelGenerator != null)
+            if (_newLevelGameManager.CurrentLevelGenerator != null)
             {
-                _newLevelGameManager.levelGenerator.OnGenerationCompleted -= OnLevelGenerationCompleted;
+                _newLevelGameManager.CurrentLevelGenerator.OnGenerationCompleted -= OnLevelGenerationCompleted;
             }
         }
         _newLevelGameManager = null;
@@ -80,10 +80,10 @@ public class LoadingScreenScript : MonoBehaviour
             _newLevelGameManager = GameManager.instance;
             _newLevelGameManager.sceneUI.enabled = false;
 
-            if (_newLevelGameManager.levelGenerator != null)
+            if (_newLevelGameManager.CurrentLevelGenerator != null)
             {
-                _newLevelGameManager.levelGenerator.OnGenerationCompleted += OnLevelGenerationCompleted;
-                _newLevelGameManager.levelGenerator.GenerationSpeed = LevelGenerationSpeed.Fast;
+                _newLevelGameManager.CurrentLevelGenerator.OnGenerationCompleted += OnLevelGenerationCompleted;
+                _newLevelGameManager.CurrentLevelGenerator.GenerationSpeed = LevelGenerationSpeed.Fast;
             }
         }
 
@@ -120,7 +120,6 @@ public class LoadingScreenScript : MonoBehaviour
 
     private void OnLevelGenerationCompleted()
     {
-        GameManager.instance.mainPlayer.transform.position = GameManager.instance.levelGenerator.GenerateRandomPositionOnGround(towardsMiddle: true) + Vector3.up * 3f;
         SceneManager.UnloadSceneAsync(SceneManager.GetActiveScene().name);
     }
 }

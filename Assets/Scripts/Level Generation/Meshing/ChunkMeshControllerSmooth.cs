@@ -32,7 +32,7 @@ public class ChunkMeshControllerSmooth : ChunkMeshController
             }
             else
             {
-                meshGenerateTask = Task.Factory.StartNew(GenerateMesh);
+                meshGenerateTask = Task.Run(GenerateMesh);
             }
 
         }
