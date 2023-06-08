@@ -25,4 +25,12 @@ public class MouseLook : MonoBehaviour
         transform.localRotation = Quaternion.Euler(xRotation, 0f, 0f);
         playerBody.Rotate(Vector3.up * mouseX);
     }
+
+    public void SetCameraRotation(Quaternion quaternion)
+    {
+        Vector3 euler = quaternion.eulerAngles;
+        xRotation = euler.x;
+
+        playerBody.Rotate(Vector3.up * euler.y);
+    }
 }

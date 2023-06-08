@@ -6,7 +6,8 @@ public enum LevelGenerationSpeed
 {
     None,
     Slow,
-    Fast
+    Fast,
+    SuperFast
 }
 
 public abstract class LevelGeneratorBase : MonoBehaviour

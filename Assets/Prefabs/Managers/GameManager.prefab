@@ -49,7 +49,7 @@ MonoBehaviour:
   _forwardRenderer: {fileID: 11400000, guid: 4a4130d8d2e4335488046c5872bd0dff, type: 2}
   mainPlayer: {fileID: 0}
   levelInfos:
-  - Level: 0
+  - Level: 1
     LevelObject: {fileID: 0}
     Generator: {fileID: 0}
     ElevatorOut: {fileID: 0}
@@ -57,6 +57,7 @@ MonoBehaviour:
   pfLevel: {fileID: 157185657184755021, guid: 88026c5f6b34abc4c9a7235dd7ed02d1, type: 3}
   pfElevatorOut: {fileID: 5396935699496874472, guid: 93c6f677368312c4a9f58edb9005fa5a, type: 3}
   pfElevatorIn: {fileID: 7312668267832843587, guid: 0f07d1b5c57934e4f9b6b5b85fe66b19, type: 3}
+  pfPlayerFallChamber: {fileID: 7152100190247321916, guid: 6e75789d5d03e40419e7cbb4ee3a7b26, type: 3}
   sceneUI: {fileID: 0}
 --- !u!114 &39228896130775932
 MonoBehaviour:

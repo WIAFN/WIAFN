@@ -31,6 +31,7 @@ public class GameManager : MonoBehaviour
     public GameObject pfLevel;
     public GameObject pfElevatorOut;
     public GameObject pfElevatorIn;
+    public GameObject pfPlayerFallChamber;
 
     public Canvas sceneUI;
 
@@ -159,6 +160,11 @@ public class GameManager : MonoBehaviour
     private GameObject CreateElevatorIn(Transform parent, Vector3 elevatorInPos)
     {
         return Instantiate(pfElevatorIn, elevatorInPos, Quaternion.identity, parent);
+    }
+
+    public GameObject CreatePlayerFallChamber(Vector3 fallChamberPos)
+    {
+        return Instantiate(pfPlayerFallChamber, fallChamberPos, Quaternion.identity);
     }
 
     public delegate void CharacterDelegate(Character character);

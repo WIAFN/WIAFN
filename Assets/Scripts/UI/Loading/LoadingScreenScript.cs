@@ -83,7 +83,7 @@ public class LoadingScreenScript : MonoBehaviour
             if (_newLevelGameManager.CurrentLevelGenerator != null)
             {
                 _newLevelGameManager.CurrentLevelGenerator.OnGenerationCompleted += OnLevelGenerationCompleted;
-                _newLevelGameManager.CurrentLevelGenerator.GenerationSpeed = LevelGenerationSpeed.Fast;
+                _newLevelGameManager.CurrentLevelGenerator.GenerationSpeed = LevelGenerationSpeed.SuperFast;
             }
         }
 
@@ -120,6 +120,13 @@ public class LoadingScreenScript : MonoBehaviour
 
     private void OnLevelGenerationCompleted()
     {
-        SceneManager.UnloadSceneAsync(SceneManager.GetActiveScene().name);
+        Vector3 fallChamberPos = _newLevelGameManager.CurrentLevelGenerator.GenerateRandomPositionOnGround(true) + Vector3.up * 500f;
+        GameObject playerFallChamber = _newLevelGameManager.CreatePlayerFallChamber(fallChamberPos);
+        DontDestroyOnLoad(playerFallChamber);
+        Vector3 playerPos = fallChamberPos + Vector3.up * 100f;
+        _newLevelGameManager.mainPlayer.transform.position = playerPos;
+        _newLevelGameManager.mainPlayer.transform.GetComponentInChildren<MouseLook>().SetCameraRotation(Quaternion.LookRotation(Vector3.down));
+
+        SceneManager.UnloadSceneAsync(gameObject.scene);
     }
 }

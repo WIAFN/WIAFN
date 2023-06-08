@@ -8,7 +8,6 @@ using Random = UnityEngine.Random;
 [RequireComponent(typeof(LevelGeneratorBase))]
 public class LevelMeshController : MonoBehaviour
 {
-    // Y is constrained to 1 for multithreaded generation.
     [SerializeField]
     private Vector3Int _levelSizeInChunks;
 
@@ -91,6 +90,10 @@ public class LevelMeshController : MonoBehaviour
     {
         switch (LevelGenerator.GenerationSpeed)
         {
+            case LevelGenerationSpeed.SuperFast:
+                _currentFrameSkipsBetweenMeshGenerations = 1;
+                _currentMeshGenerationsPerFrame = fastMeshGenerationsPerFrame * 4;
+                break;
             case LevelGenerationSpeed.Fast:
                 _currentFrameSkipsBetweenMeshGenerations = 1;
                 _currentMeshGenerationsPerFrame = fastMeshGenerationsPerFrame;
