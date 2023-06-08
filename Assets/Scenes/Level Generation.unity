@@ -1296,9 +1296,13 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 157185656571648470, guid: 88026c5f6b34abc4c9a7235dd7ed02d1, type: 3}
+      propertyPath: slowFrameSkipsBetweenMeshGenerations
+      value: 64
+      objectReference: {fileID: 0}
     - target: {fileID: 157185657184755021, guid: 88026c5f6b34abc4c9a7235dd7ed02d1, type: 3}
       propertyPath: m_Name
-      value: Level 0
+      value: Level 1
       objectReference: {fileID: 0}
     - target: {fileID: 157185657184755023, guid: 88026c5f6b34abc4c9a7235dd7ed02d1, type: 3}
       propertyPath: m_RootOrder

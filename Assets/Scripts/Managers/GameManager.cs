@@ -7,7 +7,7 @@ using System;
 using System.Linq;
 
 [Serializable]
-public struct LevelInfo
+public class LevelInfo
 {
     public int Level;
     public GameObject LevelObject;
@@ -23,6 +23,8 @@ public class GameManager : MonoBehaviour
 
     [SerializeField]
     private UniversalRendererData _forwardRenderer;
+
+    public bool levelGameManager;
 
     public Character mainPlayer;
     public List<LevelInfo> levelInfos;
@@ -72,10 +74,28 @@ public class GameManager : MonoBehaviour
 
         Debug.Assert(levelInfos.Count > 0);
         var levelInfo = CurrentLevelInfo;
-        if (levelInfo.ElevatorIn == null)
+        if (levelGameManager && levelInfo.ElevatorIn == null)
         {
             var elevatorInPos = levelInfo.Generator ? levelInfo.Generator.GenerateRandomPositionOnGround(true) : levelInfo.LevelObject.transform.position;
-            levelInfo.ElevatorIn = CreateElevatorIn(levelInfo.LevelObject.transform, elevatorInPos);
+            levelInfo.ElevatorIn = CreateElevatorIn(levelInfo.LevelObject, elevatorInPos);
+        }
+
+        StartCoroutine(LateStart());
+    }
+
+    private IEnumerator LateStart()
+    {
+        yield return new WaitUntil(() => CurrentLevelInfo.Generator == null || CurrentLevelInfo.Generator.GenerationComplete);
+        yield return null;
+
+        if (OnLevelChanged != null)
+        {
+            LevelInfo lastLevelInfo = null;
+            foreach (LevelInfo levelInfo in levelInfos)
+            {
+                OnLevelChanged(lastLevelInfo, levelInfo);
+                lastLevelInfo = levelInfo;
+            }
         }
     }
 
@@ -131,11 +151,7 @@ public class GameManager : MonoBehaviour
         newLevelInfo.ElevatorOut = Instantiate(pfElevatorOut, elevatorOutPos, Quaternion.identity, newLevelInfo.LevelObject.transform);
 
         // Creating elevator in object
-        newLevelInfo.ElevatorIn = CreateElevatorIn(newLevelInfo.LevelObject.transform, elevatorInPos);
-
-        // Setting next elevator level
-        var inController = newLevelInfo.ElevatorIn.GetComponent<ElevatorController>();
-        inController.CurrentLevel = newLevelInfo.LevelObject;
+        newLevelInfo.ElevatorIn = CreateElevatorIn(newLevelInfo.LevelObject, elevatorInPos);
 
         return newLevelInfo;
     }
@@ -157,9 +173,15 @@ public class GameManager : MonoBehaviour
     }
 
 
-    private GameObject CreateElevatorIn(Transform parent, Vector3 elevatorInPos)
+    private GameObject CreateElevatorIn(GameObject levelObject, Vector3 elevatorInPos)
     {
-        return Instantiate(pfElevatorIn, elevatorInPos, Quaternion.identity, parent);
+        var elevatorIn = Instantiate(pfElevatorIn, elevatorInPos, Quaternion.identity, levelObject.transform);
+
+        // Setting next elevator level
+        var inController = elevatorIn.GetComponent<ElevatorController>();
+        inController.CurrentLevel = levelObject;
+
+        return elevatorIn;
     }
 
     public GameObject CreatePlayerFallChamber(Vector3 fallChamberPos)

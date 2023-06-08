@@ -27,6 +27,7 @@ public class ElevatorController : MonoBehaviour
     private readonly float LEVEL_SKIP_TIMER = 2f;
     private float _playerInTimer;
 
+    private bool _waitingForWorldGeneration;
     private bool _teleportedToNextLevel;
 
     void Start()
@@ -35,6 +36,7 @@ public class ElevatorController : MonoBehaviour
         _active = false;
         _isMoving = false;
 
+        _waitingForWorldGeneration = false;
         _teleportedToNextLevel = false;
 
         Cabin.transform.localPosition = new Vector3(0,-0.1f,0);
@@ -43,14 +45,7 @@ public class ElevatorController : MonoBehaviour
 
         _playerInTimer = 0;
 
-        if (_gm.CurrentLevelInfo.LevelObject == CurrentLevel)
-        {
-            ActivateElevator();
-        }
-        else
-        {
-            _gm.OnLevelChanged += OnLevelChanged;
-        }
+        _gm.OnLevelChanged += OnLevelChanged;
     }
 
     private void OnDestroy()
@@ -135,6 +130,20 @@ public class ElevatorController : MonoBehaviour
     {
         _active = true;
         _nextLevelInfo = _gm.CreateNewLevel(startGeneration: true);
+
+        if (_nextLevelInfo.Generator != null)
+        {
+            _nextLevelInfo.Generator.OnGenerationCompleted += Generator_OnGenerationCompleted;
+        }
+        
+    }
+
+    private void Generator_OnGenerationCompleted()
+    {
+        if (!_waitingForWorldGeneration)
+        {
+            _nextLevelInfo.LevelObject.SetActive(false);
+        }
     }
 
     public void StartAscend()
@@ -146,12 +155,15 @@ public class ElevatorController : MonoBehaviour
 
     IEnumerator WaitForLevelGenerationToCompleteToChangeLevel()
     {
+        _waitingForWorldGeneration = true;
         yield return new WaitUntil(() => _nextLevelInfo.Generator.GenerationComplete);
 
         Cabin.transform.parent = _nextLevelInfo.ElevatorOut.transform;
         outFloorPos = _nextLevelInfo.ElevatorOut.transform.GetChild(1).position;
         // Last Operations.
         Vector3 entrancePos = _nextLevelInfo.ElevatorOut.transform.GetChild(0).position; // Entrance
+
+        _nextLevelInfo.LevelObject.SetActive(true);
 
         _gm.SetLevel(_nextLevelInfo);
         TeleportToNextLevel(entrancePos);

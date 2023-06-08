@@ -66,6 +66,7 @@ public class LevelMeshController : MonoBehaviour
     private int _currentMeshGenerationsPerFrame;
 
     private int _updatedMeshCountOnCurrentFrame;
+    private object _updatingChunksLock = new object();
     private HashSet<ChunkMeshController> _updatingChunks;
 
     private void Awake()
@@ -318,7 +319,7 @@ public class LevelMeshController : MonoBehaviour
     {
         if (chunk.MarkMeshToUpdate())
         {
-            lock (_updatingChunks)
+            lock (_updatingChunksLock)
             {
                 _updatingChunks.Add(chunk);
             }
@@ -328,7 +329,7 @@ public class LevelMeshController : MonoBehaviour
     public void OnChunkMeshUpdated(ChunkMeshController chunkMesh)
     {
         _updatedMeshCountOnCurrentFrame += 1;
-        lock (_updatingChunks)
+        lock (_updatingChunksLock)
         {
             _updatingChunks.Remove(chunkMesh);
         }

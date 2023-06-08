@@ -476,7 +476,7 @@ MonoBehaviour:
   dashCooldown: 0
   dashCost: 0
   shootingErrorRateMinMax: {x: 0.05, y: 0.13}
-  speedCoefficient: 7
+  speedCoefficient: 1
 --- !u!114 &3293409358827904584
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -542,7 +542,6 @@ MonoBehaviour:
   character: {fileID: 0}
   eyeHeight: 2.01
   angularSpeed: 240
-  isStuck: 0
   rotateBodyTowardsMovement: 1
   shootingErrorRateToDistance: 0.08
 --- !u!114 &56262782640741871
