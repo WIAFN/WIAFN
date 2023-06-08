@@ -15,6 +15,7 @@ public class GameManager : MonoBehaviour
 
     public Character mainPlayer;
     public LevelGeneratorBase levelGenerator;
+    public int Floor;
 
     public Canvas sceneUI;
 
@@ -57,7 +58,7 @@ public class GameManager : MonoBehaviour
         {
             levelGenerator.OnGenerationCompleted -= LevelGenerator_OnGenerationCompleted;
         }
-
+        Floor = 0;
         ClearBlits();
         AudioManager.instance?.PlayBackgroundGame(transform);
     }

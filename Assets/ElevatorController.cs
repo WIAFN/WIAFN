@@ -5,21 +5,31 @@ using UnityEngine;
 
 public class ElevatorController : MonoBehaviour
 {
+    [Header("Movement")]
     public float AscendSpeed;
     public bool isMoving = false;
     public bool GenerationComplete = false;
+    [Header("Children")]
     public GameObject Cabin;
     public GameObject Console;
     public Transform DarkEntrance;
     public Transform DarkLeave;
-    public GameObject NextLevel;
+    [Header("Prefabs")]
+    public GameObject pfLevel;
     public GameObject pfElevatorOut;
+    public GameObject pfElevatorIn;
+    [Header("Vectors - Should be private")]
+    public GameObject CurrentLevel;
+    public GameObject NextLevel;
     public Vector3 outFloorPos;
 
-    // Start is called before the first frame update
+    // CAREFUL NOT TO CHANGE HIERARCHY, MIGHT MESS STUFF UP
     void Start()
     {
-
+        //Cabin = transform.GetChild(0).gameObject;
+        //Console = transform.GetChild(1).gameObject;
+        //DarkEntrance = transform.GetChild(2);
+        //DarkLeave = transform.GetChild(3);
     }
 
     private void Update()
@@ -42,7 +52,19 @@ public class ElevatorController : MonoBehaviour
     public void StartAscend()
     {
         isMoving = true;
-        NextLevel.SetActive(true);
+
+        // Creating next level object
+        if (NextLevel == null)
+        {
+            NextLevel = Instantiate(pfLevel, CurrentLevel.transform.position + Vector3.right * 1000f, Quaternion.identity);
+            NextLevel.name = "Level " + GameManager.instance.Floor++;
+            GameManager.instance.levelGenerator = NextLevel.GetComponentInChildren<LevelGeneratorBase>();
+        }
+        else
+        {
+            NextLevel.SetActive(true);
+        }
+
         StartCoroutine(StartGenerationAsync());
     }
 
@@ -57,8 +79,20 @@ public class ElevatorController : MonoBehaviour
     private void LevelGenerationComplete()
     {
         GenerationComplete = true;
-        Vector3 startingPoint = GameManager.instance.levelGenerator.GenerateRandomPositionOnGround(towardsMiddle: true) + Vector3.up * 3f;
-        GameObject elevatorOut = Instantiate(pfElevatorOut, startingPoint, Quaternion.identity);
+        Vector3 elevatorOutPos = GameManager.instance.levelGenerator.GenerateRandomPositionOnGround(towardsMiddle: true) + Vector3.up * 3f;
+        Vector3 elevatorInPos = GameManager.instance.levelGenerator.GenerateRandomPositionOnGround(towardsMiddle: true) + Vector3.up * 3f;
+
+        // Creating elevator in object
+        GameObject elevatorIn = Instantiate(pfElevatorIn, elevatorInPos, Quaternion.identity, NextLevel.transform);
+
+        // Setting next elevator level
+        elevatorIn.GetComponent<ElevatorController>().CurrentLevel = NextLevel;
+        elevatorIn.GetComponent<ElevatorController>().NextLevel = null;
+        elevatorIn.GetComponent<ElevatorController>().GenerationComplete = false;
+
+        // Creating elevator out object
+        GameObject elevatorOut = Instantiate(pfElevatorOut, elevatorOutPos, Quaternion.identity, NextLevel.transform);
+        Cabin.transform.parent = elevatorOut.transform;
         Vector3 entrancePos = elevatorOut.transform.GetChild(0).position; // Entrance
         outFloorPos = elevatorOut.transform.GetChild(1).position;
         TeleportToNextLevel(entrancePos);
@@ -75,7 +109,7 @@ public class ElevatorController : MonoBehaviour
         {
             Vector3 difference = new Vector3(0,DarkLeave.position.y - DarkEntrance.position.y,0);
             Cabin.transform.position -= difference;
-            GameManager.instance.mainPlayer.transform.position -= difference;
+            GameManager.instance.mainPlayer.transform.position = Cabin.transform.position + Vector3.up * 3f;
         }
     }
 
@@ -83,5 +117,6 @@ public class ElevatorController : MonoBehaviour
     {
         Cabin.transform.position = entrancePos;
         GameManager.instance.mainPlayer.transform.position = entrancePos + new Vector3(0,5,0);
+        Destroy(CurrentLevel, 5f);
     }
 }

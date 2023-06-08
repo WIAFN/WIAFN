@@ -3,7 +3,14 @@ guid: 69b8dd148a3b94d4f82f75be70f90b03
 MonoImporter:
   externalObjects: {}
   serializedVersion: 2
-  defaultReferences: []
+  defaultReferences:
+  - Cabin: {instanceID: 0}
+  - Console: {instanceID: 0}
+  - DarkEntrance: {instanceID: 0}
+  - DarkLeave: {instanceID: 0}
+  - NextLevel: {instanceID: 0}
+  - pfElevatorOut: {fileID: 5396935699496874472, guid: 93c6f677368312c4a9f58edb9005fa5a, type: 3}
+  - pfElevatorIn: {fileID: 5396935699496874472, guid: cbbd4a5cea71ae849b56a3a9ac198526, type: 3}
   executionOrder: 0
   icon: {instanceID: 0}
   userData: 
