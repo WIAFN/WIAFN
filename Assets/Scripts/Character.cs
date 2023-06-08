@@ -22,6 +22,8 @@ public class Character : MonoBehaviour
     [HideInInspector]
     public float stamina { get; private set; }
 
+    public int keyItems { get; private set; }
+
     public string state { get; set; }
 
 
@@ -124,6 +126,8 @@ public class Character : MonoBehaviour
     {
         switch (attributeEnum)
         {
+            case -1:
+                return keyItems;
             case 0:
                 return BaseStats.maxHealth;
             case 1:
@@ -142,6 +146,9 @@ public class Character : MonoBehaviour
     {
         switch (attributeEnum)
         {
+            case -1:
+                keyItems += (int)value;
+                break;
             case 0:
                 BaseStats.maxHealth += value;
                 break;
@@ -187,6 +194,7 @@ public class Character : MonoBehaviour
 
     public void ChangeEffect(Effect effect)
     {
+        if (effect.Boosts.Count == 0) return;
         if (HasEffect())
         {
             _effect.OnEffectDrop();

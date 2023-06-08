@@ -29,6 +29,7 @@ namespace WIAFN.Constants
 
     public enum CharacterStats
     {
+        keyItem = -1,
         maxHealth = 0,
         maxStamina = 1,
         healthRegen = 2,

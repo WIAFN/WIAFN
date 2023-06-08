@@ -18,6 +18,8 @@ public class ElevatorController : MonoBehaviour
     public GameObject pfLevel;
     public GameObject pfElevatorOut;
     public GameObject pfElevatorIn;
+    [Header("Animators")]
+    public Animator CabinDoorAnimator;
     [Header("Vectors - Should be private")]
     public GameObject CurrentLevel;
     public GameObject NextLevel;
@@ -25,6 +27,9 @@ public class ElevatorController : MonoBehaviour
 
     private readonly int LEVEL_DESTROY_TIMER = 7;
     private readonly float LEVEL_GEN_DISTANCE = 1000f;
+    private readonly float LEVEL_SKIP_TIMER = 2f;
+    private float _playerInTimer;
+    private bool _playerInCollider;
 
     // CAREFUL NOT TO CHANGE HIERARCHY, MIGHT MESS STUFF UP
     void Start()
@@ -33,15 +38,41 @@ public class ElevatorController : MonoBehaviour
         isMoving = false;
         GenerationComplete = false;
         Cabin.transform.localPosition = new Vector3(0,-0.1f,0);
+        _playerInTimer = 0;
+        _playerInCollider = false;
         //Cabin = transform.GetChild(0).gameObject;
         //Console = transform.GetChild(1).gameObject;
         //DarkEntrance = transform.GetChild(2);
         //DarkLeave = transform.GetChild(3);
     }
 
+
+    private void OnTriggerStay(Collider other)
+    {
+        if (isMoving) return;
+        if (other.CompareTag("Player"))
+        {
+            _playerInTimer += Time.deltaTime;
+            if(_playerInTimer > LEVEL_SKIP_TIMER)
+            {
+                CabinDoorAnimator.SetTrigger("DoorClose");
+                StartAscend();
+            }
+        }
+    }
+    private void OnTriggerExit(Collider other)
+    {
+        if (other.CompareTag("Player"))
+        {
+            _playerInTimer = 0;
+        }
+    }
+
     private void Update()
     {
-        if(Input.GetKeyDown(KeyCode.N))
+        PlayerInElevator();
+
+        if (Input.GetKeyDown(KeyCode.N))
         {
             StartAscend();
         }
@@ -61,6 +92,19 @@ public class ElevatorController : MonoBehaviour
                 default:
                     Debug.LogAssertion("Level generation speed is invalid.");
                     break;
+            }
+        }
+    }
+
+    private void PlayerInElevator()
+    {
+        if (_playerInCollider)
+        {
+            _playerInTimer += Time.deltaTime;
+            if (_playerInTimer > LEVEL_SKIP_TIMER)
+            {
+                CabinDoorAnimator.SetTrigger("DoorClose");
+                StartAscend();
             }
         }
     }
@@ -125,9 +169,12 @@ public class ElevatorController : MonoBehaviour
     public void Move()
     {
         Cabin.transform.position += new Vector3(0, AscendSpeed, 0) * Time.deltaTime;
+
+        //MADE IT TO OTHER LEVEL
         if(Cabin.transform.position.y > outFloorPos.y && GenerationComplete)
         {
             isMoving = false;
+            CabinDoorAnimator.SetTrigger("DoorOpen");
             Destroy(CurrentLevel,LEVEL_DESTROY_TIMER);
         }
         if(Cabin.transform.position.y > DarkLeave.position.y) 
