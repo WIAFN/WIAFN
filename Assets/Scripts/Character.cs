@@ -207,6 +207,11 @@ public class Character : MonoBehaviour
         return _effect != null;
     }
 
+    public void ResetKeyItems()
+    {
+        keyItems = 0;
+    }
+
     public CharacterMovement CharacterMovement => _characterMove;
 
     public delegate void DamageTakeHandler(float damageTaken);

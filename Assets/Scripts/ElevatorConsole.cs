@@ -18,11 +18,12 @@ public class ElevatorConsole : MonoBehaviour
     {
         if (_inRange)
         {
-            int keyItemCount = GameManager.instance.mainPlayer.keyItems;
+            Character mainPlayer = GameManager.instance.mainPlayer;
             // >= because bugs :D
-            if(keyItemCount >= RequiredKeys)
+            if(mainPlayer.keyItems >= RequiredKeys)
             {
                 DoorAnimator.SetTrigger("DoorOpen");
+                mainPlayer.ResetKeyItems();
             }
         }
     }
