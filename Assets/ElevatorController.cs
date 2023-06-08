@@ -7,8 +7,8 @@ public class ElevatorController : MonoBehaviour
 {
     [Header("Movement")]
     public float AscendSpeed;
-    public bool isMoving = false;
-    public bool GenerationComplete = false;
+    public bool isMoving;
+    public bool GenerationComplete;
     [Header("Children")]
     public GameObject Cabin;
     public GameObject Console;
@@ -23,9 +23,16 @@ public class ElevatorController : MonoBehaviour
     public GameObject NextLevel;
     public Vector3 outFloorPos;
 
+    private readonly int LEVEL_DESTROY_TIMER = 7;
+    private readonly float LEVEL_GEN_DISTANCE = 1000f;
+
     // CAREFUL NOT TO CHANGE HIERARCHY, MIGHT MESS STUFF UP
     void Start()
     {
+        // No idea why they change after instantiate alas no time to find out
+        isMoving = false;
+        GenerationComplete = false;
+        Cabin.transform.localPosition = new Vector3(0,-0.1f,0);
         //Cabin = transform.GetChild(0).gameObject;
         //Console = transform.GetChild(1).gameObject;
         //DarkEntrance = transform.GetChild(2);
@@ -37,6 +44,24 @@ public class ElevatorController : MonoBehaviour
         if(Input.GetKeyDown(KeyCode.N))
         {
             StartAscend();
+        }
+        if (Input.GetKeyDown(KeyCode.L))
+        {
+            LevelGeneratorBase levelGenerator = GameManager.instance.levelGenerator;
+            switch (levelGenerator.GenerationSpeed)
+            {
+                case LevelGenerationSpeed.Slow:
+                    levelGenerator.GenerationSpeed = LevelGenerationSpeed.Fast;
+                    Debug.Log("Set the level generation to fast.");
+                    break;
+                case LevelGenerationSpeed.Fast:
+                    levelGenerator.GenerationSpeed = LevelGenerationSpeed.Slow;
+                    Debug.Log("Set the level generation to slow.");
+                    break;
+                default:
+                    Debug.LogAssertion("Level generation speed is invalid.");
+                    break;
+            }
         }
     }
 
@@ -56,7 +81,7 @@ public class ElevatorController : MonoBehaviour
         // Creating next level object
         if (NextLevel == null)
         {
-            NextLevel = Instantiate(pfLevel, CurrentLevel.transform.position + Vector3.right * 1000f, Quaternion.identity);
+            NextLevel = Instantiate(pfLevel, CurrentLevel.transform.position + Vector3.right * LEVEL_GEN_DISTANCE, Quaternion.identity);
             NextLevel.name = "Level " + GameManager.instance.Floor++;
             GameManager.instance.levelGenerator = NextLevel.GetComponentInChildren<LevelGeneratorBase>();
         }
@@ -88,7 +113,6 @@ public class ElevatorController : MonoBehaviour
         // Setting next elevator level
         elevatorIn.GetComponent<ElevatorController>().CurrentLevel = NextLevel;
         elevatorIn.GetComponent<ElevatorController>().NextLevel = null;
-        elevatorIn.GetComponent<ElevatorController>().GenerationComplete = false;
 
         // Creating elevator out object
         GameObject elevatorOut = Instantiate(pfElevatorOut, elevatorOutPos, Quaternion.identity, NextLevel.transform);
@@ -104,6 +128,7 @@ public class ElevatorController : MonoBehaviour
         if(Cabin.transform.position.y > outFloorPos.y && GenerationComplete)
         {
             isMoving = false;
+            Destroy(CurrentLevel,LEVEL_DESTROY_TIMER);
         }
         if(Cabin.transform.position.y > DarkLeave.position.y) 
         {
@@ -117,6 +142,5 @@ public class ElevatorController : MonoBehaviour
     {
         Cabin.transform.position = entrancePos;
         GameManager.instance.mainPlayer.transform.position = entrancePos + new Vector3(0,5,0);
-        Destroy(CurrentLevel, 5f);
     }
 }
