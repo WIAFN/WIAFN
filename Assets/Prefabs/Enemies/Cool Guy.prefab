@@ -4016,7 +4016,7 @@ MonoBehaviour:
   leftLegIK: {fileID: 2670087228144807389}
   leftLegRootIndicator: {fileID: 461465843109555199}
   rightLegRootIndicator: {fileID: 7399738001173110035}
-  legRootTargetDistThresholdSqr: 4
+  legRootTargetDistThresholdSqr: 5
   legResetDistanceThresholdSqr: 9
   legsRaycastLayerMask:
     serializedVersion: 2
