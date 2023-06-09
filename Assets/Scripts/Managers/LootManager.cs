@@ -15,6 +15,7 @@ public class LootManager : MonoBehaviour
     public List<Upgrade> WeaponUpgrades;
     public List<Upgrade> CharacterUpgrades;
     public List<Upgrade> MovementUpgrades;
+    public List<Effect> Boosts;
 
     private GameManager _gm;
 
@@ -39,6 +40,11 @@ public class LootManager : MonoBehaviour
         {
             CreateLoot(GameManager.instance.mainPlayer.transform.position);
         }
+
+        if (Input.GetKeyUp(KeyCode.B))
+        {
+            CreateLoot(GameManager.instance.mainPlayer.transform.position, true);
+        }
     }
 
     private void Start()
@@ -47,6 +53,7 @@ public class LootManager : MonoBehaviour
         _gm.OnCharacterDied += this.OnCharacterDied;
 
         List<Upgrade> upgrades = Resources.LoadAll<Upgrade>("Upgrades").ToList();
+        Boosts = Resources.LoadAll<Effect>("Effects").ToList();
         WeaponUpgrades = new();
         CharacterUpgrades = new();
         MovementUpgrades = new();
@@ -67,7 +74,7 @@ public class LootManager : MonoBehaviour
         }
     }
 
-    public void CreateLoot(Vector3 position)
+    public void CreateLoot(Vector3 position, bool isBoost = false)
     {
         Vector3 pos;
         Physics.Raycast(position, Vector3.up, out RaycastHit hit, 0.5f);
@@ -85,7 +92,17 @@ public class LootManager : MonoBehaviour
         }
 
         GameObject upgrade = Instantiate(pfUpgrade, pos + new Vector3(0f, 1.5f, 0f), Quaternion.identity);
-        RandomizeLoot(upgrade, GetRarity());
+        
+
+        if (isBoost)
+        {
+            AddBoost(upgrade);
+        }
+        else
+        {
+            RandomizeLoot(upgrade, GetRarity());
+        }
+
     }
 
     public void RandomizeLoot(GameObject upgrade, int rarity)
@@ -94,7 +111,7 @@ public class LootManager : MonoBehaviour
         List<Upgrade> upgrades = new();
         EffectBody container = upgrade.GetComponent<EffectBody>();
         container.Rarity = rarity;
-        Effect effect = new();
+        Effect effect = (Effect)ScriptableObject.CreateInstance("Effect");
 
         int upgradeCount = 1 + (int)Mathf.Ceil(rarity / 2f);
         bool hasDetrimental = upgradeCount > 1 && rarity < 4;
@@ -161,6 +178,25 @@ public class LootManager : MonoBehaviour
         container.RefreshText();
     }
 
+    public void AddBoost(GameObject upgrade)
+    {
+        EffectBody container = upgrade.GetComponent<EffectBody>();
+        bool cantExist = true;
+        Effect effect = (Effect)ScriptableObject.CreateInstance("Effect");
+        while (cantExist)
+        {
+            int index = Random.Range(0, Boosts.Count);
+            effect = Boosts[index];
+            cantExist = effect.name.StartsWith("#_");
+        }
+        
+        effect.Upgrades = new();
+        container.Effects.Add(effect);
+        container.Name = effect.name;
+        container.Description = "TEMPORARY INCREASE OF STATS";
+        container.RefreshText();
+    }
+
     private string GetUpgradeType()
     {
         float percentage = Random.value * 100f;
@@ -199,10 +235,10 @@ public class LootManager : MonoBehaviour
     private int GetRarity()
     {
         float percentage = Random.value * 100f;
-        if (percentage < 40f) return 5;
-        if (percentage < 70f) return 4;
-        if (percentage < 15f) return 3;
-        if (percentage < 55f) return 2;
+        if (percentage < 10f) return 5;
+        if (percentage < 25f) return 4;
+        if (percentage < 45f) return 3;
+        if (percentage < 65f) return 2;
         return 1;
     }
 

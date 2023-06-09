@@ -48,7 +48,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _forwardRenderer: {fileID: 11400000, guid: 4a4130d8d2e4335488046c5872bd0dff, type: 2}
-  levelGameManager: 1
+  levelGameManager: 0
   mainPlayer: {fileID: 0}
   levelInfos:
   - Level: 1
@@ -73,8 +73,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0677fc689eb311f41a324e959edbd8a4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  lootPercent: 30
+  lootPercent: 40
   pfUpgrade: {fileID: 6365665363150068368, guid: 9bc9969bb95d1db4a9abe7a2b5cb8cc1, type: 3}
+  WeaponUpgrades: []
+  CharacterUpgrades: []
+  MovementUpgrades: []
+  Boosts: []
 --- !u!114 &1238161195
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -99,6 +103,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5e2751b276908254abe13ad0afd71a45, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  pfElevatorKey: {fileID: 6365665363150068368, guid: 3e6ebff28924c4549972d4357ffff610, type: 3}
+  pfElevatorKey: {fileID: 6365665363150068368, guid: 3ff3f409bf88a0d4584d20b398b21220, type: 3}
   hasPresetKeys: []
   keyCountPerLevel: 10

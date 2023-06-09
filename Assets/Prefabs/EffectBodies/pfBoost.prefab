@@ -5698,7 +5698,7 @@ GameObject:
   - component: {fileID: 7495300434675273175}
   - component: {fileID: 1470557746}
   m_Layer: 2
-  m_Name: pfKeyItem
+  m_Name: pfBoost
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -5753,12 +5753,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dedea874bc16e7540929f16e2a193b5b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Name: KEY ITEM
-  Description: A STRANGE SIMULACRUM OF ENERGY
+  Name: General Upgrade
+  Description: Everything will be specified for different upgrades.
   Effects:
-  - {fileID: 11400000, guid: 87f8351cbca3b3442918fe877b716b67, type: 2}
-  Color: {r: 0, g: 0, b: 0, a: 1}
-  Rarity: 6
+  - {fileID: 11400000, guid: 2ef4c9781b6fe8e40b10968683e3216b, type: 2}
+  Color: {r: 0.9716981, g: 0.21542363, b: 0.21542363, a: 1}
+  Rarity: 5
   rotateTowardsPlayer: {fileID: 8172268256268696732}
   information: {fileID: 1613892331}
   ps: {fileID: 1065220112446423145}

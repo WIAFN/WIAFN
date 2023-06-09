@@ -77,33 +77,29 @@ public class Effect : ScriptableObject
         //TODO: Find a way to distinguish between boosted stats and base stats, probably need a base stats overhaul
         foreach (Upgrade boost in Boosts)
         {
-            int statId;
-            float currentValue;
-            float calculatedValue;
             foreach (CharacterStatChange statChange in boost.CharacterStatChanges)
             {
-                statId = (int)statChange.StatEnum;
-                currentValue = _owner.GetCharacterStat(statId);
-                calculatedValue = currentValue + statChange.Value;
+                int statId = (int)statChange.StatEnum;
+                float currentValue = _owner.GetCharacterStat(statId);
+                float calculatedValue = currentValue + statChange.Value;
                 LeanTween.value(currentValue, calculatedValue, AnimationDuration)
                     .setEase(animationEaseIn)
                     .setOnUpdate( val =>
                     {
-                        _owner.ChangeCharacterStat(statId, val);
+                        _owner.SetCharacterStat(statId, val);
                     });
             }
 
             foreach (WeaponStatChange statChange in boost.WeaponStatChanges)
             {
-                statId = (int)statChange.StatEnum;
-                currentValue = _owner.GetWeaponStat(statId);
-                calculatedValue = currentValue + statChange.Value;
-                Debug.Log(statId + " " + currentValue + " " + calculatedValue);
+                int localStatId = (int)statChange.StatEnum;
+                float currentValue = _owner.GetWeaponStat(localStatId);
+                float calculatedValue = currentValue + statChange.Value;
                 LeanTween.value(currentValue, calculatedValue, AnimationDuration)
                     .setEase(animationEaseIn)
                     .setOnUpdate(val =>
                     {
-                        _owner.ChangeWeaponStat(statId, val);
+                        _owner.SetWeaponStat(localStatId, val);
                     });
             }
         }
@@ -133,32 +129,29 @@ public class Effect : ScriptableObject
         //TODO: Find a way to distinguish between boosted stats and base stats, probably need a base stats overhaul
         foreach (Upgrade boost in Boosts)
         {
-            int statId;
-            float currentValue;
-            float calculatedValue;
             foreach (CharacterStatChange statChange in boost.CharacterStatChanges)
             {
-                statId = (int)statChange.StatEnum;
-                currentValue = _owner.GetCharacterStat(statId);
-                calculatedValue = currentValue - statChange.Value;
+                int statId = (int)statChange.StatEnum;
+                float currentValue = _owner.GetCharacterStat(statId);
+                float calculatedValue = currentValue - statChange.Value;
                 LeanTween.value(currentValue, calculatedValue, AnimationDuration)
                     .setEase(animationEaseOut)
                     .setOnUpdate(val =>
                     {
-                        _owner.ChangeCharacterStat(statId, val);
+                        _owner.SetCharacterStat(statId, val);
                     });
             }
 
             foreach (WeaponStatChange statChange in boost.WeaponStatChanges)
             {
-                statId = (int)statChange.StatEnum;
-                currentValue = _owner.GetWeaponStat(statId);
-                calculatedValue = currentValue - statChange.Value;
+                int statId = (int)statChange.StatEnum;
+                float currentValue = _owner.GetWeaponStat(statId);
+                float calculatedValue = currentValue - statChange.Value;
                 LeanTween.value(currentValue, calculatedValue, AnimationDuration)
                     .setEase(animationEaseOut)
                     .setOnUpdate(val =>
                     {
-                        _owner.ChangeWeaponStat(statId, val);
+                        _owner.SetWeaponStat(statId, val);
                     });
             }
         }
@@ -176,7 +169,7 @@ public class Effect : ScriptableObject
                 statId = (int)statChange.StatEnum;
                 currentValue = _owner.GetCharacterStat(statId);
                 calculatedValue = currentValue - statChange.Value;
-                _owner.ChangeCharacterStat(statId, calculatedValue);
+                _owner.SetCharacterStat(statId, calculatedValue);
             }
 
             foreach (WeaponStatChange statChange in boost.WeaponStatChanges)
@@ -184,7 +177,7 @@ public class Effect : ScriptableObject
                 statId = (int)statChange.StatEnum;
                 currentValue = _owner.GetWeaponStat(statId);
                 calculatedValue = currentValue - statChange.Value;
-                _owner.ChangeWeaponStat(statId, calculatedValue);
+                _owner.SetWeaponStat(statId, calculatedValue);
             }
         }
         Enabled = false;
@@ -192,11 +185,9 @@ public class Effect : ScriptableObject
 
     private void StartScreenFX(Blit screenFX)
     {
-        Debug.Log("StartScreenFX");
 
         screenFX.SetActive(true);
         Material blitMat = screenFX.settings.blitMaterial;
-        Debug.Log(blitMat.GetFloat("_Intensity"));
         InAnimation = true;
 
         LeanTween.value(0, 1, AnimationDuration)
@@ -214,9 +205,7 @@ public class Effect : ScriptableObject
     }
     private void EndScreenFX(Blit screenFX)
     {
-        Debug.Log("EndScreenFX");
         Material blitMat = screenFX.settings.blitMaterial;
-        Debug.Log(blitMat.GetFloat("_Intensity"));
         InAnimation = true;
         LeanTween.value(1, 0, 1.5f)
             .setEase(animationEaseOut)

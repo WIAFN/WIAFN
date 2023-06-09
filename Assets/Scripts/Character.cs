@@ -265,17 +265,80 @@ public class Character : MonoBehaviour
         }
     }
 
+    public void SetCharacterStat(int attributeEnum, float value)
+    {
+        switch (attributeEnum)
+        {
+            case -1:
+                keyItems += (int)value;
+                break;
+            case 0:
+                BaseStats.maxHealth = Mathf.Clamp(value, CHAR_MIN_HP, CHAR_MAX_HP);
+                break;
+            case 1:
+                BaseStats.maxStamina = Mathf.Clamp(value, CHAR_MIN_STM, CHAR_MAX_STM);
+                break;
+            case 2:
+                BaseStats.healthRegen = Mathf.Clamp(value, CHAR_MIN_HPREG, CHAR_MAX_HPREG);
+                break;
+            case 3:
+                BaseStats.staminaRegen = Mathf.Clamp(value, CHAR_MIN_STMREG, CHAR_MAX_STMREG);
+                break;
+            case 4:
+                BaseStats.jumpHeight = Mathf.Clamp(value, CHAR_MIN_JUMP_HEIGHT, CHAR_MAX_JUMP_HEIGHT);
+                break;
+            case 5:
+                BaseStats.multiJumps = Mathf.Clamp((int)value, CHAR_MIN_MULTIJMP, CHAR_MAX_MULTIJMP);
+                break;
+            case 6:
+                BaseStats.defaultSpeed = Mathf.Clamp(value, CHAR_MIN_SPEED, CHAR_MAX_SPEED);
+                break;
+            case 7:
+                BaseStats.defaultSprintSpeed = Mathf.Clamp(value, CHAR_MIN_SPRINT, CHAR_MAX_SPRINT);
+                break;
+            case 8:
+                BaseStats.defaultDashSpeed = Mathf.Clamp(value, CHAR_MIN_DASH_SPEED, CHAR_MAX_DASH_SPEED);
+                break;
+            case 9:
+                BaseStats.multiDashes = Mathf.Clamp((int)value, CHAR_MIN_MULTIDASH, CHAR_MAX_MULTIDASH);
+                break;
+            case 10:
+                BaseStats.dashDuration = Mathf.Clamp(value, CHAR_MIN_DASH_DUR, CHAR_MAX_DASH_DUR);
+                break;
+            case 11:
+                BaseStats.dashCooldown = Mathf.Clamp(value, CHAR_MIN_DASH_CD, CHAR_MAX_DASH_CD);
+                break;
+            case 12:
+                BaseStats.dashCost = Mathf.Clamp(value, CHAR_MIN_DASH_COST, CHAR_MAX_DASH_COST);
+                break;
+            case 13:
+                BaseStats.speedCoefficient = Mathf.Clamp(value, CHAR_MIN_SPDCOEF, CHAR_MAX_SPDCOEF);
+                break;
+        }
+    }
+
     public void ChangeWeaponStat(int attributeEnum, float value)
     {
         switch (attributeEnum)
         {
             case 0:
-                Weapon.Damage += value;
-                Mathf.Clamp(Weapon.Damage, WEAPON_MIN_DMG, WEAPON_MAX_DMG);
+                Weapon.Damage = Mathf.Clamp(Weapon.Damage + value, WEAPON_MIN_DMG, WEAPON_MAX_DMG);
                 break;
             case 1:
-                Weapon.FireRate += value;
-                Mathf.Clamp(Weapon.FireRate, WEAPON_MIN_FR, WEAPON_MAX_FR);
+                Weapon.FireRate = Mathf.Clamp(Weapon.FireRate + value, WEAPON_MIN_FR, WEAPON_MAX_FR);
+                break;
+        }
+    }
+
+    public void SetWeaponStat(int attributeEnum, float value)
+    {
+        switch (attributeEnum)
+        {
+            case 0:
+                Weapon.Damage = Mathf.Clamp(value, WEAPON_MIN_DMG, WEAPON_MAX_DMG);
+                break;
+            case 1:
+                Weapon.FireRate = Mathf.Clamp(value, WEAPON_MIN_FR, WEAPON_MAX_FR);
                 break;
         }
     }

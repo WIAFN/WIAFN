@@ -9,6 +9,7 @@ public class DebugManager : MonoBehaviour
     public bool generalDebug;
     public bool debugAi;
     public bool debugProceduralAnims;
+    public int LeanTweenCallCount;
 
     private void Awake()
     {
@@ -24,7 +25,7 @@ public class DebugManager : MonoBehaviour
 
     private void Update()
     {
-
+        LeanTweenCallCount = LeanTween.tweensRunning;
     }
 
 }

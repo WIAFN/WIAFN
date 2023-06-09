@@ -197,7 +197,7 @@ Camera:
     width: 1
     height: 1
   near clip plane: 0.01
-  far clip plane: 1000
+  far clip plane: 5000
   field of view: 55
   orthographic: 0
   orthographic size: 5
@@ -573,7 +573,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Character: {fileID: 0}
   FireRate: 5
-  Damage: 8
+  Damage: 5
   GunTip: {fileID: 5511685309753150738}
   MuzzleFlash: {fileID: 7813738118887920440, guid: 9afa50d68c6ab79418141f5a31b4ae06, type: 3}
   projectilePrefab: {fileID: 2206067794516419196, guid: ef0cfbfe4ad97014d91137ec1452d82d, type: 3}

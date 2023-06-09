@@ -12,17 +12,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5e47e66b6c4697f42bf4e0d72ffc9ccd, type: 3}
   m_Name: B_Regen
   m_EditorClassIdentifier: 
-  Upgrades:
-  - {fileID: 11400000, guid: 4c2f36fc4afd0e840ae517a70b0f65c8, type: 2}
+  Upgrades: []
   Boosts:
   - {fileID: 11400000, guid: 6807426f73114fd48b7ba5e4d7fbcbaa, type: 2}
   ScreenEffect: {fileID: 7053655301277151119, guid: 4a4130d8d2e4335488046c5872bd0dff, type: 2}
   InAnimation: 0
   Enabled: 0
-  AnimationDuration: 0
-  EffectDuration: 0
+  AnimationDuration: 1
+  EffectDuration: 10
   EffectCooldown: 0
   IsUsedOnce: 0
-  UseCount: 6
+  UseCount: 8
   animationEaseIn: 0
   animationEaseOut: 0

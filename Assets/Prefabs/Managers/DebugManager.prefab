@@ -47,3 +47,4 @@ MonoBehaviour:
   generalDebug: 0
   debugAi: 0
   debugProceduralAnims: 0
+  LeanTweenCallCount: 0
