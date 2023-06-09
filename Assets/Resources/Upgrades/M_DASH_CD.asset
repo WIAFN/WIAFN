@@ -10,11 +10,11 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: a08ac5638a3d94d4097ff49b804dab96, type: 3}
-  m_Name: Health+Dmg
+  m_Name: M_DASH_CD
   m_EditorClassIdentifier: 
   CharacterStatChanges:
-  - StatEnum: 0
-    Value: 100
-  WeaponStatChanges:
-  - StatEnum: 0
-    Value: 5
+  - StatEnum: 11
+    Value: -1
+  WeaponStatChanges: []
+  IsDetrimental: 0
+  Multiplier: 1

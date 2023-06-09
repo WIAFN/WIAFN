@@ -30,6 +30,59 @@ public class Character : MonoBehaviour
     public event DamageTakeHandler OnDamageTaken;
     public event VoidHandler OnDied;
 
+
+    #region STAT UPPER AND LOWER BOUNDS
+    //WEAPON
+    private readonly float WEAPON_MIN_DMG = 0.5f;
+    private readonly float WEAPON_MAX_DMG = 300f;
+
+    private readonly float WEAPON_MIN_FR = 0.1f;
+    private readonly float WEAPON_MAX_FR = 100f;
+
+    //CHARACTER
+    private readonly float CHAR_MIN_HP = 50f;
+    private readonly float CHAR_MAX_HP = 3000f;
+
+    private readonly float CHAR_MIN_STM = 100f;
+    private readonly float CHAR_MAX_STM = 2000f;
+
+    private readonly float CHAR_MIN_HPREG = 0.1f;
+    private readonly float CHAR_MAX_HPREG = 100f;
+
+    private readonly float CHAR_MIN_STMREG = 1f;
+    private readonly float CHAR_MAX_STMREG = 50f;
+
+    private readonly float CHAR_MIN_JUMP_HEIGHT = 2f;
+    private readonly float CHAR_MAX_JUMP_HEIGHT = 10f;
+
+    private readonly int CHAR_MIN_MULTIJMP = 1;
+    private readonly int CHAR_MAX_MULTIJMP = 5;
+
+    private readonly float CHAR_MIN_SPEED = 6f;
+    private readonly float CHAR_MAX_SPEED = 30f;
+
+    private readonly float CHAR_MIN_SPRINT = 30f;
+    private readonly float CHAR_MAX_SPRINT = 120f;
+
+    private readonly float CHAR_MIN_DASH_SPEED = 120f;
+    private readonly float CHAR_MAX_DASH_SPEED = 600f;
+
+    private readonly int CHAR_MIN_MULTIDASH = 0;
+    private readonly int CHAR_MAX_MULTIDASH = 5;
+
+    private readonly float CHAR_MIN_DASH_DUR = 0.05f;
+    private readonly float CHAR_MAX_DASH_DUR = 1f;
+
+    private readonly float CHAR_MIN_DASH_CD = 2f;
+    private readonly float CHAR_MAX_DASH_CD = 10f;
+
+    private readonly float CHAR_MIN_DASH_COST = 10f;
+    private readonly float CHAR_MAX_DASH_COST = 200f;
+
+    private readonly float CHAR_MIN_SPDCOEF = 0.3f;
+    private readonly float CHAR_MAX_SPDCOEF = 2f;
+    #endregion
+
     private void Awake()
     {
         _characterMove = GetComponent<CharacterMovement>();
@@ -133,10 +186,28 @@ public class Character : MonoBehaviour
             case 1:
                 return BaseStats.maxStamina;
             case 2:
-                return BaseStats.staminaRegen;
-            case 3:
                 return BaseStats.healthRegen;
+            case 3:
+                return BaseStats.staminaRegen;
             case 4:
+                return BaseStats.jumpHeight;
+            case 5:
+                return BaseStats.multiJumps;
+            case 6:
+                return BaseStats.defaultSpeed;
+            case 7:
+                return BaseStats.defaultSprintSpeed;
+            case 8:
+                return BaseStats.defaultDashSpeed;
+            case 9:
+                return BaseStats.multiDashes;
+            case 10:
+                return BaseStats.dashDuration;
+            case 11:
+                return BaseStats.dashCooldown;
+            case 12:
+                return BaseStats.dashCost;
+            case 13:
                 return BaseStats.speedCoefficient;
             default:
                 return BaseStats.maxHealth;
@@ -150,19 +221,46 @@ public class Character : MonoBehaviour
                 keyItems += (int)value;
                 break;
             case 0:
-                BaseStats.maxHealth += value;
+                BaseStats.maxHealth = Mathf.Clamp(BaseStats.maxHealth + value, CHAR_MIN_HP, CHAR_MAX_HP);
                 break;
             case 1:
-                BaseStats.maxStamina += value;
+                BaseStats.maxStamina = Mathf.Clamp(BaseStats.maxStamina + value, CHAR_MIN_STM, CHAR_MAX_STM);
                 break;
             case 2:
-                BaseStats.healthRegen += value;
+                BaseStats.healthRegen = Mathf.Clamp(BaseStats.healthRegen + value, CHAR_MIN_HPREG, CHAR_MAX_HPREG);
                 break;
             case 3:
-                BaseStats.staminaRegen += value;
+                BaseStats.staminaRegen = Mathf.Clamp(BaseStats.staminaRegen + value, CHAR_MIN_STMREG, CHAR_MAX_STMREG);
                 break;
             case 4:
-                BaseStats.speedCoefficient += value;
+                BaseStats.jumpHeight = Mathf.Clamp(BaseStats.jumpHeight + value, CHAR_MIN_JUMP_HEIGHT, CHAR_MAX_JUMP_HEIGHT);
+                break;
+            case 5:
+                BaseStats.multiJumps = Mathf.Clamp(BaseStats.multiJumps + Mathf.CeilToInt(value), CHAR_MIN_MULTIJMP, CHAR_MAX_MULTIJMP);
+                break;
+            case 6:
+                BaseStats.defaultSpeed = Mathf.Clamp(BaseStats.defaultSpeed + value, CHAR_MIN_SPEED, CHAR_MAX_SPEED);
+                break;
+            case 7:
+                BaseStats.defaultSprintSpeed = Mathf.Clamp(BaseStats.defaultSprintSpeed + value, CHAR_MIN_SPRINT, CHAR_MAX_SPRINT);
+                break;
+            case 8:
+                BaseStats.defaultDashSpeed = Mathf.Clamp(BaseStats.defaultDashSpeed + value, CHAR_MIN_DASH_SPEED, CHAR_MAX_DASH_SPEED);
+                break;
+            case 9:
+                BaseStats.multiDashes = Mathf.Clamp(BaseStats.multiDashes + Mathf.CeilToInt(value), CHAR_MIN_MULTIDASH, CHAR_MAX_MULTIDASH);
+                break;
+            case 10:
+                BaseStats.dashDuration = Mathf.Clamp(BaseStats.dashDuration + value, CHAR_MIN_DASH_DUR, CHAR_MAX_DASH_DUR);
+                break;
+            case 11:
+                BaseStats.dashCooldown = Mathf.Clamp(BaseStats.dashCooldown + value, CHAR_MIN_DASH_CD, CHAR_MAX_DASH_CD);
+                break;
+            case 12:
+                BaseStats.dashCost = Mathf.Clamp(BaseStats.dashCost + value, CHAR_MIN_DASH_COST, CHAR_MAX_DASH_COST);
+                break;
+            case 13:
+                BaseStats.speedCoefficient = Mathf.Clamp(BaseStats.speedCoefficient + value, CHAR_MIN_SPDCOEF, CHAR_MAX_SPDCOEF);
                 break;
         }
     }
@@ -172,10 +270,12 @@ public class Character : MonoBehaviour
         switch (attributeEnum)
         {
             case 0:
-                Weapon.Damage = value;
+                Weapon.Damage += value;
+                Mathf.Clamp(Weapon.Damage, WEAPON_MIN_DMG, WEAPON_MAX_DMG);
                 break;
             case 1:
-                Weapon.FireRate = value;
+                Weapon.FireRate += value;
+                Mathf.Clamp(Weapon.FireRate, WEAPON_MIN_FR, WEAPON_MAX_FR);
                 break;
         }
     }

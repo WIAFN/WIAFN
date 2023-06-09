@@ -8,9 +8,9 @@ using UnityEngine;
 public class Effect : ScriptableObject
 {
     [Header("For Simple Upgrades")]
-    public List<Upgrade> Upgrades;
+    public List<Upgrade> Upgrades = new List<Upgrade>();
     [Header("For Effect")]
-    public List<Upgrade> Boosts;
+    public List<Upgrade> Boosts = new List<Upgrade>();
     public Blit ScreenEffect;
     public bool InAnimation = false;
     public bool Enabled = false;
@@ -59,14 +59,15 @@ public class Effect : ScriptableObject
     {
         foreach (Upgrade upgrade in Upgrades)
         {
+            float multiplier = upgrade.GetMultiplier();
             foreach (CharacterStatChange statChange in upgrade.CharacterStatChanges)
             {
-                _owner.ChangeCharacterStat(((int)statChange.StatEnum), statChange.Value);
+                _owner.ChangeCharacterStat(((int)statChange.StatEnum), statChange.Value * multiplier);
             }
 
             foreach (WeaponStatChange statChange in upgrade.WeaponStatChanges)
             {
-                _owner.ChangeWeaponStat(((int)statChange.StatEnum), statChange.Value);
+                _owner.ChangeWeaponStat(((int)statChange.StatEnum), statChange.Value * multiplier);
             }
         }
     }
@@ -112,16 +113,17 @@ public class Effect : ScriptableObject
     {
         foreach (Upgrade upgrade in Upgrades)
         {
+            float multiplier = upgrade.GetMultiplier();
             foreach (CharacterStatChange statChange in upgrade.CharacterStatChanges)
             {
                 _owner.ChangeCharacterStat(((int)statChange.StatEnum),
-                    -statChange.Value);
+                    -(statChange.Value * multiplier));
             }
 
             foreach (WeaponStatChange statChange in upgrade.WeaponStatChanges)
             {
                 _owner.ChangeWeaponStat(((int)statChange.StatEnum),
-                    -statChange.Value);
+                    -(statChange.Value * multiplier));
             }
         }
     }

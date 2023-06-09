@@ -10,7 +10,11 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: a08ac5638a3d94d4097ff49b804dab96, type: 3}
-  m_Name: Upgrade
+  m_Name: M_SPEED
   m_EditorClassIdentifier: 
-  CharacterStatChanges: []
+  CharacterStatChanges:
+  - StatEnum: 6
+    Value: 3
   WeaponStatChanges: []
+  IsDetrimental: 0
+  Multiplier: 1
