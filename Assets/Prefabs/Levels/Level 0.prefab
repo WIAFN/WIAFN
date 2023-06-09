@@ -1403,7 +1403,7 @@ MonoBehaviour:
   chunkPrefab: {fileID: 8858154486212053559, guid: 756ace3c814aa9043b9ead700abc7a70, type: 3}
   updateMeshCountPerFrame: 20
   fastMeshGenerationsPerFrame: 4
-  slowFrameSkipsBetweenMeshGenerations: 64
+  slowFrameSkipsBetweenMeshGenerations: 32
 --- !u!114 &157185656571648469
 MonoBehaviour:
   m_ObjectHideFlags: 0
