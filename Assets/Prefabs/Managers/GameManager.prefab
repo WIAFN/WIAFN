@@ -100,3 +100,5 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   pfElevatorKey: {fileID: 6365665363150068368, guid: 3e6ebff28924c4549972d4357ffff610, type: 3}
+  hasPresetKeys: []
+  keyCountPerLevel: 10

@@ -10,6 +10,8 @@ public class CollectableManager : MonoBehaviour
 
     public List<GameObject> hasPresetKeys;
 
+    public int keyCountPerLevel;
+
     private void Awake()
     {
         if (instance == null)
@@ -47,7 +49,7 @@ public class CollectableManager : MonoBehaviour
 
         if (currentLevel.ElevatorIn != null)
         {
-            for (int i = 0; i < 10; i++)
+            for (int i = 0; i < keyCountPerLevel; i++)
             {
                 Vector3 keyPosition = currentLevel.Generator != null ? currentLevel.Generator.GenerateRandomPositionOnGround() : currentLevel.ElevatorIn.transform.position + UnityEngine.Random.insideUnitSphere * 10f;
                 keyPosition += Vector3.up * 1.5f;

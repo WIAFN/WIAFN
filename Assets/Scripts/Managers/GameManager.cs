@@ -186,6 +186,12 @@ public class GameManager : MonoBehaviour
 
     public GameObject CreatePlayerFallChamber(Vector3 fallChamberPos)
     {
+        Transform roof = CurrentLevelInfo.LevelObject.transform.Find("Roof");
+        if (roof != null)
+        {
+            Destroy(roof.gameObject);
+        }
+
         return Instantiate(pfPlayerFallChamber, fallChamberPos, Quaternion.identity);
     }
 
