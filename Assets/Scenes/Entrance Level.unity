@@ -2815,57 +2815,5 @@ PrefabInstance:
       propertyPath: levelInfos.Array.data[0].LevelObject
       value: 
       objectReference: {fileID: 1281052333}
-    - target: {fileID: 7635250797421234224, guid: 2cabf0345c18ef8499c2db2fecaa3257, type: 3}
-      propertyPath: lowDamage.b
-      value: 0.28261834
-      objectReference: {fileID: 0}
-    - target: {fileID: 7635250797421234224, guid: 2cabf0345c18ef8499c2db2fecaa3257, type: 3}
-      propertyPath: lowDamage.g
-      value: 0.8207547
-      objectReference: {fileID: 0}
-    - target: {fileID: 7635250797421234224, guid: 2cabf0345c18ef8499c2db2fecaa3257, type: 3}
-      propertyPath: lowDamage.r
-      value: 0.7991019
-      objectReference: {fileID: 0}
-    - target: {fileID: 7635250797421234224, guid: 2cabf0345c18ef8499c2db2fecaa3257, type: 3}
-      propertyPath: highDamage.b
-      value: 0.13822764
-      objectReference: {fileID: 0}
-    - target: {fileID: 7635250797421234224, guid: 2cabf0345c18ef8499c2db2fecaa3257, type: 3}
-      propertyPath: highDamage.g
-      value: 0.11725702
-      objectReference: {fileID: 0}
-    - target: {fileID: 7635250797421234224, guid: 2cabf0345c18ef8499c2db2fecaa3257, type: 3}
-      propertyPath: highDamage.r
-      value: 0.8018868
-      objectReference: {fileID: 0}
-    - target: {fileID: 7635250797421234224, guid: 2cabf0345c18ef8499c2db2fecaa3257, type: 3}
-      propertyPath: mediumDamage.b
-      value: 0.11307406
-      objectReference: {fileID: 0}
-    - target: {fileID: 7635250797421234224, guid: 2cabf0345c18ef8499c2db2fecaa3257, type: 3}
-      propertyPath: mediumDamage.g
-      value: 0.3257112
-      objectReference: {fileID: 0}
-    - target: {fileID: 7635250797421234224, guid: 2cabf0345c18ef8499c2db2fecaa3257, type: 3}
-      propertyPath: mediumDamage.r
-      value: 0.7264151
-      objectReference: {fileID: 0}
-    - target: {fileID: 7635250797421234224, guid: 2cabf0345c18ef8499c2db2fecaa3257, type: 3}
-      propertyPath: specialColor.b
-      value: 0.6509434
-      objectReference: {fileID: 0}
-    - target: {fileID: 7635250797421234224, guid: 2cabf0345c18ef8499c2db2fecaa3257, type: 3}
-      propertyPath: specialColor.g
-      value: 0.12588999
-      objectReference: {fileID: 0}
-    - target: {fileID: 7635250797421234224, guid: 2cabf0345c18ef8499c2db2fecaa3257, type: 3}
-      propertyPath: specialColor.r
-      value: 0.34578755
-      objectReference: {fileID: 0}
-    - target: {fileID: 7635250797421234224, guid: 2cabf0345c18ef8499c2db2fecaa3257, type: 3}
-      propertyPath: _damageTextPrefab
-      value: 
-      objectReference: {fileID: 2599464953658406448, guid: d3b44a7350fc1484bae2253a0f471c8a, type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 2cabf0345c18ef8499c2db2fecaa3257, type: 3}
