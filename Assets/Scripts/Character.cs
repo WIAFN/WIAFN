@@ -150,14 +150,17 @@ public class Character : MonoBehaviour
         health = Mathf.Clamp(health, 0, _baseStats.maxHealth);
     }
 
-    public void RemoveHealth(float health)
+    public void Damage(Projectile projectile)
     {
-        this.health -= health;
+        float damage = projectile.Damage;
+        this.health -= damage;
 
         if (OnDamageTaken != null)
         {
-            OnDamageTaken(health);
+            OnDamageTaken(damage);
         }
+
+        GameManager.instance.CallCharacterDamage(projectile.Weapon.Character, this, damage);
     }
 
     public float GetFiringErrorRate()

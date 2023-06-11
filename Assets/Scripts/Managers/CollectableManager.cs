@@ -33,7 +33,7 @@ public class CollectableManager : MonoBehaviour
     private void Update()
     {
 
-        if (Input.GetKeyUp(KeyCode.M))
+        if (Input.GetKeyUp(KeyCode.C))
         {
             CreateKey(GameManager.instance.CurrentLevelInfo, GameManager.instance.mainPlayer.transform.position);
         }

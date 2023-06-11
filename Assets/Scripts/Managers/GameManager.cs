@@ -40,6 +40,7 @@ public class GameManager : MonoBehaviour
     public LevelInfo CurrentLevelInfo { get { return levelInfos.Last(); } }
     public LevelGeneratorBase CurrentLevelGenerator { get { return CurrentLevelInfo.Generator; } }
 
+    public event DamageDelegate OnDamage;
     public event CharacterDelegate OnCharacterDied;
     public event LevelChangeDelegate OnLevelChanged;
 
@@ -105,8 +106,15 @@ public class GameManager : MonoBehaviour
         
     }
 
+    // TODO - Safa: We should create these for each character.
+    public void CallCharacterDamage(Character from, Character to, float damage)
+    {
+        if (OnDamage != null)
+        {
+            OnDamage(from, to, damage);
+        }
+    }
 
-    // TODO - Safa: We should track characters using their OnDied event.
     public void CharacterDied(Character character)
     {
         AudioManager.instance?.PlayCharDeath(transform);
@@ -197,4 +205,5 @@ public class GameManager : MonoBehaviour
 
     public delegate void CharacterDelegate(Character character);
     public delegate void LevelChangeDelegate(LevelInfo oldLevel, LevelInfo currentLevel);
+    public delegate void DamageDelegate(Character from, Character to, float damage);
 }

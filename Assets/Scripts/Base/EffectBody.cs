@@ -107,7 +107,7 @@ public class EffectBody : MonoBehaviour
 
     private bool CanCollect()
     {
-        return _isVisible && _playerInRange;
+        return _isVisible && _playerInRange && !_pickedUp;
     }
 
     public void RefreshText()

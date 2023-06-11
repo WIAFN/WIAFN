@@ -20,6 +20,8 @@ public abstract class Projectile : MonoBehaviour
     private MeshRenderer _meshRenderer;     //Get mesh renderer from child
     private float _damage;                   //Moved from projectile, might do terraria logic for bullet + weapon damage combo
 
+    public float Damage => _damage;
+
     private void Awake()
     {
         TrailRenderer = GetComponent<TrailRenderer>();
@@ -111,7 +113,7 @@ public abstract class Projectile : MonoBehaviour
 
         if (hitCharacter != null)
         {
-            hitCharacter.RemoveHealth(_damage);
+            hitCharacter.Damage(this);
         }
 
         //Destroy self if cannot penetrate anymore

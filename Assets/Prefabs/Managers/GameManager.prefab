@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 39228896130775932}
   - component: {fileID: 1238161195}
   - component: {fileID: 5485299475306076477}
+  - component: {fileID: 7635250797421234224}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -106,3 +107,16 @@ MonoBehaviour:
   pfElevatorKey: {fileID: 6365665363150068368, guid: 3ff3f409bf88a0d4584d20b398b21220, type: 3}
   hasPresetKeys: []
   keyCountPerLevel: 10
+--- !u!114 &7635250797421234224
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7331057603790362889}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 46a0d1ef2b0568f438fd3b5286f1321f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _damageTextPrefab: {fileID: 0}
