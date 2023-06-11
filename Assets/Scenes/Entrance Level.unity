@@ -2747,6 +2747,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 1456276398063499886}
     - target: {fileID: 7331057603790362891, guid: 2cabf0345c18ef8499c2db2fecaa3257, type: 3}
+      propertyPath: levelGameManager
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7331057603790362891, guid: 2cabf0345c18ef8499c2db2fecaa3257, type: 3}
       propertyPath: levelInfos.Array.data[0].LevelObject
       value: 
       objectReference: {fileID: 1281052333}

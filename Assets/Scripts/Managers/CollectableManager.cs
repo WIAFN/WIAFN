@@ -30,6 +30,15 @@ public class CollectableManager : MonoBehaviour
         GameManager.instance.OnLevelChanged += OnLevelChanged;
     }
 
+    private void Update()
+    {
+
+        if (Input.GetKeyUp(KeyCode.M))
+        {
+            CreateKey(GameManager.instance.CurrentLevelInfo, GameManager.instance.mainPlayer.transform.position);
+        }
+    }
+
     private void OnDestroy()
     {
         if (GameManager.instance != null)
@@ -52,10 +61,15 @@ public class CollectableManager : MonoBehaviour
             for (int i = 0; i < keyCountPerLevel; i++)
             {
                 Vector3 keyPosition = currentLevel.Generator != null ? currentLevel.Generator.GenerateRandomPositionOnGround() : currentLevel.ElevatorIn.transform.position + UnityEngine.Random.insideUnitSphere * 10f;
-                keyPosition += Vector3.up * 1.5f;
-                GameObject newKey = Instantiate(pfElevatorKey, keyPosition, Quaternion.identity);
-                newKey.transform.parent = currentLevel.LevelObject.transform;
+                CreateKey(currentLevel, keyPosition);
             }
         }
+    }
+
+    private void CreateKey(LevelInfo currentLevel, Vector3 keyPosition)
+    {
+        keyPosition += Vector3.up * 1.5f;
+        GameObject newKey = Instantiate(pfElevatorKey, keyPosition, Quaternion.identity);
+        newKey.transform.parent = currentLevel.LevelObject.transform;
     }
 }

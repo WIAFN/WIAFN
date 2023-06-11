@@ -36,7 +36,7 @@ public class LootManager : MonoBehaviour
 
     private void Update()
     {
-        if(Input.GetKeyUp(KeyCode.L)) 
+        if(Input.GetKeyUp(KeyCode.N)) 
         {
             CreateLoot(GameManager.instance.mainPlayer.transform.position);
         }
