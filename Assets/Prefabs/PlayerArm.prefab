@@ -170,9 +170,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 70dab98d2a231444d9ec73c1463ff307, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  mouseSensivity: 1000
+  mouseSensivity: 800
   playerBody: {fileID: 5899578701194276614}
   xRotation: 0
+  IsLocked: 0
+  Snappiness: 50
 --- !u!20 &1066322988
 Camera:
   m_ObjectHideFlags: 0
@@ -398,7 +400,7 @@ MonoBehaviour:
   dashDuration: 0.3
   dashCooldown: 5
   dashCost: 40
-  shootingErrorRateMinMax: {x: 0.03, y: 0.1}
+  shootingErrorRateMinMax: {x: 0.01, y: 0.1}
   speedCoefficient: 1
 --- !u!114 &5899578701194276610
 MonoBehaviour:
@@ -573,7 +575,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Character: {fileID: 0}
   FireRate: 5
-  Damage: 5
+  Damage: 10
   GunTip: {fileID: 5511685309753150738}
   MuzzleFlash: {fileID: 7813738118887920440, guid: 9afa50d68c6ab79418141f5a31b4ae06, type: 3}
   projectilePrefab: {fileID: 2206067794516419196, guid: ef0cfbfe4ad97014d91137ec1452d82d, type: 3}

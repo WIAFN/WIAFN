@@ -43,7 +43,6 @@ public class PlayerCamera : MonoBehaviour
             }
         }
 
-        //three ifs, why?!
         if (Input.GetKeyDown(KeyCode.R) && _player.HasEffect())
         {
             if(!_player.Effect.InAnimation)

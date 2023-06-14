@@ -974,6 +974,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Dummy EnemyWithHead
       objectReference: {fileID: 0}
+    - target: {fileID: 3293409358827904580, guid: 33a3ba6d5fbfe8349b5548c83f5a40f9, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 3293409358827904587, guid: 33a3ba6d5fbfe8349b5548c83f5a40f9, type: 3}
       propertyPath: maxHealth
       value: 100000
@@ -2807,10 +2811,6 @@ PrefabInstance:
       propertyPath: mainPlayer
       value: 
       objectReference: {fileID: 1456276398063499886}
-    - target: {fileID: 7331057603790362891, guid: 2cabf0345c18ef8499c2db2fecaa3257, type: 3}
-      propertyPath: levelGameManager
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 7331057603790362891, guid: 2cabf0345c18ef8499c2db2fecaa3257, type: 3}
       propertyPath: levelInfos.Array.data[0].LevelObject
       value: 
