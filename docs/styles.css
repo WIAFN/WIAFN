@@ -29,26 +29,29 @@ body {
   display: flex;
   justify-content: flex-end;
   padding: 10px;
-}
-
-.nav an {
-  text-decoration: none;
-  color: #d8d4cf;
-  margin-right: 20px;
-  font-size: 16px;
-}
-
-.nav am {
-  text-decoration: none;
-  color: #d8d4cf;
-  margin-right: 20px;
-  font-size: 16px;
+  -webkit-user-select: none; /* Safari */
+  -moz-user-select: none; /* Firefox */
+  -ms-user-select: none; /* IE/Edge */
+  user-select: none; /* Standard syntax */
 }
 
 .nav a {
   text-decoration: none;
-  color: #b47d5b;
+  color: #d8d4cf;
   font-size: 16px;
+}
+
+.nav a.am {
+  margin-right: 20px;
+}
+
+.nav a.an {
+  margin-right: 20px;
+  color: #b47d5b;
+}
+
+.nav a.a {
+  color: #b47d5b;
 }
 
 .slider {
