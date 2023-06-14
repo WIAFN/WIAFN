@@ -27,6 +27,8 @@ public class MouseLook : MonoBehaviour
             IsLocked = !IsLocked;
             Cursor.lockState = IsLocked ? CursorLockMode.Locked : CursorLockMode.None;
             Cursor.visible = !IsLocked;
+
+            GameObject.Find("Options").GetComponent<OptionController>().Activate(IsLocked);
         }
         if(IsLocked)
         {
