@@ -1,8 +1,8 @@
 window.addEventListener('DOMContentLoaded', function() {
     var images = [
       'imgs/first/WIAFN.jpg',
-      'imgs/first/image2.png',
-      'imgs/first/image.png'
+      'imgs/first/junkyard.png',
+      'imgs/first/image2.png'
     ];
     var currentIndex = 0;
     var slider = document.querySelector('.slider');

@@ -31,10 +31,23 @@ body {
   padding: 10px;
 }
 
+.nav an {
+  text-decoration: none;
+  color: #d8d4cf;
+  margin-right: 20px;
+  font-size: 16px;
+}
+
+.nav am {
+  text-decoration: none;
+  color: #d8d4cf;
+  margin-right: 20px;
+  font-size: 16px;
+}
+
 .nav a {
   text-decoration: none;
-  color: #FFFFFF;
-  margin-right: 20px;
+  color: #b47d5b;
   font-size: 16px;
 }
 
