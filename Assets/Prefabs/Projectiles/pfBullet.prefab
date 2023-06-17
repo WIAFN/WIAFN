@@ -45,7 +45,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ccea7294ab05d2c418978337280d28fc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Speed: 300
+  Speed: 500
   TimeToLive: 3
   PenetrationValue: 0
   ImpactParticleSystem: {fileID: 107994787288928992, guid: dc3a630b19867be4095c42eee36b0f34, type: 3}
@@ -223,7 +223,7 @@ TrailRenderer:
       ctime5: 0
       ctime6: 0
       ctime7: 0
-      atime0: 0
+      atime0: 17348
       atime1: 65342
       atime2: 0
       atime3: 0
