@@ -57,7 +57,7 @@ body {
   color: #ffffff;
   font-family: 'Helvetica';
   font-size: 12px;
-  letter-spacing: .4rem;
+  letter-spacing: .1rem;
 }
 
 .nav a.am {
@@ -79,7 +79,7 @@ body {
   color: #ffffff;
   font-family: 'Helvetica';
   font-size: 12px;
-  letter-spacing: .4rem;
+  letter-spacing: .2rem;
 }
 
 .nav a.b {
@@ -153,7 +153,7 @@ body {
 .arrow {
   position: absolute;
   bottom: 25%;
-  left: 95%;
+  left: 50%;
   color: white;
   font-size: 50px;
   cursor: pointer;
