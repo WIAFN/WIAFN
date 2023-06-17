@@ -1,27 +1,44 @@
-html, body {
+html {
   height: 100%;
+  scroll-behavior: smooth;
 }
 
 body {
-  background: linear-gradient(to bottom, rgb(5, 77, 121), rgb(24, 26, 27));
-  color: #d8d4cf;
-  font-family: Helvetica, Arial, sans-serif;
+  height: 100%;
+  color: white;
+  font-family: Helvetica;
   margin: 0;
   padding: 0;
-  display: flex;
   flex-direction: column;
+  background-size: cover;
+}
+
+@font-face {
+  font-family: newFont;
+  src: url(JosefinSans.ttf);
+  font-weight: bold;
 }
 
 .header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
   padding: 20px;
+  justify-content: center;
   -webkit-user-select: none; /* Safari */
   -moz-user-select: none; /* Firefox */
   -ms-user-select: none; /* IE/Edge */
   user-select: none; /* Standard syntax */
+  font-family: 'newFont';
+  background-color: black;
+  font-size: 50px;
+  letter-spacing: .4rem;
+  z-index: 999;
 }
 
 .header h1 {
-  font-size: 24px;
+  font-size: 30px;
   margin: 0;
 }
 
@@ -37,38 +54,91 @@ body {
 
 .nav a {
   text-decoration: none;
-  color: #d8d4cf;
+  color: #ffffff;
   font-size: 16px;
+  font-family: 'Helvetica';
+  font-size: 15px;
+  letter-spacing: .4rem;
 }
 
 .nav a.am {
   margin-right: 20px;
+  font-family: 'Helvetica';
+  font-size: 15px;
+  letter-spacing: .4rem;
 }
 
 .nav a.an {
   margin-right: 20px;
-  color: #b47d5b;
+  color: #ffffff;
+  font-family: 'Helvetica';
+  font-size: 15px;
+  letter-spacing: .4rem;
 }
 
 .nav a.a {
-  color: #b47d5b;
+  color: #ffffff;
+  font-family: 'Helvetica';
+  font-size: 15px;
+  letter-spacing: .4rem;
 }
 
-.slider {
-  flex: 1;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 100vh;
-  overflow: hidden;
-}
-
-.slider img {
-  width: 100%;
-  height: auto;
+.nav a.b {
+  color: #9c6161;
+  font-family: 'Helvetica';
+  font-size: 15px;
+  letter-spacing: .4rem;
 }
 
 .details {
-  padding: 20px;
+  padding: 2px;
   text-align: center;
+  background-color: whitesmoke;
+  color: black;
+  font-family: 'newFont';
+  padding-bottom: 150px;
+  padding-top: 100px;
+  padding-left: 100px;
+  padding-right: 100px;
+  min-height: calc(100vh - 150px);
+
+  font-size: 50px;
+
+}
+
+.details h2{
+  margin-top:  10%;
+  color:purple;
+}
+
+
+.footer {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  background-color: black;
+  padding: 10px;
+}
+
+.mySlides {display: none;}
+
+.slideshow-container {
+  height: calc(100% - 150px);
+
+  max-width: 100%;
+
+  position: relative;
+  margin-bottom: 10%;
+
+}
+
+.fade {
+  animation-name: fade;
+  animation-duration: 1.5s;
+}
+
+@keyframes fade {
+  from {opacity: .4} 
+  to {opacity: 1}
 }

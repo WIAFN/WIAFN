@@ -3,30 +3,77 @@
 <head>
   <title>Was It All For Nothing?</title>
   <link rel="stylesheet" href="styles.css">
-  <script src="site.js"></script>
 </head>
 <body>
   <header class="header">
     <h1>Was It All For Nothing?</h1>
   </header>
   
-  <nav class="nav">
-    <a class="an" href="https://github.com/WIAFN/WIAFN">GitHub</a>
-    <a class="am">/</a>
-    <a class="an" href="https://drive.google.com/drive/folders/1J4jy1-bl_ddLuqxLbyRK9piWlO-7tuWg?usp=sharing">Drive</a>
-    <a>by&nbsp;<a class="a" href="https://github.com/safalevent">safalevent</a>,&nbsp;<a class="a" href="https://github.com/hikmetguner">hikmetguner</a>&nbsp;and&nbsp;<a class="a" href="https://github.com/iremunsal">iremunsal</a></a>
-  </nav>
   
-  <div class="slider"></div>
+  <div class="slideshow-container">
+
+    <div class="mySlides fade">
+      <img src="imgs/first/bg2.jpg" style="width:100%">
+    </div>
+    
+    <div class="mySlides fade">
+      <img src="imgs/first/junkyard.png" style="width:100%">
+    </div>
+    
+    <div class="mySlides fade">
+      <img src="imgs/first/WIAFN.jpg" style="width:100%">
+    </div>
+  
+  </div>
   
   <div class="details">
     <h2>WIAFN?</h2>
     <p>
-      Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed eget urna ut est commodo sagittis id sit amet libero.
-      Praesent sit amet posuere lectus. Integer aliquam justo mauris, id posuere sapien vestibulum vitae. Integer id nunc
-      semper, varius nisl ac, tempor tortor. Nullam nec massa et ligula pharetra interdum sed ut ante. Nullam et mi justo.
-      Sed facilisis odio quis nunc dignissim, in vulputate mi viverra.
+      “Was it All For Nothing?” is a video game based on first person shooter, a genre that mainly focuses on precise mouse movements and high 
+      reflex responses, and rogue-lite, a genre that focuses on generally increased difficulty and rich replayability, genres. While there 
+      are very successful rogue-lite and first person shooter games available, no game has managed to capture the essence of two very popular
+      genres together. Was it All for Nothing aims to be the game that acts like a bridge between the two genres, bringing the best of both 
+      into one.
     </p>
   </div>
+
+  <footer class="footer">
+    <nav class="nav">
+      <a class="a" href="https://github.com/WIAFN/WIAFN">GitHub</a>
+      <a class="am">&nbsp/</a>
+      <a class="a" href="https://drive.google.com/drive/folders/1J4jy1-bl_ddLuqxLbyRK9piWlO-7tuWg?usp=sharing">Drive</a>
+      <a><a class="b">&nbspby&nbsp;</a><a class="a" href="https://github.com/safalevent">safalevent</a><a class="a">&nbsp,&nbsp</a><a class="a" href="https://github.com/hikmetguner">hikmetguner</a><a class="a" >&nbsp;and&nbsp;</a><a class="a" href="https://github.com/iremunsal">iremunsal</a></a>
+    </nav>
+  </footer>
+
+  <script>
+    let slideIndex = 0;
+    showSlides();
+    
+    function showSlides() {
+      let i;
+      let slides = document.getElementsByClassName("mySlides");
+      for (i = 0; i < slides.length; i++) {
+        slides[i].style.display = "none";  
+      }
+      slideIndex++;
+      if (slideIndex > slides.length) {slideIndex = 1} 
+      slides[slideIndex-1].style.display = "block"; 
+      setTimeout(showSlides, 2000); // Change image every 2 seconds
+    }
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+      anchor.addEventListener('click', function (e) {
+        e.preventDefault();
+
+        document.querySelector(this.getAttribute('href')).scrollIntoView({
+          behavior: 'smooth'
+        });
+      });
+    });
+
+
+  </script>
+
 </body>
+
 </html>
