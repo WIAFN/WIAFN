@@ -4,7 +4,7 @@ html {
 }
 
 body {
-  height: 100%;
+  height: auto;
   color: white;
   font-family: Helvetica;
   margin: 0;
@@ -31,14 +31,14 @@ body {
   -ms-user-select: none; /* IE/Edge */
   user-select: none; /* Standard syntax */
   font-family: 'newFont';
-  background-color: black;
+  background-color: rgb(23, 21, 21);
   font-size: 50px;
   letter-spacing: .4rem;
   z-index: 999;
 }
 
 .header h1 {
-  font-size: 30px;
+  font-size: 20px;
   margin: 0;
 }
 
@@ -55,16 +55,15 @@ body {
 .nav a {
   text-decoration: none;
   color: #ffffff;
-  font-size: 16px;
   font-family: 'Helvetica';
-  font-size: 15px;
+  font-size: 12px;
   letter-spacing: .4rem;
 }
 
 .nav a.am {
   margin-right: 20px;
   font-family: 'Helvetica';
-  font-size: 15px;
+  font-size: 12px;
   letter-spacing: .4rem;
 }
 
@@ -72,21 +71,21 @@ body {
   margin-right: 20px;
   color: #ffffff;
   font-family: 'Helvetica';
-  font-size: 15px;
+  font-size: 12px;
   letter-spacing: .4rem;
 }
 
 .nav a.a {
   color: #ffffff;
   font-family: 'Helvetica';
-  font-size: 15px;
+  font-size: 12px;
   letter-spacing: .4rem;
 }
 
 .nav a.b {
-  color: #9c6161;
+  color: #bc6f6f;
   font-family: 'Helvetica';
-  font-size: 15px;
+  font-size: 12px;
   letter-spacing: .4rem;
 }
 
@@ -94,21 +93,21 @@ body {
   padding: 2px;
   text-align: center;
   background-color: whitesmoke;
-  color: black;
+  color: rgb(57, 53, 53);
   font-family: 'newFont';
   padding-bottom: 150px;
-  padding-top: 100px;
+  padding-top: 5%;
   padding-left: 100px;
   padding-right: 100px;
-  min-height: calc(100vh - 150px);
+  min-height: calc(100vh - 50px);
+  margin-bottom: 150px; /* Yeni eklendi */
 
-  font-size: 50px;
+  font-size: 38px;
 
 }
 
 .details h2{
-  margin-top:  10%;
-  color:purple;
+  color: #9b3535;
 }
 
 
@@ -117,7 +116,7 @@ body {
   bottom: 0;
   left: 0;
   width: 100%;
-  background-color: black;
+  background-color: rgb(23, 21, 21);
   padding: 10px;
 }
 
@@ -125,20 +124,41 @@ body {
 
 .slideshow-container {
   height: calc(100% - 150px);
-
   max-width: 100%;
-
   position: relative;
-  margin-bottom: 10%;
-
 }
 
 .fade {
   animation-name: fade;
-  animation-duration: 1.5s;
+  animation-duration: 1s; 
+  animation-timing-function: linear; 
+  animation-fill-mode: both; 
 }
 
 @keyframes fade {
-  from {opacity: .4} 
-  to {opacity: 1}
+  0% {
+    opacity: 0;
+  }
+  20% {
+    opacity: 0.2;
+  }
+  80% {
+    opacity: 0.8;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+.arrow {
+  position: absolute;
+  bottom: 25%;
+  left: 95%;
+  color: white;
+  font-size: 50px;
+  cursor: pointer;
+}
+
+.arrow:hover {
+  color: gray;
 }

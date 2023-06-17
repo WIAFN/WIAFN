@@ -27,6 +27,9 @@
     <div class="mySlides fade">
       <img src="imgs/first/ingame.png" style="width:100%">
     </div>
+
+    <div class="arrow" onclick="scrollToDetails()">&#8595;</div>
+
   
   </div>
   
@@ -63,18 +66,13 @@
       slideIndex++;
       if (slideIndex > slides.length) {slideIndex = 1} 
       slides[slideIndex-1].style.display = "block"; 
-      setTimeout(showSlides, 2000); // Change image every 2 seconds
+      setTimeout(showSlides, 3500); // Change image every 2 seconds
     }
-    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-      anchor.addEventListener('click', function (e) {
-        e.preventDefault();
 
-        document.querySelector(this.getAttribute('href')).scrollIntoView({
-          behavior: 'smooth'
-        });
-      });
-    });
-
+    function scrollToDetails() {
+      const detailsSection = document.querySelector('.details');
+      detailsSection.scrollIntoView({ behavior: 'smooth' });
+    }
 
   </script>
 
